@@ -1,5 +1,8 @@
 package com.dr.poc;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 import java.io.*;
@@ -20,12 +23,12 @@ public class CharacterRenderManager {
         return defInst;
     }
 
-    private File getPngPath(String character) {
-        return new File(DATA_PATH + character + ".png");
+    private FileHandle getPngPath(String character) {
+        return Gdx.files.internal(DATA_PATH + character + ".png");
     }
 
-    private File getAtlasPath(String character) {
-        return new File(DATA_PATH + character + ".atlas");
+    private FileHandle getAtlasPath(String character) {
+        return Gdx.files.internal(DATA_PATH + character + ".atlas");
     }
 
     public CharacterRenderInfo getCharacter(String character) {
@@ -34,9 +37,9 @@ public class CharacterRenderManager {
             return cinfo_cache_map.get(character);
 
         if (!getPngPath(character).exists())
-            throw new RuntimeException("character png is not found!");
+            throw new RuntimeException("character png : " + character + " is not found!");
 
-        File atlas = getAtlasPath(character);
+        FileHandle atlas = getAtlasPath(character);
         if (!atlas.exists()) {
             createAtlas(character);
         }
@@ -51,16 +54,16 @@ public class CharacterRenderManager {
     }
 
     private void createAtlas(String character) {
-        File targetAtlas = new File(DATA_PATH + character + ".atlas");
+        FileHandle targetAtlas = Gdx.files.internal(DATA_PATH + character + ".atlas");
 
         FileInputStream if_temp = null;
         FileOutputStream of_atlas = null;
         try {
-            targetAtlas.createNewFile();
-            of_atlas = new FileOutputStream(targetAtlas);
+            //targetAtlas.createNewFile();
+            of_atlas = new FileOutputStream(targetAtlas.file());
 
-            File template = new File(DATA_PATH + "atlas.template");
-            if_temp = new FileInputStream(template);
+            FileHandle template = Gdx.files.internal(DATA_PATH + "atlas.template");
+            if_temp = new FileInputStream(template.file());
 
             of_atlas.write(("\n" + character + ".png\n").getBytes());
 
