@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.dr.iris.character.GameActor;
 
 /**
  * Created by Rayer on 12/31/14.
@@ -28,7 +29,7 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
     SpriteBatch sb;
 
     float elapsed = 0;
-    MainActor actor;
+    GameActor actor;
 
     @Override
     public void create() {
@@ -44,7 +45,7 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
         render = new OrthogonalTiledMapRenderer(map);
         Gdx.input.setInputProcessor(this);
 
-        actor = new MainActor("steampunk_f9");
+        actor = new GameActor("steampunk_f9");
         actor.setPosition(20, 40);
     }
 
@@ -59,6 +60,9 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        //camera.project(new Vector3(actor.getX(), actor.getY(), 0));
+        camera.position.set(actor.getX(), actor.getY(), 0);
         camera.update();
         render.setView(camera);
         render.render();
@@ -117,6 +121,7 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
         Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
         Vector3 position = camera.unproject(clickCoordinates);
 
+        actor.clearActions();
         //Fix acter speed 200 per second
         float length = (new Vector2(position.x - actor.getX(), position.y - actor.getY())).len();
         actor.addAction(Actions.moveTo(position.x, position.y, length / 200));

@@ -1,4 +1,4 @@
-package com.dr.poc;
+package com.dr.iris.character;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
@@ -30,7 +30,7 @@ public class CharacterRenderInfo {
         return atlas.findRegions(facing.getAtlasDefine());
     }
 
-    enum FACING {
+    public enum FACING {
         UP("walk-fu"),
         DOWN("walk-fd"),
         LEFT("walk-fl"),

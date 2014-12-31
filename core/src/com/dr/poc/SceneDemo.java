@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.dr.iris.character.GameActor;
 
 
 /**
@@ -23,7 +24,7 @@ public class SceneDemo implements ApplicationListener {
                 "steampunk_f9", "trabiastudent_f", "xmasgirl3", "misaamane", "steampunk_f5"
         };
 
-        stage.addActor(new MainActor("steampunk_f9"));
+        stage.addActor(new GameActor("steampunk_f9"));
 
     }
 

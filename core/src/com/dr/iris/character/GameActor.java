@@ -1,4 +1,4 @@
-package com.dr.poc;
+package com.dr.iris.character;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -8,16 +8,19 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Disposable;
 
+
 /**
  * Created by Rayer on 12/30/14.
  */
-public class MainActor extends Actor implements Disposable {
+public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements Disposable {
+
+    ActorSpec actorSpec = new ActorSpec();
+
 
     CharacterRenderInfo.FACING currentFacing = CharacterRenderInfo.FACING.DOWN;
     CharacterRenderInfo.FACING lastFacing = currentFacing;
@@ -33,7 +36,7 @@ public class MainActor extends Actor implements Disposable {
 
     Vector2 lastPos;
 
-    public MainActor(String characterName) {
+    public GameActor(String characterName) {
 
         name = characterName;
 
