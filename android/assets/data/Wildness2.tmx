@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Wildness" tilewidth="32" tileheight="32">
+  <image source="image.axd.png" trans="ff00ff" width="512" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt0bERABAQBdHLtYQKMApA/2X4BYidMRu8eIPtZtYBAMDTwsHtfpQk2alfpEpz6g+Zspz6nv8BAH/YyQ47pQ==
+  </data>
+ </layer>
+ <objectgroup name="Object Layer 1"/>
+ <layer name="Tile Layer 2" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztzUkSwWAQhuEYYm/KHmFv3MeQPcLeeANuwA1wApwg3MoRlPcM+as6RL9Vz7L7syxN0/69FNLIIAsbOcH9PAooooQyHMH9CqqowUUdDcH9Jlpoo4MueoL7HvoYYIgRfMH9MSaYIsAMc8H9BZZYYY0NtoL7v9Yr5v13zPtasjvhjEvE+x32BvtX3HCPeH/A0WA/xANPgx+apn13H3INEiw=
+  </data>
+ </layer>
+</map>
