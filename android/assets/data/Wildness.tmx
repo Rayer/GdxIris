@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" name="Wildness" tilewidth="32" tileheight="32">
+  <image source="image.axd.png" width="512" height="512"/>
+ </tileset>
+ <layer name="Tile Layer 1" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1rENwlAQRMHLKcXFuEHjCsAVGGrzBSQQISd/ZU0w+Uov2bmqZgAAAAD+srR7WwO2UPVoz7YFbKFqb6/2DtgCAHB1tx+j9/DdZvQG9EilRxY9suiRxcfKo0cWPbLokWX6GL0DTZJpkkeTPNMJozcDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwFUdNDsLRw==
+  </data>
+ </layer>
+ <layer name="Tile Layer 2" width="100" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt1zkuBWAUhuFr7I09Lr2xQmKsLgkJFRISdmDYgGFX7IAl+aJQ6STOjf95krc6zdeeTgcAAAD4rwbSYBpKw2kkjZYuattYGk8TaTJNpenSRW2bSbNpLnXTfFooXdS2xbSUltNKWk1rpYvatpW2007aTXtpv3RR247ScXpNb+kknVYOatxlukrv6SNdp5vSRW25Tw/VIxqznjbS5g+35/Tyt3Oa10sH6bB6CF/O0nm6qB4CAPyKP6O/+DPacZvuqkfw7TE9VY8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAPvQJP84Syw==
+  </data>
+ </layer>
+</map>
