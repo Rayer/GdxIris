@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * Created by Rayer on 12/31/14.
  */
-public class TileMapDemo implements ApplicationListener, InputProcessor {
+public class TileMapDemo implements ApplicationListener, GestureDetector.GestureListener {
 
     Texture img;
     TiledMap map;
@@ -41,6 +42,10 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
 
     int screenSizeX = 0;
     int screenSizeY = 0;
+
+    //Casting
+    boolean casting = false;
+
 
     public TileMapDemo() {
     }
@@ -85,7 +90,7 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
         actorList.add(actor);
 
         render = new OrthogonalTiledMapRendererWithActorList(map, sb, actorList);
-        Gdx.input.setInputProcessor(this);
+        Gdx.input.setInputProcessor(new GestureDetector(this));
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Music/blood.mp3"));
         bgm.play();
 
@@ -146,62 +151,68 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
 
     }
 
+
     @Override
-    public boolean keyDown(int keycode) {
+    public boolean touchDown(float x, float y, int pointer, int button) {
+
         return false;
     }
 
     @Override
-    public boolean keyUp(int keycode) {
-        if (keycode == Input.Keys.LEFT)
-            camera.translate(-32, 0);
-        if (keycode == Input.Keys.RIGHT)
-            camera.translate(32, 0);
-        if (keycode == Input.Keys.UP)
-            camera.translate(0, 32);
-        if (keycode == Input.Keys.DOWN)
-            camera.translate(0, -32);
-        if (keycode == Input.Keys.NUM_1)
-            map.getLayers().get(0).setVisible(!map.getLayers().get(0).isVisible());
-        if (keycode == Input.Keys.NUM_2)
-            map.getLayers().get(1).setVisible(!map.getLayers().get(1).isVisible());
+    public boolean tap(float x, float y, int count, int button) {
+        System.out.println("Touch down invoked : " + x + "," + y + " and times : " + count);
+        //processing moving
+        if(casting == false) {
+            Vector3 clickCoordinates = new Vector3(x, y, 0);
+            Vector3 position = camera.unproject(clickCoordinates);
+
+            actor.clearActions();
+            //Fix acter speed 200 per second
+            float length = (new Vector2(position.x - actor.getX(), position.y - actor.getY())).len();
+            actor.addAction(Actions.moveTo(position.x, position.y, length / 200));
+        } else {
+            casting = false;
+        }
+
         return false;
     }
 
     @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        System.out.println("Touch down invoked : " + screenX + "," + screenY);
-        Vector3 clickCoordinates = new Vector3(screenX, screenY, 0);
+    public boolean longPress(float x, float y) {
+        //Enter casting mode
+        Vector3 clickCoordinates = new Vector3(x, y, 0);
         Vector3 position = camera.unproject(clickCoordinates);
 
         actor.clearActions();
-        //Fix acter speed 200 per second
-        float length = (new Vector2(position.x - actor.getX(), position.y - actor.getY())).len();
-        actor.addAction(Actions.moveTo(position.x, position.y, length / 200));
-        return true;
-    }
 
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        casting = true;
+        System.out.println("longpress invoked : " + clickCoordinates.x + "," + clickCoordinates.y);
+
         return false;
     }
 
     @Override
-    public boolean mouseMoved(int screenX, int screenY) {
+    public boolean fling(float velocityX, float velocityY, int button) {
         return false;
     }
 
     @Override
-    public boolean scrolled(int amount) {
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance) {
+        return false;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return false;
     }
 }
