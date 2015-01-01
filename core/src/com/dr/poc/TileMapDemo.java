@@ -2,12 +2,9 @@ package com.dr.poc;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapProperties;
@@ -27,7 +24,6 @@ import java.util.List;
  */
 public class TileMapDemo implements ApplicationListener, GestureDetector.GestureListener {
 
-    Texture img;
     TiledMap map;
     OrthographicCamera camera;
     OrthogonalTiledMapRendererWithActorList render;
@@ -42,13 +38,20 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     int screenSizeX = 0;
     int screenSizeY = 0;
-
-    //Casting
-    boolean casting = false;
-
-
+    CastingStatus casting = CastingStatus.NO_CASTING;
+    //Map
+    private Integer mapWidth;
+    private Integer mapHeight;
+    private Integer tilePixelWidth;
+    private Integer tilePixelHeight;
     public TileMapDemo() {
     }
+
+
+    //Pathfinding
+    //AStarGridFinder<GridCell> finder = new AStarGridFinder<GridCell>(GridCell.class);
+    //NavigationTiledMapLayer nav;
+
 
     public TileMapDemo(int x, int y) {
         screenSizeX = x;
@@ -61,7 +64,6 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         screenSizeX = screenSizeX == 0 ? Gdx.graphics.getWidth() : screenSizeX;
         screenSizeY = screenSizeY == 0 ? Gdx.graphics.getHeight() : screenSizeY;
 
-
         sb = new SpriteBatch();
 
 
@@ -71,16 +73,20 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         camera.update();
 
 
+        //Load map
         map = new TmxMapLoader().load("data/Wildness2.tmx");
         MapProperties prop = map.getProperties();
 
-        int mapWidth = prop.get("width", Integer.class);
-        int mapHeight = prop.get("height", Integer.class);
-        int tilePixelWidth = prop.get("tilewidth", Integer.class);
-        int tilePixelHeight = prop.get("tileheight", Integer.class);
+        mapWidth = prop.get("width", Integer.class);
+        mapHeight = prop.get("height", Integer.class);
+        tilePixelWidth = prop.get("tilewidth", Integer.class);
+        tilePixelHeight = prop.get("tileheight", Integer.class);
 
         mapSizeX = mapWidth * tilePixelWidth;
         mapSizeY = mapHeight * tilePixelHeight;
+
+        //Load A* PF module
+        //nav = (NavigationTiledMapLayer)map.getLayers().get("Navigation");
 
 
         actor = new GameActor("trabiastudent_f");
@@ -149,8 +155,14 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     @Override
     public void dispose() {
 
-    }
+        map.dispose();
+        render.dispose();
+        sb.dispose();
 
+        actor.dispose();
+
+        bgm.dispose();
+    }
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
@@ -162,16 +174,21 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     public boolean tap(float x, float y, int count, int button) {
         System.out.println("Touch down invoked : " + x + "," + y + " and times : " + count);
         //processing moving
-        if(casting == false) {
+        if (casting == CastingStatus.NO_CASTING) {
             Vector3 clickCoordinates = new Vector3(x, y, 0);
             Vector3 position = camera.unproject(clickCoordinates);
+
+            int cellX = (int) (position.x / this.tilePixelWidth);
+            int cellY = (int) (position.y / this.tilePixelHeight);
+
+            System.out.println("Cell ID : " + cellX + ", " + cellY);
 
             actor.clearActions();
             //Fix acter speed 200 per second
             float length = (new Vector2(position.x - actor.getX(), position.y - actor.getY())).len();
             actor.addAction(Actions.moveTo(position.x, position.y, length / 200));
         } else {
-            casting = false;
+            casting = CastingStatus.ADJUSTING;
         }
 
         return false;
@@ -185,8 +202,8 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         actor.clearActions();
 
-        casting = true;
-        System.out.println("longpress invoked : " + clickCoordinates.x + "," + clickCoordinates.y);
+        casting = CastingStatus.ADJUSTING;
+        System.out.println("longpress invoked : " + position.x + "," + position.y);
 
         return false;
     }
@@ -198,6 +215,11 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
+        if (casting == CastingStatus.ADJUSTING) {
+            System.out.println("Start casting!");
+            //casting = CastingStatus.CASTING;
+            casting = CastingStatus.NO_CASTING;
+        }
         return false;
     }
 
@@ -214,5 +236,12 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
         return false;
+    }
+
+    //Casting
+    enum CastingStatus {
+        NO_CASTING,
+        ADJUSTING,
+        CASTING
     }
 }
