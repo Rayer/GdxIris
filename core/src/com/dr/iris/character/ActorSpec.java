@@ -10,6 +10,7 @@ import java.util.List;
  */
 public class ActorSpec {
     List<ActionBase> abilityActionBase = new ArrayList<>();
+
     private int HP = 120;
     private int MaxHP = 120;
     private int ENG = 80;
@@ -17,6 +18,15 @@ public class ActorSpec {
     private int STA = 150;
     private int MaxSTA = 150;
     private int EXPERTISE = 100;
+    private Type type = Type.Friendly;
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
 
     public int getHP() {
         return HP;
@@ -73,4 +83,8 @@ public class ActorSpec {
     public void setEXPERTISE(int EXPERTISE) {
         this.EXPERTISE = EXPERTISE;
     }
+
+    enum Type {Main, Friendly, Enemy}
+
+
 }

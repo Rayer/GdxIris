@@ -2,16 +2,31 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="32" height="32" tilewidth="32" tileheight="32">
  <tileset firstgid="1" name="Wildness" tilewidth="32" tileheight="32">
   <image source="image.axd.png" trans="ff00ff" width="512" height="512"/>
+  <tile id="237">
+   <properties>
+    <property name="Should not pass" value=""/>
+   </properties>
+  </tile>
+  <tile id="253">
+   <properties>
+    <property name="Should not pass" value=""/>
+   </properties>
+  </tile>
  </tileset>
- <layer name="Tile Layer 1" width="32" height="32">
+ <layer name="ShouldNotPass" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJzt0bERABAQBdHLtYQKMApA/2X4BYidMRu8eIPtZtYBAMDTwsHtfpQk2alfpEpz6g+Zspz6nv8BAH/YyQ47pQ==
+   eJzt1LERACAMAsA4T/bfz8YFcmcjfvE1DdBV1cDIOn7NJ9uNbuknvG+y45TN+z8g3QbU9qpd
   </data>
  </layer>
- <objectgroup name="Object Layer 1"/>
- <layer name="Tile Layer 2" width="32" height="32">
+ <layer name="Ground" width="32" height="32">
   <data encoding="base64" compression="zlib">
-   eJztzUkSwWAQhuEYYm/KHmFv3MeQPcLeeANuwA1wApwg3MoRlPcM+as6RL9Vz7L7syxN0/69FNLIIAsbOcH9PAooooQyHMH9CqqowUUdDcH9Jlpoo4MueoL7HvoYYIgRfMH9MSaYIsAMc8H9BZZYYY0NtoL7v9Yr5v13zPtasjvhjEvE+x32BvtX3HCPeH/A0WA/xANPgx+apn13H3INEiw=
+   eJzzZ2Bg8B/Fo3gUj2ISMD8QCwyg/fJArDCA9usDscEA2m8PxA40ND+AgDwx8U/IjNH4H7zxjw/nAHEuFOcNgP01QFwLxXUDYH8PEPdCcd8AxcEopi2mRtlFy/JvFI/iUTyKKcUASLs7xA==
+  </data>
+ </layer>
+ <objectgroup name="Object"/>
+ <layer name="Decoration" width="32" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt1EEOQDAQheFemhtwM5wAJ8DOrrprvLUQFa/G4n3Jv2kmnd04JyJPFag03F+h2nC/5LUa/xEJ+xl/yD99df8a1KLu8H52/65m3+jRgEbybKoJzWghz6byaEOBPHtH909EJK8d98kgbQ==
   </data>
  </layer>
 </map>

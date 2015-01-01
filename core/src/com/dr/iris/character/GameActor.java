@@ -21,6 +21,10 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
 
     ActorSpec actorSpec = new ActorSpec();
 
+    /**
+     * Not used now
+     */
+    GroupInfo groupInfo = new GroupInfo();
 
     CharacterRenderInfo.FACING currentFacing = CharacterRenderInfo.FACING.DOWN;
     CharacterRenderInfo.FACING lastFacing = currentFacing;
@@ -73,6 +77,11 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
     public void act(float delta) {
         super.act(delta);
         //update current facing
+        updateCurrentFacing();
+
+    }
+
+    private void updateCurrentFacing() {
         if (lastPos.x != getX() || lastPos.y != getY()) {
             //update facing
             Vector2 facingVector = lastPos.sub(this.getX(), this.getY());
@@ -100,7 +109,6 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
             lastFacing = currentFacing;
             lastPos.set(getX(), getY());
         }
-
     }
 
 

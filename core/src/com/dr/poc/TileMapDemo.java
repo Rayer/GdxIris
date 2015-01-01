@@ -4,18 +4,21 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.character.GameActor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Rayer on 12/31/14.
@@ -25,11 +28,13 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
     Texture img;
     TiledMap map;
     OrthographicCamera camera;
-    TiledMapRenderer render;
+    OrthogonalTiledMapRendererWithActorList render;
     SpriteBatch sb;
 
     float elapsed = 0;
     GameActor actor;
+
+    Music bgm;
 
     @Override
     public void create() {
@@ -38,15 +43,24 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
 
         sb = new SpriteBatch();
 
+
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, w, h);
+        camera.setToOrtho(false, 680, 480);
         camera.update();
         map = new TmxMapLoader().load("data/Wildness2.tmx");
-        render = new OrthogonalTiledMapRenderer(map);
-        Gdx.input.setInputProcessor(this);
 
         actor = new GameActor("steampunk_f9");
         actor.setPosition(20, 40);
+
+        List<Actor> actorList = new ArrayList<>();
+        actorList.add(actor);
+
+        render = new OrthogonalTiledMapRendererWithActorList(map, sb, actorList);
+        Gdx.input.setInputProcessor(this);
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("Music/blood.mp3"));
+        bgm.play();
+
+
     }
 
     @Override
@@ -57,7 +71,7 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
     @Override
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -65,12 +79,8 @@ public class TileMapDemo implements ApplicationListener, InputProcessor {
         camera.position.set(actor.getX(), actor.getY(), 0);
         camera.update();
         render.setView(camera);
-        render.render();
-        sb.setProjectionMatrix(camera.combined);
-        sb.begin();
-        actor.act(delta);
-        actor.draw(sb, 1);
-        sb.end();
+        render.render(delta);
+
 
     }
 
