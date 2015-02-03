@@ -30,6 +30,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     SpriteBatch sb;
 
     float elapsed = 0;
+    Vector3 camera_shift = new Vector3(0.5f, 0 , 0);
     GameActor actor;
 
     Music bgm;
@@ -85,6 +86,8 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         mapSizeX = mapWidth * tilePixelWidth;
         mapSizeY = mapHeight * tilePixelHeight;
 
+
+
         //Load A* PF module
         //nav = (NavigationTiledMapLayer)map.getLayers().get("Navigation");
 
@@ -92,7 +95,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         actor = new GameActor("trabiastudent_f");
         actor.setPosition(20, 40);
 
-        List<Actor> actorList = new ArrayList<>();
+        List<Actor> actorList = new ArrayList<Actor>();
         actorList.add(actor);
 
         render = new OrthogonalTiledMapRendererWithActorList(map, sb, actorList);
@@ -131,15 +134,22 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         //System.out.println("" + actor.getX() + " / " + camera.viewportWidth / 2 + " " + Gdx.graphics.getWidth());
 
-        camera.position.set(cameraX, cameraY, 0);
+        //camera.position.set(cameraX, cameraY, 0);
         //System.out.println("Camera is set to : ( " + cameraX + ", " + cameraY + ")");
+        moveCamera(camera_shift);
         camera.update();
 
-
+        //moveCamera(camera_shift);
         render.setView(camera);
         render.render(delta);
 
+    }
 
+    private void moveCamera(Vector3 moveVector) {
+        camera.position.add(moveVector);
+        for(Actor actor : render.actorList) {
+            actor.moveBy(moveVector.x, moveVector.y);
+        }
     }
 
     @Override
