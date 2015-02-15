@@ -10,9 +10,12 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.character.GameActor;
 
@@ -30,21 +33,23 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     SpriteBatch sb;
 
     float elapsed = 0;
-    Vector3 camera_shift = new Vector3(0.5f, 0 , 0);
+    Vector3 camera_shift = new Vector3(0, 0.5f , 0);
     GameActor actor;
+    GameActor actor2;
 
     Music bgm;
-    int mapSizeX;
-    int mapSizeY;
 
-    int screenSizeX = 0;
-    int screenSizeY = 0;
+
+    private GridPoint2 screenGird = new GridPoint2(0, 0);
     CastingStatus casting = CastingStatus.NO_CASTING;
     //Map
-    private Integer mapWidth;
-    private Integer mapHeight;
-    private Integer tilePixelWidth;
-    private Integer tilePixelHeight;
+
+    private GridPoint2 mapGrid;
+
+    private GridPoint2 tilePixelGrid;
+
+    private GridPoint2 mapSizeGrid;
+
     public TileMapDemo() {
     }
 
@@ -55,37 +60,27 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
 
     public TileMapDemo(int x, int y) {
-        screenSizeX = x;
-        screenSizeY = y;
+        screenGird.set(x, y);
     }
+
+
 
     @Override
     public void create() {
 
-        screenSizeX = screenSizeX == 0 ? Gdx.graphics.getWidth() : screenSizeX;
-        screenSizeY = screenSizeY == 0 ? Gdx.graphics.getHeight() : screenSizeY;
-
         sb = new SpriteBatch();
 
+        screenGird = getScreenGrid();
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, screenSizeX, screenSizeY);
-        //camera.setToOrtho(false);
-        camera.update();
-
+        createCamera();
 
         //Load map
-        map = new TmxMapLoader().load("data/Wildness2.tmx");
-        MapProperties prop = map.getProperties();
+        loadMap();
 
-        mapWidth = prop.get("width", Integer.class);
-        mapHeight = prop.get("height", Integer.class);
-        tilePixelWidth = prop.get("tilewidth", Integer.class);
-        tilePixelHeight = prop.get("tileheight", Integer.class);
+        mapGrid = getMapGrid();
+        tilePixelGrid = getTilePixelGrid();
 
-        mapSizeX = mapWidth * tilePixelWidth;
-        mapSizeY = mapHeight * tilePixelHeight;
-
+        mapSizeGrid = getMapSizeGrid();
 
 
         //Load A* PF module
@@ -94,16 +89,20 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         actor = new GameActor("trabiastudent_f");
         actor.setPosition(20, 40);
+        actor2 = new GameActor("steampunk_f5");
+        actor2.setPosition(150, 140);
+        actor2.setTouchable(Touchable.enabled);
 
         List<Actor> actorList = new ArrayList<Actor>();
         actorList.add(actor);
+        actorList.add(actor2);
 
         render = new OrthogonalTiledMapRendererWithActorList(map, sb, actorList);
         Gdx.input.setInputProcessor(new GestureDetector(this));
-        bgm = Gdx.audio.newMusic(Gdx.files.internal("Music/blood.mp3"));
-        bgm.play();
 
-        bgm.setLooping(true);
+        bgm = Gdx.audio.newMusic(Gdx.files.internal("Music/blood.mp3"));
+        //bgm.play();
+        //bgm.setLooping(true);
 
     }
 
@@ -128,8 +127,8 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         float cameraY = actor.getY() - (camera.viewportHeight / 2) > 0 ? actor.getY() : camera.viewportHeight / 2;
 
         //restrict h, w side
-        cameraX = actor.getX() + (camera.viewportWidth / 2) > mapSizeX ? mapSizeX - (camera.viewportWidth / 2) : cameraX;
-        cameraY = actor.getY() + (camera.viewportHeight / 2) > mapSizeY ? mapSizeY - (camera.viewportHeight / 2) : cameraY;
+        cameraX = actor.getX() + (camera.viewportWidth / 2) > mapSizeGrid.x ? mapSizeGrid.x - (camera.viewportWidth / 2) : cameraX;
+        cameraY = actor.getY() + (camera.viewportHeight / 2) > mapSizeGrid.y ? mapSizeGrid.y - (camera.viewportHeight / 2) : cameraY;
 
 
         //System.out.println("" + actor.getX() + " / " + camera.viewportWidth / 2 + " " + Gdx.graphics.getWidth());
@@ -183,13 +182,20 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     @Override
     public boolean tap(float x, float y, int count, int button) {
         System.out.println("Touch down invoked : " + x + "," + y + " and times : " + count);
-        //processing moving
-        if (casting == CastingStatus.NO_CASTING) {
-            Vector3 clickCoordinates = new Vector3(x, y, 0);
-            Vector3 position = camera.unproject(clickCoordinates);
 
-            int cellX = (int) (position.x / this.tilePixelWidth);
-            int cellY = (int) (position.y / this.tilePixelHeight);
+        Vector3 clickCoordinates = new Vector3(x, y, 0);
+        Vector3 position = camera.unproject(clickCoordinates);
+
+        if (actor2.hit(position.x-actor2.getX(), position.y-actor2.getY(), true) != null) {
+
+            System.out.println("hit!");
+        //processing moving
+        } else if (casting == CastingStatus.NO_CASTING) {
+            //Vector3 clickCoordinates = new Vector3(x, y, 0);
+            //Vector3 position = camera.unproject(clickCoordinates);
+
+            int cellX = (int) (position.x / this.tilePixelGrid.x);
+            int cellY = (int) (position.y / this.tilePixelGrid.y);
 
             System.out.println("Cell ID : " + cellX + ", " + cellY);
 
@@ -253,5 +259,35 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         NO_CASTING,
         ADJUSTING,
         CASTING
+    }
+
+    private GridPoint2 getMapGrid() {
+        MapProperties prop = map.getProperties();
+        return new GridPoint2(prop.get("width", Integer.class), prop.get("height", Integer.class));
+    }
+
+    private void loadMap() {
+        map = new TmxMapLoader().load("data/Wildness2.tmx");
+    }
+
+    private GridPoint2 getScreenGrid() {
+        return new GridPoint2(screenGird.x == 0 ? Gdx.graphics.getWidth() : screenGird.x,
+                screenGird.y == 0 ? Gdx.graphics.getHeight() : screenGird.y);
+    }
+
+    private void createCamera() {
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, screenGird.x, screenGird.y);
+        //camera.setToOrtho(false);
+        camera.update();
+    }
+
+    private GridPoint2 getTilePixelGrid() {
+        MapProperties prop = map.getProperties();
+        return new GridPoint2(prop.get("tilewidth", Integer.class), prop.get("tileheight", Integer.class));
+    }
+
+    private GridPoint2 getMapSizeGrid() {
+        return new GridPoint2(mapGrid.x * tilePixelGrid.x, mapGrid.y * tilePixelGrid.y);
     }
 }
