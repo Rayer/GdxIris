@@ -99,6 +99,11 @@ project(":core") {
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+
+        // sfl4j is just a facade for loggers. To actually get logging to work, you need to
+        // tie it in with some actual implementation, e.g., logback
+        compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.2'
+        compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.2'
         //compile "com.github.xaguzman:pathfinding:0.2.4-SNAPSHOT"
         //compile "com.github.xaguzman:pathfinding-gdx-bridge:0.2.4-SNAPSHOT"
     }

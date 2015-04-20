@@ -12,10 +12,11 @@ import java.util.List;
 /**
  * Created by Rayer on 1/1/15.
  */
-public class Iris extends ApplicationAdapter implements InputProcessor {
+public class Iris extends ApplicationAdapter {
 
     TiledMap tiledMap;
     Stage stage;
+    InputProcessor inputProcessor;
 
     List<GameActor> actorBaseList = new ArrayList<>();
 
@@ -54,44 +55,6 @@ public class Iris extends ApplicationAdapter implements InputProcessor {
         super.dispose();
     }
 
-    @Override
-    public boolean keyDown(int keycode) {
-        return false;
-    }
 
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
 }
 

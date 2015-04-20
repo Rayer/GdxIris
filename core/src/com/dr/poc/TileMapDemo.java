@@ -18,6 +18,9 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.character.GameActor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.spi.LoggerContextFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +41,8 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     GameActor actor2;
 
     Music bgm;
+
+    Logger logger = LogManager.getLogger(this.getClass());
 
 
     private GridPoint2 screenGird = new GridPoint2(0, 0);
@@ -68,6 +73,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     @Override
     public void create() {
 
+        logger.info("Creating!");
         sb = new SpriteBatch();
 
         screenGird = getScreenGrid();
@@ -226,6 +232,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
+
         return false;
     }
 
@@ -267,7 +274,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     }
 
     private void loadMap() {
-        map = new TmxMapLoader().load("data/Wildness2.tmx");
+        map = new TmxMapLoader().load("data/FlyingDemo.tmx");
     }
 
     private GridPoint2 getScreenGrid() {
