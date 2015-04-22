@@ -1,6 +1,7 @@
 package com.dr.poc.Objects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +45,20 @@ public class ObjectManager {
         logger.info("Bullet added, in list : " + bulletList.size() + " and in recycle list : " + recycleList.size());
         return true;
     }
+
+    public boolean createExpBulletGroup(IBulletSpec spec, int count) {
+
+        for (int i = 0; i < count; ++i) {
+            Vector2 direction = new Vector2(1, 1);
+            direction.setAngle(360.0f / count * i);
+            logger.debug("Angel : " + direction.angle());
+            LinearBulletSpec mb_spec = new LinearBulletSpec(spec.getStart(), direction, 80f);
+            createBulletObject(mb_spec);
+        }
+
+        return true;
+    }
+
 
     public boolean update(float delta) {
         for (int i = 0; i < bulletList.size(); ++i) {

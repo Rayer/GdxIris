@@ -43,12 +43,9 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     Music bgm;
 
     Logger logger = LogManager.getLogger(this.getClass());
-
-
-    private GridPoint2 screenGird = new GridPoint2(0, 0);
     CastingStatus casting = CastingStatus.NO_CASTING;
+    private GridPoint2 screenGird = new GridPoint2(0, 0);
     //Map
-
     private GridPoint2 mapGrid;
 
     private GridPoint2 tilePixelGrid;
@@ -190,9 +187,9 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         Vector3 clickCoordinates = new Vector3(x, y, 0);
         Vector3 position = camera.unproject(clickCoordinates);
+        ObjectManager obm = ObjectManager.getInst();
 
         if (actor2.hit(position.x-actor2.getX(), position.y-actor2.getY(), true) != null) {
-            ObjectManager obm = ObjectManager.getInst();
             Vector2 deltaPos = new Vector2(actor2.getX() - actor.getX(), actor2.getY() - actor.getY());
             obm.createBulletObject(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 10.0f));
 
@@ -211,6 +208,9 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
             //Fix acter speed 200 per second
             float length = (new Vector2(position.x - actor.getX(), position.y - actor.getY())).len();
             actor.addAction(Actions.moveTo(position.x, position.y, length / 200));
+
+            obm.createExpBulletGroup(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), new Vector2(1, 1), 10.0f), 24);
+
         } else {
             casting = CastingStatus.ADJUSTING;
         }
@@ -263,13 +263,6 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         return false;
     }
 
-    //Casting
-    enum CastingStatus {
-        NO_CASTING,
-        ADJUSTING,
-        CASTING
-    }
-
     private GridPoint2 getMapGrid() {
         MapProperties prop = map.getProperties();
         return new GridPoint2(prop.get("width", Integer.class), prop.get("height", Integer.class));
@@ -299,5 +292,12 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     private GridPoint2 getMapSizeGrid() {
         return new GridPoint2(mapGrid.x * tilePixelGrid.x, mapGrid.y * tilePixelGrid.y);
+    }
+
+    //Casting
+    enum CastingStatus {
+        NO_CASTING,
+        ADJUSTING,
+        CASTING
     }
 }
