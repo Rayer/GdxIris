@@ -14,6 +14,12 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
+//    idea {
+//        project {
+//            languageLevel = '1.8'
+//        }
+//    }
+
     version = '1.0'
     ext {
         appName = 'Iris POC'
@@ -95,6 +101,8 @@ project(":html") {
 project(":core") {
     apply plugin: "java"
 
+    sourceCompatibility= "1.7"
+    targetCompatibility= "1.7"
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -104,8 +112,11 @@ project(":core") {
         // tie it in with some actual implementation, e.g., logback
         compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.2'
         compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.2'
-        //compile "com.github.xaguzman:pathfinding:0.2.4-SNAPSHOT"
-        //compile "com.github.xaguzman:pathfinding-gdx-bridge:0.2.4-SNAPSHOT"
+        //https://oss.sonatype.org/content/repositories/releases/com/github/xaguzman/pathfinding-gdx-bridge/0.2.5/
+        compile "com.github.xaguzman:pathfinding:0.2.5"
+        //compile "com.github.xaguzman:pathfinding-gdx-bridge:0.2.5"
+        //compile group: 'com.github.xaguzman', name: 'pathfinding', version: '0.2.5'
+        //compile group: 'com.github.xaguzman', name: 'pathfinding-gdx-bridge', version: '0.2.5'
     }
 }
 

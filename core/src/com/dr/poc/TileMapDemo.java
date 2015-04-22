@@ -137,10 +137,6 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         cameraY = actor.getY() + (camera.viewportHeight / 2) > mapSizeGrid.y ? mapSizeGrid.y - (camera.viewportHeight / 2) : cameraY;
 
 
-        //System.out.println("" + actor.getX() + " / " + camera.viewportWidth / 2 + " " + Gdx.graphics.getWidth());
-
-        //camera.position.set(cameraX, cameraY, 0);
-        //System.out.println("Camera is set to : ( " + cameraX + ", " + cameraY + ")");
         moveCamera(camera_shift);
         camera.update();
 
@@ -187,14 +183,14 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        System.out.println("Touch down invoked : " + x + "," + y + " and times : " + count);
+        logger.info("Touch down invoked : " + x + "," + y + " and times : " + count);
 
         Vector3 clickCoordinates = new Vector3(x, y, 0);
         Vector3 position = camera.unproject(clickCoordinates);
 
         if (actor2.hit(position.x-actor2.getX(), position.y-actor2.getY(), true) != null) {
 
-            System.out.println("hit!");
+            logger.info("hit!");
         //processing moving
         } else if (casting == CastingStatus.NO_CASTING) {
             //Vector3 clickCoordinates = new Vector3(x, y, 0);
@@ -203,7 +199,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
             int cellX = (int) (position.x / this.tilePixelGrid.x);
             int cellY = (int) (position.y / this.tilePixelGrid.y);
 
-            System.out.println("Cell ID : " + cellX + ", " + cellY);
+            logger.info("Cell ID : " + cellX + ", " + cellY);
 
             actor.clearActions();
             //Fix acter speed 200 per second
@@ -225,7 +221,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         actor.clearActions();
 
         casting = CastingStatus.ADJUSTING;
-        System.out.println("longpress invoked : " + position.x + "," + position.y);
+        logger.info("longpress invoked : " + position.x + "," + position.y);
 
         return false;
     }
@@ -239,7 +235,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         if (casting == CastingStatus.ADJUSTING) {
-            System.out.println("Start casting!");
+            logger.info("Start casting!");
             //casting = CastingStatus.CASTING;
             casting = CastingStatus.NO_CASTING;
         }

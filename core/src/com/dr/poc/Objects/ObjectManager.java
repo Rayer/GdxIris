@@ -10,5 +10,8 @@ public class ObjectManager {
     List<Bullet> bulletList = new ArrayList<>();
 
 
+    boolean createBulletObject(IBulletSpec spec) {
+        return true;
+    }
 
 }
