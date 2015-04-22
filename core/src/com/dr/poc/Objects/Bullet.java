@@ -14,11 +14,10 @@ import com.badlogic.gdx.utils.Disposable;
 public class Bullet implements Disposable {
 
     Sprite bulletSpirte;
-    //static Pixmap pixmap;
     static Texture dynTexture;
 
     Vector2 direction;
-    float speed = 5.0f;
+    float speed = 60.0f;
 
     public Bullet() {
         if(dynTexture == null) {

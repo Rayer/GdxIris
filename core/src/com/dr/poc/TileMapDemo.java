@@ -129,12 +129,12 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         //Camera.y - viewPort.height must > 0, or just set to 0
 
         //restrict 0, 0 side
-        float cameraX = actor.getX() - (camera.viewportWidth / 2) > 0 ? actor.getX() : camera.viewportWidth / 2;
-        float cameraY = actor.getY() - (camera.viewportHeight / 2) > 0 ? actor.getY() : camera.viewportHeight / 2;
+        //float cameraX = actor.getX() - (camera.viewportWidth / 2) > 0 ? actor.getX() : camera.viewportWidth / 2;
+        //float cameraY = actor.getY() - (camera.viewportHeight / 2) > 0 ? actor.getY() : camera.viewportHeight / 2;
 
         //restrict h, w side
-        cameraX = actor.getX() + (camera.viewportWidth / 2) > mapSizeGrid.x ? mapSizeGrid.x - (camera.viewportWidth / 2) : cameraX;
-        cameraY = actor.getY() + (camera.viewportHeight / 2) > mapSizeGrid.y ? mapSizeGrid.y - (camera.viewportHeight / 2) : cameraY;
+        //cameraX = actor.getX() + (camera.viewportWidth / 2) > mapSizeGrid.x ? mapSizeGrid.x - (camera.viewportWidth / 2) : cameraX;
+        //cameraY = actor.getY() + (camera.viewportHeight / 2) > mapSizeGrid.y ? mapSizeGrid.y - (camera.viewportHeight / 2) : cameraY;
 
 
         moveCamera(camera_shift);
@@ -145,9 +145,6 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         render.setView(camera);
         render.render(delta);
 
-        sb.begin();
-        ObjectManager.getInst().draw(sb);
-        sb.end();
 
 
     }
@@ -196,7 +193,8 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         if (actor2.hit(position.x-actor2.getX(), position.y-actor2.getY(), true) != null) {
             ObjectManager obm = ObjectManager.getInst();
-            obm.createBulletObject(new LinearBulletSpec(new Vector2(position.x, position.y), new Vector2(2, 2), 5.0f));
+            Vector2 deltaPos = new Vector2(actor2.getX() - actor.getX(), actor2.getY() - actor.getY());
+            obm.createBulletObject(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 10.0f));
 
             logger.info("hit!");
         //processing moving

@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.dr.poc.Objects.ObjectManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +35,8 @@ public class OrthogonalTiledMapRendererWithActorList extends OrthogonalTiledMapR
         }
 
         renderTileLayer((TiledMapTileLayer) layers.get("Decoration"));
+        ObjectManager.getInst().render(batch);
+
         endRender();
     }
 }

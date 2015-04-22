@@ -47,7 +47,7 @@ public class ObjectManager {
         return true;
     }
 
-    public void draw(Batch batch) {
+    public void render(Batch batch) {
         for(Bullet b : bulletList) {
             b.draw(batch);
         }
