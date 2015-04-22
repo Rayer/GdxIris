@@ -18,6 +18,8 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.character.GameActor;
+import com.dr.poc.Objects.LinearBulletSpec;
+import com.dr.poc.Objects.ObjectManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.spi.LoggerContextFactory;
@@ -139,6 +141,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         moveCamera(camera_shift);
         camera.update();
+        ObjectManager.getInst().update(delta);
 
         //moveCamera(camera_shift);
         render.setView(camera);
@@ -189,6 +192,8 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         Vector3 position = camera.unproject(clickCoordinates);
 
         if (actor2.hit(position.x-actor2.getX(), position.y-actor2.getY(), true) != null) {
+            ObjectManager obm = ObjectManager.getInst();
+            obm.createBulletObject(new LinearBulletSpec(new Vector2(position.x, position.y), new Vector2(2, 2), 5.0f));
 
             logger.info("hit!");
         //processing moving
@@ -283,6 +288,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         camera.setToOrtho(false, screenGird.x, screenGird.y);
         //camera.setToOrtho(false);
         camera.update();
+
     }
 
     private GridPoint2 getTilePixelGrid() {

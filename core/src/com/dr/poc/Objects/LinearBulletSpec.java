@@ -8,10 +8,12 @@ import com.badlogic.gdx.math.Vector2;
 public class LinearBulletSpec implements IBulletSpec {
 
     Vector2 start;
-    Vector2 end;
+    Vector2 direction;
 
-    LinearBulletSpec(Vector2 start, Vector2 direction, float velocity) {
 
+    public LinearBulletSpec(Vector2 start, Vector2 direction, float velocity) {
+        this.start = start;
+        this.direction = direction;
     }
 
     @Override
@@ -21,12 +23,12 @@ public class LinearBulletSpec implements IBulletSpec {
 
     @Override
     public Vector2 getDirection() {
-        return null;
+        return direction;
     }
 
     @Override
     public Vector2 getStart() {
-        return null;
+        return start;
     }
 
 

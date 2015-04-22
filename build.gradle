@@ -14,6 +14,7 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
+    //Seems these features are not supported in Gradle 2.2
 //    idea {
 //        project {
 //            languageLevel = '1.8'
