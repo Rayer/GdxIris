@@ -13,11 +13,11 @@ import com.badlogic.gdx.utils.Disposable;
  */
 public class Bullet implements Disposable {
 
-    Sprite bulletSpirte;
     static Texture dynTexture;
-
+    Sprite bulletSpirte;
     Vector2 direction;
-    float speed = 60.0f;
+    float speed = 80.0f;
+    float ttl = 5.0f; //max life time is 5 sec
 
     public Bullet() {
         if(dynTexture == null) {
@@ -39,7 +39,17 @@ public class Bullet implements Disposable {
         direction = dir.nor();
     }
 
+    void setTtl(float ttl) {
+        this.ttl = ttl;
+    }
+
+    void reinit() {
+
+    }
     boolean update(float delta) {
+
+        ttl -= delta;
+        if (ttl < 0) return false;
 
         //TODO: Use primitive type like float x, float y, to avoid rapidly new object.
         Vector2 pos = new Vector2(bulletSpirte.getX(), bulletSpirte.getY());

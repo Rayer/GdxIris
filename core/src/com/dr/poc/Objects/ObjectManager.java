@@ -12,13 +12,15 @@ import java.util.List;
  */
 public class ObjectManager {
 
+    static private ObjectManager inst;
     Logger logger = LogManager.getLogger(ObjectManager.class);
+    List<Bullet> bulletList = new ArrayList<>();
+    List<Bullet> recycleList = new ArrayList<>();
 
     private ObjectManager() {
 
     }
 
-    static private ObjectManager inst;
     static public ObjectManager getInst() {
         if(inst == null)
             inst = new ObjectManager();
@@ -26,23 +28,30 @@ public class ObjectManager {
         return inst;
     }
 
-    List<Bullet> bulletList = new ArrayList<>();
+    private Bullet getBullet() {
+        return recycleList.isEmpty() ? new Bullet() : recycleList.remove(recycleList.size() - 1);
+    }
 
 
     public boolean createBulletObject(IBulletSpec spec) {
-        Bullet b = new Bullet();
+        Bullet b = getBullet();
 
         b.setInitPosition(spec.getStart());
         b.setDirection(spec.getDirection());
+        b.setTtl(spec.getMaxTTL());
 
         bulletList.add(b);
-        logger.info("Bullet added, in list : " + bulletList.size());
+        logger.info("Bullet added, in list : " + bulletList.size() + " and in recycle list : " + recycleList.size());
         return true;
     }
 
     public boolean update(float delta) {
-        for(Bullet b : bulletList) {
-            b.update(delta);
+        for (int i = 0; i < bulletList.size(); ++i) {
+            Bullet b = bulletList.get(i);
+            if (b.update(delta) == false) {
+                bulletList.remove(i);
+                recycleList.add(b);
+            }
         }
         return true;
     }

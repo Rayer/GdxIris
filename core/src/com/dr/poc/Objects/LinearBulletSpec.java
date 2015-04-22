@@ -18,7 +18,7 @@ public class LinearBulletSpec implements IBulletSpec {
 
     @Override
     public long getMaxTTL() {
-        return 2000;
+        return 5;
     }
 
     @Override
