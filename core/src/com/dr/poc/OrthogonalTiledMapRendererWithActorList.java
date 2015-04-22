@@ -33,7 +33,6 @@ public class OrthogonalTiledMapRendererWithActorList extends OrthogonalTiledMapR
             actor.draw(batch, 1);
         }
 
-
         renderTileLayer((TiledMapTileLayer) layers.get("Decoration"));
         endRender();
     }

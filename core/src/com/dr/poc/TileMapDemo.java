@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.character.GameActor;
@@ -22,7 +21,6 @@ import com.dr.poc.Objects.LinearBulletSpec;
 import com.dr.poc.Objects.ObjectManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.spi.LoggerContextFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +144,11 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         //moveCamera(camera_shift);
         render.setView(camera);
         render.render(delta);
+
+        sb.begin();
+        ObjectManager.getInst().draw(sb);
+        sb.end();
+
 
     }
 

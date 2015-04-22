@@ -1,5 +1,6 @@
 package com.dr.poc.Objects;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -44,6 +45,12 @@ public class ObjectManager {
             b.update(delta);
         }
         return true;
+    }
+
+    public void draw(Batch batch) {
+        for(Bullet b : bulletList) {
+            b.draw(batch);
+        }
     }
 
 }
