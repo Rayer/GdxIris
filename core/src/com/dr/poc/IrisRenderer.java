@@ -14,11 +14,11 @@ import java.util.List;
 /**
  * Created by Rayer on 1/1/15.
  */
-public class OrthogonalTiledMapRendererWithActorList extends OrthogonalTiledMapRenderer {
+public class IrisRenderer extends OrthogonalTiledMapRenderer {
 
     List<Actor> actorList = new ArrayList<>();
 
-    public OrthogonalTiledMapRendererWithActorList(TiledMap map, Batch batch, List<Actor> actorList) {
+    public IrisRenderer(TiledMap map, Batch batch, List<Actor> actorList) {
         super(map, batch);
         this.actorList = actorList;
     }
@@ -35,6 +35,8 @@ public class OrthogonalTiledMapRendererWithActorList extends OrthogonalTiledMapR
         }
 
         renderTileLayer((TiledMapTileLayer) layers.get("Decoration"));
+
+
         ObjectManager.getInst().render(batch);
 
         endRender();

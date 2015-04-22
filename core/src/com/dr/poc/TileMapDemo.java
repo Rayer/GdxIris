@@ -32,7 +32,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     TiledMap map;
     OrthographicCamera camera;
-    OrthogonalTiledMapRendererWithActorList render;
+    IrisRenderer render;
     SpriteBatch sb;
 
     float elapsed = 0;
@@ -100,7 +100,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         actorList.add(actor);
         actorList.add(actor2);
 
-        render = new OrthogonalTiledMapRendererWithActorList(map, sb, actorList);
+        render = new IrisRenderer(map, sb, actorList);
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Music/blood.mp3"));

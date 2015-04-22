@@ -51,7 +51,6 @@ public class ObjectManager {
         for (int i = 0; i < count; ++i) {
             Vector2 direction = new Vector2(1, 1);
             direction.setAngle(360.0f / count * i);
-            logger.debug("Angel : " + direction.angle());
             LinearBulletSpec mb_spec = new LinearBulletSpec(spec.getStart(), direction, 80f);
             createBulletObject(mb_spec);
         }
