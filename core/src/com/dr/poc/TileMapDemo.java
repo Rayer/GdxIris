@@ -191,7 +191,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         if (actor2.hit(position.x-actor2.getX(), position.y-actor2.getY(), true) != null) {
             Vector2 deltaPos = new Vector2(actor2.getX() - actor.getX(), actor2.getY() - actor.getY());
-            obm.createBulletObject(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 10.0f));
+            obm.createBulletObject(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 80.0f, 10.0f));
 
             logger.info("hit!");
         //processing moving
@@ -209,7 +209,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
             float length = (new Vector2(position.x - actor.getX(), position.y - actor.getY())).len();
             actor.addAction(Actions.moveTo(position.x, position.y, length / 200));
 
-            obm.createExpBulletGroup(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), new Vector2(1, 1), 10.0f), 24);
+            obm.createExpBulletGroup(new Vector2(actor.getX(), actor.getY()), 80.0f, 60);
 
         } else {
             casting = CastingStatus.ADJUSTING;

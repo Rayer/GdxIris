@@ -37,21 +37,20 @@ public class ObjectManager {
     public boolean createBulletObject(IBulletSpec spec) {
         Bullet b = getBullet();
 
-        b.setInitPosition(spec.getStart());
-        b.setDirection(spec.getDirection());
-        b.setTtl(spec.getMaxTTL());
+        b.setSpec(spec);
 
         bulletList.add(b);
         logger.info("Bullet added, in list : " + bulletList.size() + " and in recycle list : " + recycleList.size());
         return true;
     }
 
-    public boolean createExpBulletGroup(IBulletSpec spec, int count) {
+    public boolean createExpBulletGroup(Vector2 pos, float speed, int count) {
 
         for (int i = 0; i < count; ++i) {
             Vector2 direction = new Vector2(1, 1);
             direction.setAngle(360.0f / count * i);
-            LinearBulletSpec mb_spec = new LinearBulletSpec(spec.getStart(), direction, 80f);
+            LinearBulletSpec mb_spec = new LinearBulletSpec(pos, direction, speed, 6.0f);
+            logger.debug("Spec : " + mb_spec);
             createBulletObject(mb_spec);
         }
 

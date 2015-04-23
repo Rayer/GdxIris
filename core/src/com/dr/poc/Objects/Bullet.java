@@ -19,6 +19,8 @@ public class Bullet implements Disposable {
     float speed = 80.0f;
     float ttl = 5.0f; //max life time is 5 sec
 
+    IBulletSpec spec;
+
     public Bullet() {
         if(dynTexture == null) {
             //create pixmap
@@ -31,30 +33,19 @@ public class Bullet implements Disposable {
         bulletSpirte = new Sprite(dynTexture);
     }
 
-    void setInitPosition(Vector2 position) {
-        bulletSpirte.setPosition(position.x, position.y);
+    public void setSpec(IBulletSpec spec) {
+        this.spec = spec;
     }
 
-    void setDirection(Vector2 dir) {
-        direction = dir.nor();
-    }
 
-    void setTtl(float ttl) {
-        this.ttl = ttl;
-    }
 
-    void reinit() {
-
-    }
     boolean update(float delta) {
 
-        ttl -= delta;
-        if (ttl < 0) return false;
 
         //TODO: Use primitive type like float x, float y, to avoid rapidly new object.
-        Vector2 pos = new Vector2(bulletSpirte.getX(), bulletSpirte.getY());
-        pos.add(direction.x * delta * speed, direction.y * delta * speed);
-        bulletSpirte.setPosition(pos.x, pos.y);
+        if (spec.update(delta) == false) return false;
+
+        bulletSpirte.setPosition(spec.getCurPos().x, spec.getCurPos().y);
         return true;
     }
 
