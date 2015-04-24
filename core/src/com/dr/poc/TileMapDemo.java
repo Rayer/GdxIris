@@ -17,7 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.character.GameActor;
-import com.dr.poc.Objects.LinearBulletSpec;
+import com.dr.poc.Objects.CircularBulletSpec;
 import com.dr.poc.Objects.ObjectManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -96,7 +96,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         actor2.setPosition(150, 140);
         actor2.setTouchable(Touchable.enabled);
 
-        List<Actor> actorList = new ArrayList<Actor>();
+        List<Actor> actorList = new ArrayList<>();
         actorList.add(actor);
         actorList.add(actor2);
 
@@ -191,7 +191,8 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         if (actor2.hit(position.x-actor2.getX(), position.y-actor2.getY(), true) != null) {
             Vector2 deltaPos = new Vector2(actor2.getX() - actor.getX(), actor2.getY() - actor.getY());
-            obm.createBulletObject(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 80.0f, 10.0f));
+            //obm.createBulletObject(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 80.0f, 10.0f));
+            obm.createBulletObject(new CircularBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 80, 180, 3.0f, 10.0f));
 
             logger.info("hit!");
         //processing moving

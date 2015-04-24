@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
  * Created by Rayer on 4/22/15.
  * This file describes LinearBulletSpec, which will cause bullet go stright
  */
-public class LinearBulletSpec implements IBulletSpec {
+public class LinearBulletSpec implements BulletSpec {
 
     Vector2 pos;
     Vector2 velocity;

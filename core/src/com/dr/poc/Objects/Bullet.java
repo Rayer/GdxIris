@@ -19,7 +19,7 @@ public class Bullet implements Disposable {
     float speed = 80.0f;
     float ttl = 5.0f; //max life time is 5 sec
 
-    IBulletSpec spec;
+    BulletSpec spec;
 
     public Bullet() {
         if(dynTexture == null) {
@@ -33,7 +33,7 @@ public class Bullet implements Disposable {
         bulletSpirte = new Sprite(dynTexture);
     }
 
-    public void setSpec(IBulletSpec spec) {
+    public void setSpec(BulletSpec spec) {
         this.spec = spec;
     }
 

@@ -34,13 +34,13 @@ public class ObjectManager {
     }
 
 
-    public boolean createBulletObject(IBulletSpec spec) {
+    public boolean createBulletObject(BulletSpec spec) {
         Bullet b = getBullet();
 
         b.setSpec(spec);
 
         bulletList.add(b);
-        logger.info("Bullet added, in list : " + bulletList.size() + " and in recycle list : " + recycleList.size());
+        //logger.info("Bullet added, in list : " + bulletList.size() + " and in recycle list : " + recycleList.size());
         return true;
     }
 
@@ -49,8 +49,9 @@ public class ObjectManager {
         for (int i = 0; i < count; ++i) {
             Vector2 direction = new Vector2(1, 1);
             direction.setAngle(360.0f / count * i);
-            LinearBulletSpec mb_spec = new LinearBulletSpec(pos, direction, speed, 6.0f);
-            logger.debug("Spec : " + mb_spec);
+            //LinearBulletSpec mb_spec = new LinearBulletSpec(pos, direction, speed, 6.0f);
+            BulletSpec mb_spec = new CircularBulletSpec(pos, direction, speed, 360, 5, 6);
+            //logger.debug("Spec : " + mb_spec);
             createBulletObject(mb_spec);
         }
 
