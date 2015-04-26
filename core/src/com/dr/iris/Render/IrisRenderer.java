@@ -1,26 +1,19 @@
-package com.dr.poc;
+package com.dr.iris.Render;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.dr.poc.Objects.ObjectManager;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.dr.iris.Objects.ObjectManager;
 
 /**
  * Created by Rayer on 1/1/15.
  */
 public class IrisRenderer extends OrthogonalTiledMapRenderer {
 
-    List<Actor> actorList = new ArrayList<>();
-
-    public IrisRenderer(TiledMap map, Batch batch, List<Actor> actorList) {
+    public IrisRenderer(TiledMap map, Batch batch) {
         super(map, batch);
-        this.actorList = actorList;
     }
 
     public void render(float delta) {
@@ -29,15 +22,11 @@ public class IrisRenderer extends OrthogonalTiledMapRenderer {
         MapLayers layers = map.getLayers();
         renderTileLayer((TiledMapTileLayer) layers.get("Ground"));
 
-        for (Actor actor : actorList) {
-            actor.act(delta);
-            actor.draw(batch, 1);
-        }
+        ObjectManager.getInst().render(batch);
 
         renderTileLayer((TiledMapTileLayer) layers.get("Decoration"));
 
 
-        ObjectManager.getInst().render(batch);
 
         endRender();
     }

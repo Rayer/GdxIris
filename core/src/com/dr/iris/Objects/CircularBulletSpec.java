@@ -1,4 +1,4 @@
-package com.dr.poc.Objects;
+package com.dr.iris.Objects;
 
 import com.badlogic.gdx.math.Vector2;
 import org.apache.logging.log4j.LogManager;

@@ -224,7 +224,7 @@ public class SceneDemo implements ApplicationListener, GestureDetector.GestureLi
     public void create() {
         sb = new SpriteBatch();
         CellMapManager mgr = CellMapManager.getInst();
-        mgr.init(150, 150, 10);
+        mgr.init(150, 150, 50);
         Gdx.input.setInputProcessor(new GestureDetector(this));
     }
 

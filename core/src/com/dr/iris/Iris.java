@@ -2,24 +2,26 @@ package com.dr.iris;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.graphics.Camera;
+import com.dr.iris.Objects.ObjectManager;
+import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Rayer on 1/1/15.
  */
 public class Iris extends ApplicationAdapter {
 
-    TiledMap tiledMap;
-    Stage stage;
+    //TiledMap tiledMap;
     InputProcessor inputProcessor;
+    IrisRenderer renderer;
+    Camera camera;
 
-    List<GameActor> actorBaseList = new ArrayList<>();
+    GameActor mainActor;
 
+
+    ObjectManager objectManager;
 
     public Iris() {
         super();
@@ -27,6 +29,12 @@ public class Iris extends ApplicationAdapter {
 
     @Override
     public void create() {
+
+        //mainActor = new GameActor("trabiastudent_f");
+        //mainActor.setPosition(20, 40);
+        mainActor = objectManager.createActor("trabiastudent_f");
+        mainActor.setPosition(20, 40);
+
         super.create();
     }
 
@@ -37,6 +45,7 @@ public class Iris extends ApplicationAdapter {
 
     @Override
     public void render() {
+
         super.render();
     }
 

@@ -34,6 +34,8 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
 
     String name;
 
+    boolean isDebug = false;
+
     //for debugging
     BitmapFont font;
     Texture debugTexture;
@@ -115,8 +117,10 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(debugTexture, getX(), getY());
-        font.draw(batch, name, getX(), getY());
+        if(isDebug) {
+            batch.draw(debugTexture, getX(), getY());
+            font.draw(batch, name, getX(), getY());
+        }
         elapsedTime += parentAlpha;
         batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), getX(), getY());
     }

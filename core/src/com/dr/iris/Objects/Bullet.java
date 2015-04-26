@@ -1,4 +1,4 @@
-package com.dr.poc.Objects;
+package com.dr.iris.Objects;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;

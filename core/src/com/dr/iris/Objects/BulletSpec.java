@@ -1,4 +1,4 @@
-package com.dr.poc.Objects;
+package com.dr.iris.Objects;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -8,8 +8,6 @@ import com.badlogic.gdx.math.Vector2;
  */
 public interface BulletSpec {
     boolean isAlive();
-
     boolean update(float delta);
-
     Vector2 getCurPos();
 }

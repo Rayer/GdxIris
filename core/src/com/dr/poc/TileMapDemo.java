@@ -16,14 +16,12 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.dr.iris.Objects.CircularBulletSpec;
+import com.dr.iris.Objects.ObjectManager;
+import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
-import com.dr.poc.Objects.CircularBulletSpec;
-import com.dr.poc.Objects.ObjectManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Rayer on 12/31/14.
@@ -51,6 +49,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     private GridPoint2 tilePixelGrid;
 
     private GridPoint2 mapSizeGrid;
+
 
     public TileMapDemo() {
     }
@@ -89,18 +88,15 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         //Load A* PF module
         //nav = (NavigationTiledMapLayer)map.getLayers().get("Navigation");
 
+        ObjectManager objectManager = ObjectManager.getInst();
 
-        actor = new GameActor("trabiastudent_f");
+        actor = objectManager.createActor("trabiastudent_f");
         actor.setPosition(20, 40);
-        actor2 = new GameActor("steampunk_f5");
+        actor2 = objectManager.createActor("steampunk_f5");
         actor2.setPosition(150, 140);
         actor2.setTouchable(Touchable.enabled);
 
-        List<Actor> actorList = new ArrayList<>();
-        actorList.add(actor);
-        actorList.add(actor2);
-
-        render = new IrisRenderer(map, sb, actorList);
+        render = new IrisRenderer(map, sb);
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
         bgm = Gdx.audio.newMusic(Gdx.files.internal("Music/blood.mp3"));
@@ -148,7 +144,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     private void moveCamera(Vector3 moveVector) {
         camera.position.add(moveVector);
-        for(Actor actor : render.actorList) {
+        for(Actor actor : ObjectManager.getInst().getActorList()) {
             actor.moveBy(moveVector.x, moveVector.y);
         }
     }
@@ -169,9 +165,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         map.dispose();
         render.dispose();
         sb.dispose();
-
         actor.dispose();
-
         bgm.dispose();
     }
 

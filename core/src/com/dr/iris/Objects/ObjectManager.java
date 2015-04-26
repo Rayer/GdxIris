@@ -1,7 +1,8 @@
-package com.dr.poc.Objects;
+package com.dr.iris.Objects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
+import com.dr.iris.character.GameActor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,6 +18,8 @@ public class ObjectManager {
     Logger logger = LogManager.getLogger(ObjectManager.class);
     List<Bullet> bulletList = new ArrayList<>();
     List<Bullet> recycleList = new ArrayList<>();
+
+    List<GameActor> gameActorList = new ArrayList<>();
 
     private ObjectManager() {
 
@@ -40,7 +43,6 @@ public class ObjectManager {
         b.setSpec(spec);
 
         bulletList.add(b);
-        //logger.info("Bullet added, in list : " + bulletList.size() + " and in recycle list : " + recycleList.size());
         return true;
     }
 
@@ -67,6 +69,10 @@ public class ObjectManager {
                 recycleList.add(b);
             }
         }
+
+        for(GameActor a : gameActorList) {
+            a.act(delta);
+        }
         return true;
     }
 
@@ -74,6 +80,19 @@ public class ObjectManager {
         for(Bullet b : bulletList) {
             b.draw(batch);
         }
+
+        for(GameActor a : gameActorList) {
+            a.draw(batch, 1);
+        }
     }
 
+    public GameActor createActor(String actorAtlas) {
+        GameActor actor = new GameActor(actorAtlas);
+        gameActorList.add(actor);
+        return actor;
+    }
+
+    public List<GameActor> getActorList() {
+        return gameActorList;
+    }
 }
