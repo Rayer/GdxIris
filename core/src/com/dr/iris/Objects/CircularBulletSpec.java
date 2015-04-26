@@ -16,6 +16,8 @@ public class CircularBulletSpec implements BulletSpec {
     float currentAngel = 0;
     float circularSize = 5;
 
+    Object from;
+
     Logger logger = LogManager.getLogger(CircularBulletSpec.class);
     boolean isAlive = false;
 
@@ -24,11 +26,14 @@ public class CircularBulletSpec implements BulletSpec {
     }
 
 
+
     public CircularBulletSpec(Vector2 pos, Vector2 direction, float speed, float angelPerSec, float circularSize, float ttl) {
         direction = direction.nor();
         direction.setLength(speed);
         setSpec(pos, direction, angelPerSec, circularSize, ttl);
     }
+
+
 
     private void setSpec(Vector2 pos, Vector2 velocity, float angelPerSec, float circularSize, float ttl) {
         this.ttl = ttl;
@@ -72,4 +77,16 @@ public class CircularBulletSpec implements BulletSpec {
     public Vector2 getCurPos() {
         return pos;
     }
+
+    @Override
+    public Object getFrom() {
+        return from;
+    }
+
+
+    @Override
+    public void setFrom(Object object) {
+        from = object;
+    }
+
 }

@@ -26,8 +26,6 @@ public class IrisRenderer extends OrthogonalTiledMapRenderer {
 
         renderTileLayer((TiledMapTileLayer) layers.get("Decoration"));
 
-
-
         endRender();
     }
 }

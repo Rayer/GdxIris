@@ -7,7 +7,11 @@ import com.badlogic.gdx.math.Vector2;
  * This Bullet Spec defines movement of Bullet
  */
 public interface BulletSpec {
+
+
     boolean isAlive();
     boolean update(float delta);
     Vector2 getCurPos();
+    Object getFrom();
+    void setFrom(Object object);
 }

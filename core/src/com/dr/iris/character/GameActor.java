@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Disposable;
+import com.dr.iris.Objects.BulletSpec;
 
 
 /**
@@ -34,13 +35,17 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
 
     String name;
 
-    boolean isDebug = false;
+    int health;
+
+    public static boolean isDebug = false;
 
     //for debugging
     BitmapFont font;
     Texture debugTexture;
 
     Vector2 lastPos;
+
+    int debugFrameOffset = 10;
 
     public GameActor(String characterName) {
 
@@ -68,10 +73,11 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         TextureRegion tr = currentAnimation.getKeyFrame(0);
         Pixmap pixmap = new Pixmap(tr.getRegionWidth(), tr.getRegionHeight(), Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.YELLOW);
-        pixmap.drawRectangle(0, 0, tr.getRegionWidth(), tr.getRegionHeight());
+        pixmap.drawRectangle(0 - debugFrameOffset, 0 - debugFrameOffset, tr.getRegionWidth() + debugFrameOffset, tr.getRegionHeight() + debugFrameOffset);
         debugTexture = new Texture(pixmap);
         pixmap.dispose();
 
+        health = 100;
 
     }
 
@@ -81,6 +87,10 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         //update current facing
         updateCurrentFacing();
 
+    }
+
+    public boolean isAlive() {
+        return health > 0;
     }
 
     private void updateCurrentFacing() {
@@ -119,7 +129,7 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         super.draw(batch, parentAlpha);
         if(isDebug) {
             batch.draw(debugTexture, getX(), getY());
-            font.draw(batch, name, getX(), getY());
+            font.draw(batch, name + " : " + health, getX(), getY());
         }
         elapsedTime += parentAlpha;
         batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), getX(), getY());
@@ -132,5 +142,29 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         charRenderInfo.dispose();
         debugTexture.dispose();
 
+    }
+
+    public boolean isHit(float x, float y) {
+        float x1 = getX();
+        float x2 = getX() + getHeight();
+        float y1 = getY();
+        float y2 = getY() + getWidth();
+
+        return (x > x1 && x < x2) && (y > y1 && y < y2);
+
+    }
+
+    public boolean isHitDebugFrame(float x, float y) {
+        float x1 = getX() - debugFrameOffset;
+        float x2 = getX() + getHeight() + debugFrameOffset;
+        float y1 = getY() - debugFrameOffset;
+        float y2 = getY() + getWidth() + debugFrameOffset;
+
+        return (x > x1 && x < x2) && (y > y1 && y < y2);
+
+    }
+
+    public void getHit(BulletSpec spec) {
+        health--;
     }
 }

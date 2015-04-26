@@ -3,6 +3,7 @@ package com.dr.iris.Objects;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.dr.iris.character.GameActor;
+import com.dr.iris.character.SimpleEnemyActor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,6 +21,7 @@ public class ObjectManager {
     List<Bullet> recycleList = new ArrayList<>();
 
     List<GameActor> gameActorList = new ArrayList<>();
+
 
     private ObjectManager() {
 
@@ -39,21 +41,18 @@ public class ObjectManager {
 
     public boolean createBulletObject(BulletSpec spec) {
         Bullet b = getBullet();
-
         b.setSpec(spec);
-
         bulletList.add(b);
         return true;
     }
 
-    public boolean createExpBulletGroup(Vector2 pos, float speed, int count) {
+    public boolean createExpBulletGroup(Vector2 pos, float speed, int count, Object from) {
 
         for (int i = 0; i < count; ++i) {
             Vector2 direction = new Vector2(1, 1);
             direction.setAngle(360.0f / count * i);
-            //LinearBulletSpec mb_spec = new LinearBulletSpec(pos, direction, speed, 6.0f);
-            BulletSpec mb_spec = new CircularBulletSpec(pos, direction, speed, 360, 5, 6);
-            //logger.debug("Spec : " + mb_spec);
+            LinearBulletSpec mb_spec = new LinearBulletSpec(pos, direction, speed, 6.0f);
+            mb_spec.setFrom(from);
             createBulletObject(mb_spec);
         }
 
@@ -88,6 +87,12 @@ public class ObjectManager {
 
     public GameActor createActor(String actorAtlas) {
         GameActor actor = new GameActor(actorAtlas);
+        gameActorList.add(actor);
+        return actor;
+    }
+
+    public GameActor createEnemyActor(String actorAtlas) {
+        GameActor actor = new SimpleEnemyActor(actorAtlas);
         gameActorList.add(actor);
         return actor;
     }

@@ -6,18 +6,25 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.dr.iris.Objects.LinearBulletSpec;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 /**
  * Created by Rayer on 1/1/15.
  */
-public class Iris extends ApplicationAdapter {
+public class Iris extends ApplicationAdapter implements GestureDetector.GestureListener {
 
     TiledMap map;
     InputProcessor inputProcessor;
@@ -27,6 +34,9 @@ public class Iris extends ApplicationAdapter {
     GridPoint2 screenGrid = new GridPoint2();
 
     GameActor mainActor;
+    GameActor enemyActor;
+
+    Logger logger = LogManager.getLogger(Iris.class);
 
 
     ObjectManager objectManager = ObjectManager.getInst();
@@ -35,26 +45,35 @@ public class Iris extends ApplicationAdapter {
         super();
     }
 
+    public Iris(int x, int y) {
+        screenGrid.set(x, y);
+    }
+
+
     @Override
     public void create() {
 
         sb = new SpriteBatch();
         map = new TmxMapLoader().load("data/Wildness2.tmx");
         renderer = new IrisRenderer(map, sb);
+        Gdx.input.setInputProcessor(new GestureDetector(this));
 
+
+        setupCamera();
+        GameActor.isDebug = true;
+
+        mainActor = objectManager.createActor("trabiastudent_f");
+        mainActor.setPosition(20, 40);
+        enemyActor = objectManager.createEnemyActor("steampunk_f9");
+
+        super.create();
+    }
+
+    private void setupCamera() {
         screenGrid = getScreenGrid();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, screenGrid.x, screenGrid.y);
-        //camera.setToOrtho(false);
         camera.update();
-
-        //mainActor = new GameActor("trabiastudent_f");
-        //mainActor.setPosition(20, 40);
-        mainActor = objectManager.createActor("trabiastudent_f");
-        mainActor.setPosition(20, 40);
-
-
-        super.create();
     }
 
     @Override
@@ -97,5 +116,65 @@ public class Iris extends ApplicationAdapter {
     }
 
 
+    @Override
+    public boolean touchDown(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean tap(float x, float y, int count, int button) {
+
+
+
+        mainActor.clearActions();
+        //Fix acter speed 200 per second
+        Vector3 clickCoordinates = new Vector3(x, y, 0);
+        Vector3 position = camera.unproject(clickCoordinates);
+
+        if(enemyActor.isHitDebugFrame(position.x, position.y)) {
+            Vector2 deltaPos = new Vector2(enemyActor.getX() - mainActor.getX(), enemyActor.getY() - mainActor.getY() + 5);
+            LinearBulletSpec spec = new LinearBulletSpec(new Vector2(mainActor.getX(), mainActor.getY()), deltaPos, 80.0f, 10.0f);
+            spec.setFrom(mainActor);
+            objectManager.createBulletObject(spec);
+            //objectManager.createBulletObject(spec);
+        } else {
+            float length = (new Vector2(position.x - mainActor.getX(), position.y - mainActor.getY())).len();
+            logger.info("Move character to " + position);
+            mainActor.addAction(Actions.moveTo(position.x, position.y, length / 200));
+        }
+
+
+        return false;
+    }
+
+    @Override
+    public boolean longPress(float x, float y) {
+        return false;
+    }
+
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance) {
+        return false;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return false;
+    }
 }
 

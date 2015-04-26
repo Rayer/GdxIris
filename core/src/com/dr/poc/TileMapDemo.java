@@ -204,7 +204,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
             float length = (new Vector2(position.x - actor.getX(), position.y - actor.getY())).len();
             actor.addAction(Actions.moveTo(position.x, position.y, length / 200));
 
-            obm.createExpBulletGroup(new Vector2(actor.getX(), actor.getY()), 80.0f, 60);
+            obm.createExpBulletGroup(new Vector2(actor.getX(), actor.getY()), 80.0f, 60, actor);
 
         } else {
             casting = CastingStatus.ADJUSTING;

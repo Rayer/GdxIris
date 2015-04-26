@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
+import com.dr.iris.character.GameActor;
 
 /**
  * Created by Rayer on 4/20/15.
@@ -41,11 +42,20 @@ public class Bullet implements Disposable {
 
     boolean update(float delta) {
 
-
         //TODO: Use primitive type like float x, float y, to avoid rapidly new object.
         if (spec.update(delta) == false) return false;
-
         bulletSpirte.setPosition(spec.getCurPos().x, spec.getCurPos().y);
+
+        //hit test
+        for(GameActor actor : ObjectManager.getInst().getActorList()) {
+            if(spec.getFrom() == actor) continue;
+            if(actor.isHit(spec.getCurPos().x, spec.getCurPos().y)) {
+                actor.getHit(spec);
+                ttl = 0;
+                return false;
+            }
+        }
+
         return true;
     }
 

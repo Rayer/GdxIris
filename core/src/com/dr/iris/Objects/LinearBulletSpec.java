@@ -14,6 +14,7 @@ public class LinearBulletSpec implements BulletSpec {
 
     boolean isAlive;
 
+    Object from;
 
     public LinearBulletSpec(Vector2 start, Vector2 direction, float speed, float ttl) {
         direction = direction.nor();
@@ -58,6 +59,17 @@ public class LinearBulletSpec implements BulletSpec {
     @Override
     public Vector2 getCurPos() {
         return pos;
+    }
+
+
+    @Override
+    public Object getFrom() {
+        return from;
+    }
+
+    @Override
+    public void setFrom(Object object) {
+        from = object;
     }
 
     @Override
