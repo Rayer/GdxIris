@@ -39,7 +39,6 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
     Texture debugTexture;
     Vector2 lastPos;
     int debugFrameOffset = 10;
-
     public GameActor(String characterName) {
 
         name = characterName;
@@ -123,7 +122,7 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if(isDebug) {
+        if (isDebug) {
             batch.draw(debugTexture, getX(), getY());
             font.draw(batch, name + " : " + health, getX(), getY());
         }
@@ -165,6 +164,8 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
 
     public enum Faction {
         ENEMY,
-        Faction, NON_ENEMY
+        NON_ENEMY
     }
+
+
 }
