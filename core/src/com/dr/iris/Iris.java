@@ -20,6 +20,8 @@ import com.dr.iris.character.GameActor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.Random;
+
 
 /**
  * Created by Rayer on 1/1/15.
@@ -34,7 +36,6 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     GridPoint2 screenGrid = new GridPoint2();
 
     GameActor mainActor;
-    GameActor enemyActor;
 
     Logger logger = LogManager.getLogger(Iris.class);
 
@@ -64,7 +65,11 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
         mainActor = objectManager.createActor("trabiastudent_f");
         mainActor.setPosition(20, 40);
-        enemyActor = objectManager.createEnemyActor("steampunk_f9");
+
+        for (int i = 0; i < 5; ++i) {
+            Random random = new Random();
+            objectManager.createEnemyActor("steampunk_f9", random.nextInt(screenGrid.x), random.nextInt(screenGrid.y));
+        }
 
         super.create();
     }
@@ -131,18 +136,25 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         Vector3 clickCoordinates = new Vector3(x, y, 0);
         Vector3 position = camera.unproject(clickCoordinates);
 
-        if(enemyActor.isHitDebugFrame(position.x, position.y)) {
-            Vector2 deltaPos = new Vector2(enemyActor.getX() - mainActor.getX(), enemyActor.getY() - mainActor.getY() + 5);
-            LinearBulletSpec spec = new LinearBulletSpec(new Vector2(mainActor.getX(), mainActor.getY()), deltaPos, 80.0f, 10.0f);
-            spec.setFrom(mainActor);
-            objectManager.createBulletObject(spec);
-            //objectManager.createBulletObject(spec);
-        } else {
+        boolean hit = false;
+        for (GameActor actor : objectManager.getActorList()) {
+            if (actor.getFaction() != GameActor.Faction.ENEMY) continue;
+
+            if (actor.isHitDebugFrame(position.x, position.y)) {
+                Vector2 deltaPos = new Vector2(actor.getX() - mainActor.getX(), actor.getY() - mainActor.getY() + 5);
+                LinearBulletSpec spec = new LinearBulletSpec(new Vector2(mainActor.getX(), mainActor.getY()), deltaPos, 80.0f, 10.0f);
+                spec.setFrom(mainActor);
+                objectManager.createBulletObject(spec);
+                hit = true;
+            }
+
+        }
+
+        if (hit == false) {
             float length = (new Vector2(position.x - mainActor.getX(), position.y - mainActor.getY())).len();
             logger.info("Move character to " + position);
             mainActor.addAction(Actions.moveTo(position.x, position.y, length / 200));
         }
-
 
         return false;
     }

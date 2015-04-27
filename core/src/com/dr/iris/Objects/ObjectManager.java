@@ -46,7 +46,7 @@ public class ObjectManager {
         return true;
     }
 
-    public boolean createExpBulletGroup(Vector2 pos, float speed, int count, Object from) {
+    public boolean createExpBulletGroup(Vector2 pos, float speed, int count, GameActor from) {
 
         for (int i = 0; i < count; ++i) {
             Vector2 direction = new Vector2(1, 1);
@@ -91,8 +91,9 @@ public class ObjectManager {
         return actor;
     }
 
-    public GameActor createEnemyActor(String actorAtlas) {
+    public GameActor createEnemyActor(String actorAtlas, float x, float y) {
         GameActor actor = new SimpleEnemyActor(actorAtlas);
+        actor.setPosition(x, y);
         gameActorList.add(actor);
         return actor;
     }

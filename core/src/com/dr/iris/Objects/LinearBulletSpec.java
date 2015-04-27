@@ -1,6 +1,7 @@
 package com.dr.iris.Objects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.dr.iris.character.GameActor;
 
 /**
  * Created by Rayer on 4/22/15.
@@ -14,7 +15,7 @@ public class LinearBulletSpec implements BulletSpec {
 
     boolean isAlive;
 
-    Object from;
+    GameActor from;
 
     public LinearBulletSpec(Vector2 start, Vector2 direction, float speed, float ttl) {
         direction = direction.nor();
@@ -63,12 +64,12 @@ public class LinearBulletSpec implements BulletSpec {
 
 
     @Override
-    public Object getFrom() {
+    public GameActor getFrom() {
         return from;
     }
 
     @Override
-    public void setFrom(Object object) {
+    public void setFrom(GameActor object) {
         from = object;
     }
 

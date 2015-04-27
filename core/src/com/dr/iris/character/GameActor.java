@@ -20,31 +20,24 @@ import com.dr.iris.Objects.BulletSpec;
  */
 public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements Disposable {
 
+    public static boolean isDebug = false;
     ActorSpec actorSpec = new ActorSpec();
-
+    Faction faction;
     /**
      * Not used now
      */
     GroupInfo groupInfo = new GroupInfo();
-
     CharacterRenderInfo.FACING currentFacing = CharacterRenderInfo.FACING.DOWN;
     CharacterRenderInfo.FACING lastFacing = currentFacing;
     CharacterRenderInfo charRenderInfo;
     Animation currentAnimation;
     float elapsedTime = 0;
-
     String name;
-
     int health;
-
-    public static boolean isDebug = false;
-
     //for debugging
     BitmapFont font;
     Texture debugTexture;
-
     Vector2 lastPos;
-
     int debugFrameOffset = 10;
 
     public GameActor(String characterName) {
@@ -79,6 +72,10 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
 
         health = 100;
 
+    }
+
+    public Faction getFaction() {
+        return Faction.NON_ENEMY;
     }
 
     @Override
@@ -123,7 +120,6 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         }
     }
 
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
@@ -134,7 +130,6 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         elapsedTime += parentAlpha;
         batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), getX(), getY());
     }
-
 
     @Override
     public void dispose() {
@@ -166,5 +161,10 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
 
     public void getHit(BulletSpec spec) {
         health--;
+    }
+
+    public enum Faction {
+        ENEMY,
+        Faction, NON_ENEMY
     }
 }

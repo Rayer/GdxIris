@@ -48,7 +48,13 @@ public class Bullet implements Disposable {
 
         //hit test
         for(GameActor actor : ObjectManager.getInst().getActorList()) {
+
+            //Bypass hit check if firer is self
             if(spec.getFrom() == actor) continue;
+
+            //Bypass the same faction
+            if (spec.getFrom() != null && spec.getFrom().getFaction() == actor.getFaction()) continue;
+
             if(actor.isHit(spec.getCurPos().x, spec.getCurPos().y)) {
                 actor.getHit(spec);
                 ttl = 0;

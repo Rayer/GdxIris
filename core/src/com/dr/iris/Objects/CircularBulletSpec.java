@@ -1,6 +1,7 @@
 package com.dr.iris.Objects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.dr.iris.character.GameActor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,7 +17,7 @@ public class CircularBulletSpec implements BulletSpec {
     float currentAngel = 0;
     float circularSize = 5;
 
-    Object from;
+    GameActor from;
 
     Logger logger = LogManager.getLogger(CircularBulletSpec.class);
     boolean isAlive = false;
@@ -79,13 +80,13 @@ public class CircularBulletSpec implements BulletSpec {
     }
 
     @Override
-    public Object getFrom() {
+    public GameActor getFrom() {
         return from;
     }
 
 
     @Override
-    public void setFrom(Object object) {
+    public void setFrom(GameActor object) {
         from = object;
     }
 
