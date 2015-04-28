@@ -12,13 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Disposable;
-import com.dr.iris.Objects.*;
+import com.dr.iris.Objects.BulletFactory;
+import com.dr.iris.Objects.BulletSpec;
 
 
 /**
  * Created by Rayer on 12/30/14.
  */
-public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements Disposable {
+public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements Disposable {
 
     ActorSpec actorSpec = new ActorSpec();
 
@@ -86,17 +87,9 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
 
     }
 
-    public Faction getFaction() {
-        return Faction.NON_ENEMY;
-    }
+    public abstract Faction getFaction();
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        //update current facing
-        updateCurrentFacing();
 
-    }
 
     public boolean isAlive() {
         return health > 0;
@@ -130,6 +123,12 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
             lastFacing = currentFacing;
             lastPos.set(getX(), getY());
         }
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        updateCurrentFacing();
     }
 
 
@@ -178,15 +177,6 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
     }
 
     public void shootTo(GameActor actor) {
-        ObjectManager objectManager = ObjectManager.getInst();
-        Vector2 deltaPos = new Vector2(actor.getX() - getX(), actor.getY() - getY() + 5);
-        //LinearBulletSpec spec = new LinearBulletSpec(new Vector2(mainActor.getX(), mainActor.getY()), deltaPos, 360.0f, 12.0f);
-        TracingBulletSpec spec = new TracingBulletSpec(getX(), getY(), actor, 240.0f, 12.0f);
-        spec.setFrom(this);
-        objectManager.createBulletObject(spec);
+        new BulletFactory.TracingBulletBuilder(this, actor).createBullet();
     }
-
-
-
-
 }

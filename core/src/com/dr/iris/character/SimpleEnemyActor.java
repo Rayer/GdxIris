@@ -13,7 +13,7 @@ import java.util.Random;
  */
 public class SimpleEnemyActor extends GameActor {
 
-    static final float BULLET_PERIOD = 5.0f;
+    static final float BULLET_PERIOD = 3.0f;
     static final float MOVE_PERIOD = 4.0f;
     float bulletCooldown = BULLET_PERIOD;
     float moveCooldown = MOVE_PERIOD;
@@ -22,6 +22,10 @@ public class SimpleEnemyActor extends GameActor {
     public SimpleEnemyActor(String characterName) {
         super(characterName);
         setPosition(200, 200);
+
+        Random random = new Random();
+        bulletCooldown = random.nextInt(5);
+        moveCooldown = random.nextInt(5);
     }
 
     @Override

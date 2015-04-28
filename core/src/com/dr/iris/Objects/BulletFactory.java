@@ -1,6 +1,7 @@
 package com.dr.iris.Objects;
 
 import com.badlogic.gdx.math.Vector2;
+import com.dr.iris.character.GameActor;
 
 /**
  * Created by rayer on 2015/4/27.
@@ -29,7 +30,7 @@ public class BulletFactory {
             return this;
         }
 
-        public LinearBulletBuilder setFrom(Object from) {
+        public LinearBulletBuilder setFrom(GameActor from) {
             spec.setFrom(from);
             return this;
         }
@@ -38,6 +39,29 @@ public class BulletFactory {
             objMgr.createBulletObject(spec);
         }
 
+    }
+
+    public static class TracingBulletBuilder {
+        TracingBulletSpec spec;
+
+        public TracingBulletBuilder(GameActor from, GameActor to) {
+            spec = new TracingBulletSpec(from.getX(), from.getY(), to, 220, 12.0f);
+            spec.setFrom(from);
+        }
+
+        public TracingBulletBuilder setSpeed(float speed) {
+            spec.setSpeed(speed);
+            return this;
+        }
+
+        public TracingBulletBuilder setTTL(float ttl) {
+            spec.setTtl(ttl);
+            return this;
+        }
+
+        public void createBullet() {
+            ObjectManager.getInst().createBulletObject(spec);
+        }
     }
 
     public static class CircularBulletBuilder {

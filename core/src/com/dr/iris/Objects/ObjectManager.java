@@ -3,6 +3,7 @@ package com.dr.iris.Objects;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.dr.iris.character.GameActor;
+import com.dr.iris.character.MainActor;
 import com.dr.iris.character.SimpleEnemyActor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -85,8 +86,14 @@ public class ObjectManager {
         }
     }
 
-    public GameActor createActor(String actorAtlas) {
-        GameActor actor = new GameActor(actorAtlas);
+    public GameActor createMainActor(String actorAtlas) {
+        GameActor actor = new MainActor(actorAtlas);
+        gameActorList.add(actor);
+        return actor;
+    }
+
+    public GameActor createEnemyActor(String actorAtlas) {
+        GameActor actor = new SimpleEnemyActor(actorAtlas);
         gameActorList.add(actor);
         return actor;
     }

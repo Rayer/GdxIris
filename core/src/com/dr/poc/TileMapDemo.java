@@ -90,9 +90,9 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
         ObjectManager objectManager = ObjectManager.getInst();
 
-        actor = objectManager.createActor("trabiastudent_f");
+        actor = objectManager.createMainActor("trabiastudent_f");
         actor.setPosition(20, 40);
-        actor2 = objectManager.createActor("steampunk_f5");
+        actor2 = objectManager.createEnemyActor("steampunk_f5");
         actor2.setPosition(150, 140);
         actor2.setTouchable(Touchable.enabled);
 
@@ -204,7 +204,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
             float length = (new Vector2(position.x - actor.getX(), position.y - actor.getY())).len();
             actor.addAction(Actions.moveTo(position.x, position.y, length / 200));
 
-            obm.createExpBulletGroup(new Vector2(actor.getX(), actor.getY()), 80.0f, 60, actor);
+            obm.createExpBulletGroup(new Vector2(actor.getX(), actor.getY()), 300.0f, 20, actor);
 
         } else {
             casting = CastingStatus.ADJUSTING;

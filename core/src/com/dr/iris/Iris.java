@@ -14,7 +14,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.ObjectManager;
-import com.dr.iris.Objects.TracingBulletSpec;
 import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
 import org.apache.logging.log4j.LogManager;
@@ -63,7 +62,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         setupCamera();
         GameActor.isDebug = true;
 
-        mainActor = objectManager.createActor("trabiastudent_f");
+        mainActor = objectManager.createMainActor("trabiastudent_f");
         mainActor.setPosition(20, 40);
 
         for (int i = 0; i < 5; ++i) {
@@ -128,8 +127,6 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-
-
 
         mainActor.clearActions();
         Vector3 clickCoordinates = new Vector3(x, y, 0);

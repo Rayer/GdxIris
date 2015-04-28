@@ -8,16 +8,13 @@ import org.apache.logging.log4j.Logger;
 /**
  * Created by Rayer on 4/28/15.
  */
-public class TracingBulletSpec implements BulletSpec {
+public class TracingBulletSpec extends BaseBulletSpec {
 
     Logger logger = LogManager.getLogger(this.getClass());
 
     GameActor target;
-    float ttl;
     float speed;
-    boolean isAlive;
     GameActor from;
-
     Vector2 currentPos;
 
     public TracingBulletSpec(float startX, float startY, GameActor targetActor, float speed, float ttl) {
@@ -25,12 +22,6 @@ public class TracingBulletSpec implements BulletSpec {
         target = targetActor;
         this.speed = speed;
         this.ttl = ttl;
-    }
-
-
-    @Override
-    public boolean isAlive() {
-        return true;
     }
 
     @Override
@@ -64,5 +55,9 @@ public class TracingBulletSpec implements BulletSpec {
     @Override
     public void setFrom(GameActor object) {
         from = object;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 }

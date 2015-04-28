@@ -7,14 +7,12 @@ import com.dr.iris.character.GameActor;
  * Created by Rayer on 4/22/15.
  * This file describes LinearBulletSpec, which will cause bullet go stright
  */
-public class LinearBulletSpec implements BulletSpec {
+public class LinearBulletSpec extends BaseBulletSpec {
 
 
 
     Vector2 pos;
     Vector2 velocity;
-    float ttl;
-    boolean isAlive;
 
     GameActor from;
 
@@ -29,15 +27,6 @@ public class LinearBulletSpec implements BulletSpec {
         this.velocity = new Vector2(velocity);
         this.ttl = ttl;
         isAlive = true;
-    }
-
-    @Override
-    public boolean isAlive() {
-        return isAlive;
-    }
-
-    public void setAlive(boolean alive) {
-        isAlive = alive;
     }
 
     @Override
@@ -74,13 +63,6 @@ public class LinearBulletSpec implements BulletSpec {
         this.velocity = velocity;
     }
 
-    public float getTtl() {
-        return ttl;
-    }
-
-    public void setTtl(float ttl) {
-        this.ttl = ttl;
-    }
 
     public void setIsAlive(boolean isAlive) {
         this.isAlive = isAlive;
