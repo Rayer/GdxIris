@@ -132,7 +132,6 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
 
         mainActor.clearActions();
-        //Fix acter speed 200 per second
         Vector3 clickCoordinates = new Vector3(x, y, 0);
         Vector3 position = camera.unproject(clickCoordinates);
 
@@ -141,11 +140,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
             if (actor.getFaction() != GameActor.Faction.ENEMY) continue;
 
             if (actor.isHitDebugFrame(position.x, position.y)) {
-                Vector2 deltaPos = new Vector2(actor.getX() - mainActor.getX(), actor.getY() - mainActor.getY() + 5);
-                //LinearBulletSpec spec = new LinearBulletSpec(new Vector2(mainActor.getX(), mainActor.getY()), deltaPos, 360.0f, 12.0f);
-                TracingBulletSpec spec = new TracingBulletSpec(mainActor.getX(), mainActor.getY(), actor, 240.0f, 12.0f);
-                spec.setFrom(mainActor);
-                objectManager.createBulletObject(spec);
+                mainActor.shootTo(actor);
                 hit = true;
             }
 
@@ -154,6 +149,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         if (hit == false) {
             float length = (new Vector2(position.x - mainActor.getX(), position.y - mainActor.getY())).len();
             logger.info("Move character to " + position);
+            //Fix acter speed 200 per second
             mainActor.addAction(Actions.moveTo(position.x, position.y, length / 200));
         }
 

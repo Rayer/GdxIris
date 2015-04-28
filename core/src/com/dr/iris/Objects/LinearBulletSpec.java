@@ -9,10 +9,11 @@ import com.dr.iris.character.GameActor;
  */
 public class LinearBulletSpec implements BulletSpec {
 
+
+
     Vector2 pos;
     Vector2 velocity;
     float ttl;
-
     boolean isAlive;
 
     GameActor from;
@@ -55,6 +56,38 @@ public class LinearBulletSpec implements BulletSpec {
         pos = pos.add(speedX, speedY);
 
         return true;
+    }
+
+    public Vector2 getPos() {
+        return pos;
+    }
+
+    public void setPos(Vector2 pos) {
+        this.pos = pos;
+    }
+
+    public Vector2 getVelocity() {
+        return velocity;
+    }
+
+    public void setVelocity(Vector2 velocity) {
+        this.velocity = velocity;
+    }
+
+    public float getTtl() {
+        return ttl;
+    }
+
+    public void setTtl(float ttl) {
+        this.ttl = ttl;
+    }
+
+    public void setIsAlive(boolean isAlive) {
+        this.isAlive = isAlive;
+    }
+
+    public void setDirectionAndSpeed(Vector2 dir, float speed) {
+        this.velocity = dir.setLength(speed);
     }
 
     @Override

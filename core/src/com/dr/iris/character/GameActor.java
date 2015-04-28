@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Disposable;
-import com.dr.iris.Objects.BulletSpec;
+import com.dr.iris.Objects.*;
 
 
 /**
@@ -20,25 +20,38 @@ import com.dr.iris.Objects.BulletSpec;
  */
 public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements Disposable {
 
-    public static boolean isDebug = false;
     ActorSpec actorSpec = new ActorSpec();
-    Faction faction;
+
+    public enum Faction {
+        ENEMY,
+        NON_ENEMY
+    }
+
     /**
      * Not used now
      */
     GroupInfo groupInfo = new GroupInfo();
+
     CharacterRenderInfo.FACING currentFacing = CharacterRenderInfo.FACING.DOWN;
     CharacterRenderInfo.FACING lastFacing = currentFacing;
     CharacterRenderInfo charRenderInfo;
     Animation currentAnimation;
     float elapsedTime = 0;
+
     String name;
+
     int health;
+
+    public static boolean isDebug = false;
+
     //for debugging
     BitmapFont font;
     Texture debugTexture;
+
     Vector2 lastPos;
+
     int debugFrameOffset = 10;
+
     public GameActor(String characterName) {
 
         name = characterName;
@@ -119,16 +132,18 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         }
     }
 
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (isDebug) {
+        if(isDebug) {
             batch.draw(debugTexture, getX(), getY());
             font.draw(batch, name + " : " + health, getX(), getY());
         }
         elapsedTime += parentAlpha;
         batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), getX(), getY());
     }
+
 
     @Override
     public void dispose() {
@@ -162,10 +177,16 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         health--;
     }
 
-    public enum Faction {
-        ENEMY,
-        NON_ENEMY
+    public void shootTo(GameActor actor) {
+        ObjectManager objectManager = ObjectManager.getInst();
+        Vector2 deltaPos = new Vector2(actor.getX() - getX(), actor.getY() - getY() + 5);
+        //LinearBulletSpec spec = new LinearBulletSpec(new Vector2(mainActor.getX(), mainActor.getY()), deltaPos, 360.0f, 12.0f);
+        TracingBulletSpec spec = new TracingBulletSpec(getX(), getY(), actor, 240.0f, 12.0f);
+        spec.setFrom(this);
+        objectManager.createBulletObject(spec);
     }
+
+
 
 
 }
