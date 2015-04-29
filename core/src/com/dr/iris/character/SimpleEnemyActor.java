@@ -1,8 +1,9 @@
 package com.dr.iris.character;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
+import com.dr.iris.Objects.SweepingBulletGroup;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,9 +14,9 @@ import java.util.Random;
  */
 public class SimpleEnemyActor extends GameActor {
 
-    static final float BULLET_PERIOD = 3.0f;
+    static final float BULLET_PERIOD = 6.0f;
     static final float MOVE_PERIOD = 4.0f;
-    float bulletCooldown = BULLET_PERIOD;
+    float bulletCooldown = 0;
     float moveCooldown = MOVE_PERIOD;
     Logger logger = LogManager.getLogger(this.getClass());
 
@@ -53,8 +54,11 @@ public class SimpleEnemyActor extends GameActor {
 
 
     private void fireBullet() {
-        //logger.info("Fire!");
-        ObjectManager.getInst().createExpBulletGroup(new Vector2(getX(), getY()), 180.0f, 12, this);
+
+        Random r = new Random();
+
+        BulletGroupSpec spec = new SweepingBulletGroup(this, r.nextInt(360), 180.0f, 4.0f);
+        ObjectManager.getInst().createBulletGroup(spec);
     }
 
 

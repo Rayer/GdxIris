@@ -1,7 +1,6 @@
 package com.dr.iris.Objects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.dr.iris.character.GameActor;
 import com.dr.iris.character.MainActor;
 import com.dr.iris.character.SimpleEnemyActor;
@@ -20,6 +19,7 @@ public class ObjectManager {
     Logger logger = LogManager.getLogger(ObjectManager.class);
     List<Bullet> bulletList = new ArrayList<>();
     List<Bullet> recycleList = new ArrayList<>();
+    List<BulletGroupSpec> bulletGroupSpecs = new ArrayList<>();
 
     List<GameActor> gameActorList = new ArrayList<>();
 
@@ -47,16 +47,9 @@ public class ObjectManager {
         return true;
     }
 
-    public boolean createExpBulletGroup(Vector2 pos, float speed, int count, GameActor from) {
+    public boolean createBulletGroup(BulletGroupSpec spec) {
 
-        for (int i = 0; i < count; ++i) {
-            Vector2 direction = new Vector2(1, 1);
-            direction.setAngle(360.0f / count * i);
-            LinearBulletSpec mb_spec = new LinearBulletSpec(pos, direction, speed, 6.0f);
-            mb_spec.setFrom(from);
-            createBulletObject(mb_spec);
-        }
-
+        bulletGroupSpecs.add(spec);
         return true;
     }
 
@@ -72,6 +65,13 @@ public class ObjectManager {
 
         for(GameActor a : gameActorList) {
             a.act(delta);
+        }
+
+        for (int i = 0; i < bulletGroupSpecs.size(); ++i) {
+            BulletGroupSpec spec = bulletGroupSpecs.get(i);
+            if (spec.update(delta) == false) {
+                bulletGroupSpecs.remove(i);
+            }
         }
         return true;
     }
