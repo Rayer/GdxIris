@@ -4,8 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Objects.SweepingBulletGroup;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 
@@ -18,7 +16,6 @@ public class SimpleEnemyActor extends GameActor {
     static final float MOVE_PERIOD = 4.0f;
     float bulletCooldown = 0;
     float moveCooldown = MOVE_PERIOD;
-    Logger logger = LogManager.getLogger(this.getClass());
 
     public SimpleEnemyActor(String characterName) {
         super(characterName);

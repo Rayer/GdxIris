@@ -4,8 +4,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.dr.iris.character.GameActor;
 import com.dr.iris.character.MainActor;
 import com.dr.iris.character.SimpleEnemyActor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,6 @@ import java.util.List;
 public class ObjectManager {
 
     static private ObjectManager inst;
-    Logger logger = LogManager.getLogger(ObjectManager.class);
     List<Bullet> bulletList = new ArrayList<>();
     List<Bullet> recycleList = new ArrayList<>();
     List<BulletGroupSpec> bulletGroupSpecs = new ArrayList<>();
