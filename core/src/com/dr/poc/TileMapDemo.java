@@ -20,8 +20,7 @@ import com.dr.iris.Objects.CircularBulletSpec;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.dr.iris.log.Log;
 
 /**
  * Created by Rayer on 12/31/14.
@@ -40,7 +39,6 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     Music bgm;
 
-    Logger logger = LogManager.getLogger(this.getClass());
     CastingStatus casting = CastingStatus.NO_CASTING;
     private GridPoint2 screenGird = new GridPoint2(0, 0);
     //Map
@@ -69,7 +67,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     @Override
     public void create() {
 
-        logger.info("Creating!");
+        Log.info("Creating!");
         sb = new SpriteBatch();
 
         screenGird = getScreenGrid();
@@ -177,7 +175,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-        logger.info("Touch down invoked : " + x + "," + y + " and times : " + count);
+        Log.info("Touch down invoked : " + x + "," + y + " and times : " + count);
 
         Vector3 clickCoordinates = new Vector3(x, y, 0);
         Vector3 position = camera.unproject(clickCoordinates);
@@ -188,7 +186,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
             //obm.createBulletObject(new LinearBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 80.0f, 10.0f));
             obm.createBulletObject(new CircularBulletSpec(new Vector2(actor.getX(), actor.getY()), deltaPos, 80, 180, 3.0f, 10.0f));
 
-            logger.info("hit!");
+            Log.info("hit!");
         //processing moving
         } else if (casting == CastingStatus.NO_CASTING) {
             //Vector3 clickCoordinates = new Vector3(x, y, 0);
@@ -197,7 +195,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
             int cellX = (int) (position.x / this.tilePixelGrid.x);
             int cellY = (int) (position.y / this.tilePixelGrid.y);
 
-            logger.info("Cell ID : " + cellX + ", " + cellY);
+            Log.info("Cell ID : " + cellX + ", " + cellY);
 
             actor.clearActions();
             //Fix acter speed 200 per second
@@ -222,7 +220,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
         actor.clearActions();
 
         casting = CastingStatus.ADJUSTING;
-        logger.info("longpress invoked : " + position.x + "," + position.y);
+        Log.info("longpress invoked : " + position.x + "," + position.y);
 
         return false;
     }
@@ -236,7 +234,7 @@ public class TileMapDemo implements ApplicationListener, GestureDetector.Gesture
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
         if (casting == CastingStatus.ADJUSTING) {
-            logger.info("Start casting!");
+            Log.info("Start casting!");
             //casting = CastingStatus.CASTING;
             casting = CastingStatus.NO_CASTING;
         }

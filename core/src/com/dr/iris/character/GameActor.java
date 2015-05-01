@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Disposable;
 import com.dr.iris.Objects.BulletFactory;
@@ -21,13 +19,8 @@ import com.dr.iris.Objects.BulletSpec;
  */
 public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements Disposable {
 
+    public static boolean isDebug = false;
     ActorSpec actorSpec = new ActorSpec();
-
-    public enum Faction {
-        ENEMY,
-        NON_ENEMY
-    }
-
     /**
      * Not used now
      */
@@ -36,22 +29,19 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
     CharacterRenderInfo.FACING currentFacing = CharacterRenderInfo.FACING.DOWN;
     CharacterRenderInfo.FACING lastFacing = currentFacing;
     CharacterRenderInfo charRenderInfo;
+
     Animation currentAnimation;
     float elapsedTime = 0;
 
     String name;
 
     int health;
-
-    public static boolean isDebug = false;
-
     //for debugging
     BitmapFont font;
     Texture debugTexture;
-
     Vector2 lastPos;
-
     int debugFrameOffset = 10;
+
 
     public GameActor(String characterName) {
 
@@ -62,13 +52,6 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
         charRenderInfo = CharacterRenderManager.getInst().getCharacter(characterName);
         currentAnimation = new Animation(5f, charRenderInfo.getRegion(currentFacing));
         setBounds(getX(), getY(), currentAnimation.getKeyFrame(0).getRegionWidth(), currentAnimation.getKeyFrame(0).getRegionHeight());
-
-        addListener(new InputListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                super.touchUp(event, x, y, pointer, button);
-            }
-        });
 
         //debug info
         font = new BitmapFont();
@@ -83,13 +66,13 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
         debugTexture = new Texture(pixmap);
         pixmap.dispose();
 
+        //collision detection
+
         health = 100;
 
     }
 
     public abstract Faction getFaction();
-
-
 
     public boolean isAlive() {
         return health > 0;
@@ -131,18 +114,17 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
         updateCurrentFacing();
     }
 
-
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if(isDebug) {
+        if (isDebug) {
             batch.draw(debugTexture, getX(), getY());
             font.draw(batch, name + " : " + health, getX(), getY());
+
         }
         elapsedTime += parentAlpha;
         batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), getX(), getY());
     }
-
 
     @Override
     public void dispose() {
@@ -178,5 +160,10 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
 
     public void shootTo(GameActor actor) {
         new BulletFactory.TracingBulletBuilder(this, actor).createBullet();
+    }
+
+    public enum Faction {
+        ENEMY,
+        NON_ENEMY
     }
 }

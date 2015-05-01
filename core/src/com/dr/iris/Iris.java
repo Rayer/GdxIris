@@ -16,8 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import com.dr.iris.log.Log;
 
 import java.util.Random;
 
@@ -35,8 +34,6 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     GridPoint2 screenGrid = new GridPoint2();
 
     GameActor mainActor;
-
-    Logger logger = LogManager.getLogger(Iris.class);
 
 
     ObjectManager objectManager = ObjectManager.getInst();
@@ -145,7 +142,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
         if (hit == false) {
             float length = (new Vector2(position.x - mainActor.getX(), position.y - mainActor.getY())).len();
-            logger.info("Move character to " + position);
+            Log.debug("Move character to " + position);
             //Fix acter speed 200 per second
             mainActor.addAction(Actions.moveTo(position.x, position.y, length / 200));
         }

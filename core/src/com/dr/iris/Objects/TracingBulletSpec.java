@@ -2,15 +2,12 @@ package com.dr.iris.Objects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.dr.iris.character.GameActor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Created by Rayer on 4/28/15.
  */
 public class TracingBulletSpec extends BaseBulletSpec {
 
-    Logger logger = LogManager.getLogger(this.getClass());
 
     GameActor target;
     float speed;

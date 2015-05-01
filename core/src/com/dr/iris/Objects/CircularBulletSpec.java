@@ -2,8 +2,6 @@ package com.dr.iris.Objects;
 
 import com.badlogic.gdx.math.Vector2;
 import com.dr.iris.character.GameActor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * Created by Rayer on 4/25/15.
@@ -19,7 +17,6 @@ public class CircularBulletSpec implements BulletSpec {
 
     GameActor from;
 
-    Logger logger = LogManager.getLogger(CircularBulletSpec.class);
     boolean isAlive = false;
 
     public CircularBulletSpec(Vector2 pos, Vector2 velocity, float angelPerSec, float circularSize, float ttl) {
