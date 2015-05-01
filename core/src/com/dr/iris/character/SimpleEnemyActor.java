@@ -1,5 +1,8 @@
 package com.dr.iris.character;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
@@ -17,6 +20,10 @@ public class SimpleEnemyActor extends GameActor {
     float bulletCooldown = 0;
     float moveCooldown = MOVE_PERIOD;
 
+    // notify user
+    BitmapFont bulletColldownNotify;
+    BitmapFont moveCooldownNotify;
+
     public SimpleEnemyActor(String characterName) {
         super(characterName);
         setPosition(200, 200);
@@ -24,6 +31,14 @@ public class SimpleEnemyActor extends GameActor {
         Random random = new Random();
         bulletCooldown = random.nextInt(5);
         moveCooldown = random.nextInt(5);
+
+        bulletColldownNotify = new BitmapFont();
+        bulletColldownNotify.setColor(Color.RED);
+        bulletColldownNotify.setScale(0.8f);
+
+        moveCooldownNotify = new BitmapFont();
+        moveCooldownNotify.setColor(Color.LIGHT_GRAY);
+        moveCooldownNotify.setScale(0.8f);
     }
 
     @Override
@@ -49,6 +64,16 @@ public class SimpleEnemyActor extends GameActor {
         }
     }
 
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+
+        // draw notify
+        Integer bulletCD = (int)bulletCooldown;
+        Integer moveCD = (int)moveCooldown;
+        bulletColldownNotify.draw(batch, bulletCD.toString(), getX()+getWidth(), getY()+5);
+        moveCooldownNotify.draw(batch, moveCD.toString(), getX()+getWidth(), getY() + getHeight());
+    }
 
     private void fireBullet() {
 

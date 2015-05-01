@@ -62,7 +62,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         mainActor = objectManager.createMainActor("trabiastudent_f");
         mainActor.setPosition(20, 40);
 
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 1; ++i) {
             Random random = new Random();
             objectManager.createEnemyActor("steampunk_f9", random.nextInt(screenGrid.x), random.nextInt(screenGrid.y));
         }
@@ -73,13 +73,20 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     private void setupCamera() {
         screenGrid = getScreenGrid();
         camera = new OrthographicCamera();
+        camera.zoom -= 0.3f; // zoom in
         camera.setToOrtho(false, screenGrid.x, screenGrid.y);
+        //camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         camera.update();
     }
+
+
 
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+        screenGrid.set(width, height);
+        setupCamera();
     }
 
     @Override
