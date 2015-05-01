@@ -13,7 +13,7 @@ public class DesktopLauncher {
 
     public static void main(String[] arg) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
-        cfg.title = "Scene Demo";
+        cfg.title = SCENE_NAME;
         cfg.useGL30 = false;
         cfg.width = 720;
         cfg.height = 640;

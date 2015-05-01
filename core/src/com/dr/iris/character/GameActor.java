@@ -12,14 +12,21 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Disposable;
+import com.dr.iris.Objects.BulletFactory;
+import com.dr.iris.Objects.BulletSpec;
 
 
 /**
  * Created by Rayer on 12/30/14.
  */
-public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements Disposable {
+public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements Disposable {
 
     ActorSpec actorSpec = new ActorSpec();
+
+    public enum Faction {
+        ENEMY,
+        NON_ENEMY
+    }
 
     /**
      * Not used now
@@ -34,13 +41,17 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
 
     String name;
 
-    boolean isDebug = false;
+    int health;
+
+    public static boolean isDebug = false;
 
     //for debugging
     BitmapFont font;
     Texture debugTexture;
 
     Vector2 lastPos;
+
+    int debugFrameOffset = 10;
 
     public GameActor(String characterName) {
 
@@ -68,19 +79,20 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         TextureRegion tr = currentAnimation.getKeyFrame(0);
         Pixmap pixmap = new Pixmap(tr.getRegionWidth(), tr.getRegionHeight(), Pixmap.Format.RGBA8888);
         pixmap.setColor(Color.YELLOW);
-        pixmap.drawRectangle(0, 0, tr.getRegionWidth(), tr.getRegionHeight());
+        pixmap.drawRectangle(0 - debugFrameOffset, 0 - debugFrameOffset, tr.getRegionWidth() + debugFrameOffset, tr.getRegionHeight() + debugFrameOffset);
         debugTexture = new Texture(pixmap);
         pixmap.dispose();
 
+        health = 100;
 
     }
 
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-        //update current facing
-        updateCurrentFacing();
+    public abstract Faction getFaction();
 
+
+
+    public boolean isAlive() {
+        return health > 0;
     }
 
     private void updateCurrentFacing() {
@@ -113,13 +125,19 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         }
     }
 
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        updateCurrentFacing();
+    }
+
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if(isDebug) {
             batch.draw(debugTexture, getX(), getY());
-            font.draw(batch, name, getX(), getY());
+            font.draw(batch, name + " : " + health, getX(), getY());
         }
         elapsedTime += parentAlpha;
         batch.draw(currentAnimation.getKeyFrame(elapsedTime, true), getX(), getY());
@@ -132,5 +150,33 @@ public class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor implements 
         charRenderInfo.dispose();
         debugTexture.dispose();
 
+    }
+
+    public boolean isHit(float x, float y) {
+        float x1 = getX();
+        float x2 = getX() + getHeight();
+        float y1 = getY();
+        float y2 = getY() + getWidth();
+
+        return (x > x1 && x < x2) && (y > y1 && y < y2);
+
+    }
+
+    public boolean isHitDebugFrame(float x, float y) {
+        float x1 = getX() - debugFrameOffset;
+        float x2 = getX() + getHeight() + debugFrameOffset;
+        float y1 = getY() - debugFrameOffset;
+        float y2 = getY() + getWidth() + debugFrameOffset;
+
+        return (x > x1 && x < x2) && (y > y1 && y < y2);
+
+    }
+
+    public void getHit(BulletSpec spec) {
+        health--;
+    }
+
+    public void shootTo(GameActor actor) {
+        new BulletFactory.TracingBulletBuilder(this, actor).createBullet();
     }
 }

@@ -1,8 +1,9 @@
 package com.dr.iris.Objects;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.Vector2;
 import com.dr.iris.character.GameActor;
+import com.dr.iris.character.MainActor;
+import com.dr.iris.character.SimpleEnemyActor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,8 +19,10 @@ public class ObjectManager {
     Logger logger = LogManager.getLogger(ObjectManager.class);
     List<Bullet> bulletList = new ArrayList<>();
     List<Bullet> recycleList = new ArrayList<>();
+    List<BulletGroupSpec> bulletGroupSpecs = new ArrayList<>();
 
     List<GameActor> gameActorList = new ArrayList<>();
+
 
     private ObjectManager() {
 
@@ -39,24 +42,14 @@ public class ObjectManager {
 
     public boolean createBulletObject(BulletSpec spec) {
         Bullet b = getBullet();
-
         b.setSpec(spec);
-
         bulletList.add(b);
         return true;
     }
 
-    public boolean createExpBulletGroup(Vector2 pos, float speed, int count) {
+    public boolean createBulletGroup(BulletGroupSpec spec) {
 
-        for (int i = 0; i < count; ++i) {
-            Vector2 direction = new Vector2(1, 1);
-            direction.setAngle(360.0f / count * i);
-            //LinearBulletSpec mb_spec = new LinearBulletSpec(pos, direction, speed, 6.0f);
-            BulletSpec mb_spec = new CircularBulletSpec(pos, direction, speed, 360, 5, 6);
-            //logger.debug("Spec : " + mb_spec);
-            createBulletObject(mb_spec);
-        }
-
+        bulletGroupSpecs.add(spec);
         return true;
     }
 
@@ -73,6 +66,13 @@ public class ObjectManager {
         for(GameActor a : gameActorList) {
             a.act(delta);
         }
+
+        for (int i = 0; i < bulletGroupSpecs.size(); ++i) {
+            BulletGroupSpec spec = bulletGroupSpecs.get(i);
+            if (spec.update(delta) == false) {
+                bulletGroupSpecs.remove(i);
+            }
+        }
         return true;
     }
 
@@ -86,8 +86,21 @@ public class ObjectManager {
         }
     }
 
-    public GameActor createActor(String actorAtlas) {
-        GameActor actor = new GameActor(actorAtlas);
+    public GameActor createMainActor(String actorAtlas) {
+        GameActor actor = new MainActor(actorAtlas);
+        gameActorList.add(actor);
+        return actor;
+    }
+
+    public GameActor createEnemyActor(String actorAtlas) {
+        GameActor actor = new SimpleEnemyActor(actorAtlas);
+        gameActorList.add(actor);
+        return actor;
+    }
+
+    public GameActor createEnemyActor(String actorAtlas, float x, float y) {
+        GameActor actor = new SimpleEnemyActor(actorAtlas);
+        actor.setPosition(x, y);
         gameActorList.add(actor);
         return actor;
     }
