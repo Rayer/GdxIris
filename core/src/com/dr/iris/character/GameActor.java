@@ -52,6 +52,7 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
         charRenderInfo = CharacterRenderManager.getInst().getCharacter(characterName);
         currentAnimation = new Animation(5f, charRenderInfo.getRegion(currentFacing));
         setBounds(getX(), getY(), currentAnimation.getKeyFrame(0).getRegionWidth(), currentAnimation.getKeyFrame(0).getRegionHeight());
+        setOrigin(currentAnimation.getKeyFrame(0).getRegionWidth(), currentAnimation.getKeyFrame(0).getRegionHeight());
 
         //debug info
         font = new BitmapFont();
@@ -100,6 +101,7 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
 
             if (lastFacing != currentFacing) {
 
+                //This is not good, too rapid new animation
                 currentAnimation = new Animation(5f, charRenderInfo.getRegion(currentFacing));
             }
 
@@ -160,6 +162,14 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
 
     public void shootTo(GameActor actor) {
         new BulletFactory.TracingBulletBuilder(this, actor).createBullet();
+    }
+
+    public float getCenterX() {
+        return getX() + (getWidth() / 2);
+    }
+
+    public float getCenterY() {
+        return getY() + (getHeight() / 2);
     }
 
     public enum Faction {

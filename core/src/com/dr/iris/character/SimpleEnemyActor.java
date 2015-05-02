@@ -7,6 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Objects.SweepingBulletGroup;
+import com.dr.iris.ui.LockOnTarget;
+import com.dr.iris.ui.UIObjectsManager;
 
 import java.util.Random;
 
@@ -20,6 +22,8 @@ public class SimpleEnemyActor extends GameActor {
     float bulletCooldown = 0;
     float moveCooldown = MOVE_PERIOD;
 
+    LockOnTarget uiTarget;
+
     // notify user
     BitmapFont bulletColldownNotify;
     BitmapFont moveCooldownNotify;
@@ -31,6 +35,9 @@ public class SimpleEnemyActor extends GameActor {
         Random random = new Random();
         bulletCooldown = random.nextInt(5);
         moveCooldown = random.nextInt(5);
+
+        uiTarget = new LockOnTarget(this, false);
+        UIObjectsManager.getInst().addUIObject(uiTarget);
 
         bulletColldownNotify = new BitmapFont();
         bulletColldownNotify.setColor(Color.RED);
@@ -83,5 +90,19 @@ public class SimpleEnemyActor extends GameActor {
         ObjectManager.getInst().createBulletGroup(spec);
     }
 
+    public void getUnclicked() {
+        uiTarget.setSpinning(false);
+    }
+
+    public void getClicked() {
+        //notify other actors stop spinning
+        for (GameActor sea : ObjectManager.getInst().getActorList()) {
+            if (sea.getFaction() == Faction.NON_ENEMY) continue;
+            if (sea == this) continue;
+
+            ((SimpleEnemyActor) sea).getUnclicked();
+        }
+        uiTarget.setSpinning(true);
+    }
 
 }
