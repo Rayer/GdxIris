@@ -14,6 +14,9 @@ public class LockOnTarget implements UIObject {
     static Texture lock_on_inner_texture;
     static Texture lock_on_outer_texture;
 
+    private float MAX_ALPHA = 0.6f;
+    private float alphaTimer = 0;
+
     static {
         Pixmap inner = new Pixmap(40, 40, Pixmap.Format.RGBA8888);
         inner.setColor(Color.RED);
@@ -21,14 +24,15 @@ public class LockOnTarget implements UIObject {
         inner.drawLine(10, 0, 10, 20);
         inner.drawLine(0, 10, 20, 10);
 
-        Pixmap outer = new Pixmap(60, 60, Pixmap.Format.RGBA8888);
-        outer.setColor(Color.GREEN);
-        outer.drawCircle(30, 30, 30);
-        outer.drawLine(30, 0, 30, 60);
-        outer.drawLine(0, 30, 60, 30);
+//        Pixmap outer = new Pixmap(60, 60, Pixmap.Format.RGBA8888);
+//        outer.setColor(Color.GREEN);
+//        outer.drawCircle(30, 30, 30);
+//        outer.drawLine(30, 0, 30, 60);
+//        outer.drawLine(0, 30, 60, 30);
 
         lock_on_inner_texture = new Texture(inner);
-        lock_on_outer_texture = new Texture(outer);
+//        lock_on_outer_texture = new Texture(outer);
+        lock_on_outer_texture = new Texture("data/cross.png");
     }
 
     Sprite lock_on_inner_sprite;
@@ -44,9 +48,9 @@ public class LockOnTarget implements UIObject {
 
     public LockOnTarget(GameActor attachedActor, boolean spinning) {
         lock_on_inner_sprite = new Sprite(lock_on_inner_texture, 40, 40);
-        lock_on_outer_sprite = new Sprite(lock_on_outer_texture, 60, 60);
+        lock_on_outer_sprite = new Sprite(lock_on_outer_texture, 64, 64);
         lock_on_inner_sprite.setOrigin(20, 20);
-        lock_on_outer_sprite.setOrigin(30, 30);
+        lock_on_outer_sprite.setOrigin(32, 32);
 
         this.attachedActor = attachedActor;
     }
@@ -62,7 +66,7 @@ public class LockOnTarget implements UIObject {
         y = attachedActor.getCenterY();
 
         lock_on_inner_sprite.setPosition(x - 20, y - 20);
-        lock_on_outer_sprite.setPosition(x - 30, y - 30);
+        lock_on_outer_sprite.setPosition(x - 32, y - 32);
 
         if (spinning) {
             angle += angle_offset_per_sec * delta;
@@ -72,6 +76,14 @@ public class LockOnTarget implements UIObject {
 
         lock_on_inner_sprite.setRotation(angle);
         lock_on_outer_sprite.setRotation(-angle);
+
+        if(alphaTimer < MAX_ALPHA) {
+            alphaTimer += 0.01f;
+        } else {
+            alphaTimer = 0;
+        }
+
+        lock_on_outer_sprite.setAlpha(alphaTimer);
 
         return true;
     }
