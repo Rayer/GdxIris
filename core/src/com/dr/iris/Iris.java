@@ -16,7 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
+import com.dr.iris.character.SimpleEnemyActor;
 import com.dr.iris.log.Log;
+import com.dr.iris.ui.UIObjectsManager;
 
 import java.util.Random;
 
@@ -91,6 +93,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
 
+        UIObjectsManager.getInst().update(delta);
         objectManager.update(delta);
         renderer.setView(camera);
         renderer.render(delta);
@@ -136,6 +139,9 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
             if (actor.isHitDebugFrame(position.x, position.y)) {
                 mainActor.shootTo(actor);
                 hit = true;
+                if (actor instanceof SimpleEnemyActor) {
+                    ((SimpleEnemyActor) actor).getClicked();
+                }
             }
 
         }
