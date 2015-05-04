@@ -83,14 +83,14 @@ public class ObjectManager {
         }
     }
 
-    public GameActor createMainActor(String actorAtlas) {
-        GameActor actor = new MainActor(actorAtlas);
+    public MainActor createMainActor(String actorAtlas) {
+        MainActor actor = new MainActor(actorAtlas);
         gameActorList.add(actor);
         return actor;
     }
 
-    public GameActor createEnemyActor(String actorAtlas) {
-        GameActor actor = new SimpleEnemyActor(actorAtlas);
+    public SimpleEnemyActor createEnemyActor(String actorAtlas) {
+        SimpleEnemyActor actor = new SimpleEnemyActor(actorAtlas);
         gameActorList.add(actor);
         return actor;
     }

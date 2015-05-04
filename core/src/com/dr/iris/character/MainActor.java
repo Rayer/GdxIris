@@ -13,6 +13,8 @@ public class MainActor extends GameActor {
     float bullet_cooldown = DEF_BULLET_COOLDOWN;
     boolean bullet_fire_in_cd = false;
 
+    GameActor currentTarget;
+
     public MainActor(String characterName) {
         super(characterName);
     }
@@ -44,8 +46,17 @@ public class MainActor extends GameActor {
                 if(deltaV.len2() < 22500)
                     new BulletFactory.TracingBulletBuilder(this, a).createBullet();
             }
+
+            if (currentTarget != null) {
+                new BulletFactory.TracingBulletBuilder(this, currentTarget).createBullet();
+            }
         }
 
+    }
+
+    public void setShootingTo(GameActor actor) {
+        if (actor.getFaction() == getFaction()) return;
+        currentTarget = actor;
     }
 
 }
