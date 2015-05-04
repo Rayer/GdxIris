@@ -17,6 +17,7 @@ import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
 import com.dr.iris.character.SimpleEnemyActor;
+import com.dr.iris.character.MainActor;
 import com.dr.iris.log.Log;
 import com.dr.iris.ui.UIObjectsManager;
 
@@ -35,7 +36,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     OrthographicCamera camera;
     GridPoint2 screenGrid = new GridPoint2();
 
-    GameActor mainActor;
+    MainActor mainActor;
 
 
     ObjectManager objectManager = ObjectManager.getInst();
@@ -144,7 +145,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
             if (actor.getFaction() != GameActor.Faction.ENEMY) continue;
 
             if (actor.isHitDebugFrame(position.x, position.y)) {
-                mainActor.shootTo(actor);
+                mainActor.setShootingTo(actor);
                 hit = true;
                 if (actor instanceof SimpleEnemyActor) {
                     ((SimpleEnemyActor) actor).getClicked();
