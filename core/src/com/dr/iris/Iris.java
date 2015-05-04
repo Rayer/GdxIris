@@ -65,7 +65,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         mainActor = objectManager.createMainActor("trabiastudent_f");
         mainActor.setPosition(20, 40);
 
-        for (int i = 0; i < 1; ++i) {
+        for (int i = 0; i < 5; ++i) {
             Random random = new Random();
             objectManager.createEnemyActor("steampunk_f9", random.nextInt(screenGrid.x), random.nextInt(screenGrid.y));
         }

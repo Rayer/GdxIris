@@ -13,8 +13,8 @@ public class DesktopLauncher {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
         cfg.title = SCENE_NAME;
         cfg.useGL30 = false;
-        cfg.width = 540;
-        cfg.height = 960;
+        cfg.width = 800;
+        cfg.height = 1024;
 
         try {
             Class<?> clazz = Class.forName(SCENE_NAME);
