@@ -45,7 +45,7 @@ public class SweepingBulletGroup implements BulletGroupSpec {
 
         Vector2 bulletVector = new Vector2(1, 1).nor().setAngle(currentAngle);
 
-        new BulletFactory.LinearBulletBuilder(firer.getX(), firer.getY()).setDirAndSpeed(bulletVector, bulletSpeed).setFrom(firer).createBullet();
+        new BulletFactory.LinearBulletBuilder(firer.getCenterX(), firer.getCenterY()).setDirAndSpeed(bulletVector, bulletSpeed).setFrom(firer).createBullet();
 
         return true;
     }

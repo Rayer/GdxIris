@@ -42,7 +42,7 @@ public class MainActor extends GameActor {
             for(GameActor a : ObjectManager.getInst().getActorList()) {
                 if(a == this || a.getFaction() == Faction.NON_ENEMY) continue;
 
-                Vector2 deltaV = new Vector2(a.getX() - getX(), a.getY() - getY());
+                Vector2 deltaV = new Vector2(a.getCenterX() - getCenterX(), a.getCenterY() - getCenterY());
                 if(deltaV.len2() < 22500)
                     new BulletFactory.TracingBulletBuilder(this, a).createBullet();
             }

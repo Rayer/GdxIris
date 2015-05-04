@@ -45,7 +45,7 @@ public class BulletFactory {
         TracingBulletSpec spec;
 
         public TracingBulletBuilder(GameActor from, GameActor to) {
-            spec = new TracingBulletSpec(from.getX(), from.getY(), to, 220, 12.0f);
+            spec = new TracingBulletSpec(from.getCenterX(), from.getCenterY(), to, 220, 12.0f);
             spec.setFrom(from);
         }
 

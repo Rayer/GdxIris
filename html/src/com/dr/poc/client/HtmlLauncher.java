@@ -13,6 +13,6 @@ public class HtmlLauncher extends GwtApplication {
 
     @Override
     public ApplicationListener getApplicationListener() {
-        return new com.dr.poc.TileMapDemo();
+        return new com.dr.iris.Iris();
     }
 }
