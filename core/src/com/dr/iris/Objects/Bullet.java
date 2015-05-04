@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
 import com.dr.iris.character.GameActor;
 
@@ -16,8 +15,6 @@ public class Bullet implements Disposable {
 
     static Texture dynTexture;
     Sprite bulletSpirte;
-    Vector2 direction;
-    float speed = 80.0f;
     float ttl = 5.0f; //max life time is 5 sec
 
     BulletSpec spec;

@@ -30,8 +30,8 @@ public class TracingBulletSpec extends BaseBulletSpec {
             return false;
         }
 
-        float deltaX = currentPos.x - target.getX();
-        float deltaY = currentPos.y - target.getY();
+        float deltaX = currentPos.x - target.getCenterX();
+        float deltaY = currentPos.y - target.getCenterY();
 
         Vector2 velocity = new Vector2(deltaX, deltaY).setLength(speed * delta);
         currentPos = currentPos.sub(velocity);
