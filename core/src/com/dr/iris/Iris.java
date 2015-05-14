@@ -16,8 +16,9 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
-import com.dr.iris.character.SimpleEnemyActor;
 import com.dr.iris.character.MainActor;
+import com.dr.iris.character.SimpleEnemyActor;
+import com.dr.iris.effect.EffectManager;
 import com.dr.iris.log.Log;
 import com.dr.iris.ui.UIObjectsManager;
 
@@ -101,8 +102,10 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         camera.update();
 
+        //All update here should be gathered into a pre-render control
         UIObjectsManager.getInst().update(delta);
         objectManager.update(delta);
+        EffectManager.getInst().update(delta);
         renderer.setView(camera);
         renderer.render(delta);
     }

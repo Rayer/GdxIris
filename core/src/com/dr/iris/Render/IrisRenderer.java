@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.dr.iris.Objects.ObjectManager;
+import com.dr.iris.effect.EffectManager;
 import com.dr.iris.ui.UIObjectsManager;
 
 /**
@@ -27,6 +28,8 @@ public class IrisRenderer extends OrthogonalTiledMapRenderer {
 
         UIObjectsManager.getInst().render(batch);
         renderTileLayer((TiledMapTileLayer) layers.get("Decoration"));
+
+        EffectManager.getInst().render(batch);
 
         endRender();
     }
