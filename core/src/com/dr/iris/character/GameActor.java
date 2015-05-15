@@ -54,7 +54,7 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
         setBounds(getX(), getY(), currentAnimation.getKeyFrame(0).getRegionWidth(), currentAnimation.getKeyFrame(0).getRegionHeight());
         setOrigin(currentAnimation.getKeyFrame(0).getRegionWidth(), currentAnimation.getKeyFrame(0).getRegionHeight());
 
-        //debug info
+        //debug_s info_s
         font = new BitmapFont();
         font.setColor(Color.GREEN);
         font.setScale(0.8f);

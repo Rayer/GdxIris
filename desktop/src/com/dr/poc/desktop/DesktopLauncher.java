@@ -19,7 +19,7 @@ public class DesktopLauncher {
         try {
             Class<?> clazz = Class.forName(SCENE_NAME);
             new LwjglApplication((ApplicationListener) clazz.newInstance(), cfg);
-            Log.info("Starting package : " + SCENE_NAME);
+            Log.info_s("Starting package : " + SCENE_NAME);
         } catch (Exception e) {
             e.printStackTrace();
         }
