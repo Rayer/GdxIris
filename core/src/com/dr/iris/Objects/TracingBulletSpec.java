@@ -35,7 +35,7 @@ public class TracingBulletSpec extends BaseBulletSpec {
 
         Vector2 velocity = new Vector2(deltaX, deltaY).setLength(speed * delta);
         currentPos = currentPos.sub(velocity);
-        //logger.debug("Pos : " + currentPos);
+        //logger.debug_s("Pos : " + currentPos);
         return true;
     }
 

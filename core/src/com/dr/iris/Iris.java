@@ -1,5 +1,6 @@
 package com.dr.iris;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -30,6 +31,9 @@ import java.util.Random;
  */
 public class Iris extends ApplicationAdapter implements GestureDetector.GestureListener {
 
+    Log log = Log.getLogger(Iris.class);
+
+
     TiledMap map;
     InputProcessor inputProcessor;
     SpriteBatch sb;
@@ -38,7 +42,6 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     GridPoint2 screenGrid = new GridPoint2();
 
     MainActor mainActor;
-
 
     ObjectManager objectManager = ObjectManager.getInst();
 
@@ -53,7 +56,9 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
     @Override
     public void create() {
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
+        log.debug("Starting Iris");
         sb = new SpriteBatch();
         map = new TmxMapLoader().load("data/Wildness2.tmx");
         renderer = new IrisRenderer(map, sb);
@@ -159,7 +164,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
         if (hit == false) {
             float length = (new Vector2(position.x - mainActor.getX(), position.y - mainActor.getY())).len();
-            Log.debug("Move character to " + position);
+            Log.debug_s("Move character to " + position);
             //Fix acter speed 200 per second
             mainActor.addAction(Actions.moveTo(position.x, position.y, length / 200));
         }

@@ -65,9 +65,9 @@ public class CircularBulletSpec implements BulletSpec {
         Vector2 unit = new Vector2(1, 1).nor();
         unit.setAngle(currentAngel += angelPerSec * delta);
 
-        //logger.debug("Pos before modified : " + pos);
+        //logger.debug_s("Pos before modified : " + pos);
         pos = pos.add(unit.x * circularSize, unit.y * circularSize);
-        //logger.debug("Pos after modified : " + pos);
+        //logger.debug_s("Pos after modified : " + pos);
         return true;
     }
 
