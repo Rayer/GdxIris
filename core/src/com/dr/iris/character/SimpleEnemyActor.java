@@ -3,6 +3,7 @@ package com.dr.iris.character;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
@@ -19,9 +20,9 @@ public class SimpleEnemyActor extends GameActor {
 
     static final float BULLET_PERIOD = 6.0f;
     static final float MOVE_PERIOD = 4.0f;
+    static final float MOVE_VELOCITY_PER_SEC = 80.0f;
     float bulletCooldown = 0;
     float moveCooldown = MOVE_PERIOD;
-
     LockOnTarget uiTarget;
 
     // notify user
@@ -67,7 +68,12 @@ public class SimpleEnemyActor extends GameActor {
             moveCooldown = MOVE_PERIOD;
 
             Random random = new Random();
-            addAction(Actions.moveTo(random.nextInt(400), random.nextInt(400), MOVE_PERIOD));
+            float moveToX = random.nextInt(600);
+            float moveToY = random.nextInt(600);
+
+            float distance = new Vector2(getX() - moveToX, getY() - moveToY).len();
+
+            addAction(Actions.moveTo(moveToX, moveToY, distance / MOVE_VELOCITY_PER_SEC));
         }
     }
 
@@ -85,7 +91,6 @@ public class SimpleEnemyActor extends GameActor {
     private void fireBullet() {
 
         Random r = new Random();
-
         BulletGroupSpec spec = new SweepingBulletGroup(this, r.nextInt(360), 180.0f, 4.0f);
         ObjectManager.getInst().createBulletGroup(spec);
     }
