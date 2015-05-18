@@ -13,6 +13,9 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2D;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Render.IrisRenderer;
@@ -45,6 +48,10 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
     ObjectManager objectManager = ObjectManager.getInst();
 
+    //Box2D
+    World world;
+    Box2DDebugRenderer box2DDebugRenderer;
+
     public Iris() {
         super();
     }
@@ -57,6 +64,9 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     @Override
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        Box2D.init();
+        world = new World(new Vector2(0, 0), true);
+        box2DDebugRenderer = new Box2DDebugRenderer();
 
         log.debug("Starting Iris");
         sb = new SpriteBatch();

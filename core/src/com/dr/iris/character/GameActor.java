@@ -43,6 +43,8 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
     int debugFrameOffset = 10;
 
 
+
+
     public GameActor(String characterName) {
 
         name = characterName;
