@@ -3,6 +3,7 @@ package com.dr.iris.effect;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.dr.iris.utils.FileUtils;
 
 /**
  * Created by Rayer on 5/14/15.
@@ -21,7 +22,7 @@ public class BulletExploseEffect implements AlphaEffect {
     public BulletExploseEffect(float x, float y, float duration) {
 
         if (effectTexture == null) {
-            effectTexture = new Texture("data/effect.png");
+            effectTexture = new Texture(FileUtils.getRes("effect.png"));
         }
 
         sprite = new Sprite(effectTexture);

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.dr.iris.character.GameActor;
+import com.dr.iris.utils.FileUtils;
 
 /**
  * Created by Rayer on 5/2/15.
@@ -32,8 +33,8 @@ public class LockOnTarget implements UIObject {
 
 //        lock_on_inner_texture = new Texture(inner);
 //        lock_on_outer_texture = new Texture(outer);
-        lock_on_inner_texture = new Texture("data/cross_1.png");
-        lock_on_outer_texture = new Texture("data/cross_2.png");
+        lock_on_inner_texture = new Texture(FileUtils.getRes("cross_1.png"));
+        lock_on_outer_texture = new Texture(FileUtils.getRes("cross_2.png"));
     }
 
     Sprite lock_on_inner_sprite;

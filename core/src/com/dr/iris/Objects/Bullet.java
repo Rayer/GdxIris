@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.dr.iris.character.GameActor;
 import com.dr.iris.effect.BulletExploseEffect;
 import com.dr.iris.effect.EffectManager;
+import com.dr.iris.utils.FileUtils;
 
 /**
  * Created by Rayer on 4/20/15.
@@ -22,7 +23,7 @@ public class Bullet implements Disposable {
 
     public Bullet() {
         if(bulletTexture == null) {
-            bulletTexture = new Texture("data/bullet.png");
+            bulletTexture = new Texture(FileUtils.getRes("bullet.png"));
         }
 
         bulletSpirte = new Sprite(bulletTexture);
