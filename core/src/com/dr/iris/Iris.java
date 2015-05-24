@@ -71,7 +71,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         mainActor = objectManager.createMainActor("trabiastudent_f");
         mainActor.setPosition(20, 40);
 
-        for (int i = 0; i < 5; ++i) {
+        for (int i = 0; i < 2; ++i) {
             Random random = new Random();
             objectManager.createEnemyActor("steampunk_f9", random.nextInt(screenGrid.x), random.nextInt(screenGrid.y));
         }
@@ -138,12 +138,13 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
+        log.debug("touchDown");
         return false;
     }
 
     @Override
     public boolean tap(float x, float y, int count, int button) {
-
+        log.debug("tap");
         mainActor.clearActions();
         Vector3 clickCoordinates = new Vector3(x, y, 0);
         Vector3 position = camera.unproject(clickCoordinates);
@@ -174,31 +175,56 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
     @Override
     public boolean longPress(float x, float y) {
+        log.debug("longPress");
         return false;
     }
 
     @Override
     public boolean fling(float velocityX, float velocityY, int button) {
+        log.debug("fling");
+        doPlayerFling(velocityX, velocityY);
         return false;
+    }
+
+    private void doPlayerFling(float velocityX, float velocityY) {
+        float dashMovement = 100.0f; // it should be player status.
+        float dashSpeed = 0.1f; // it should be player status.
+
+        Vector2 v = new Vector2(velocityX, velocityY);
+
+        float angle = v.angle();
+        float addx = dashMovement * (float)Math.cos(Math.toRadians(angle));
+        float addy = dashMovement * (float)Math.sin(Math.toRadians(angle));
+        addy = -addy;
+
+        mainActor.addAction(Actions.moveTo(mainActor.getX() + addx, mainActor.getY() + addy, dashSpeed));
+    }
+
+    private Vector2 getPlayerVector2() {
+        return new Vector2(mainActor.getX(), mainActor.getY());
     }
 
     @Override
     public boolean pan(float x, float y, float deltaX, float deltaY) {
+        //log.debug("pan");
         return false;
     }
 
     @Override
     public boolean panStop(float x, float y, int pointer, int button) {
+        //log.debug("panStop");
         return false;
     }
 
     @Override
     public boolean zoom(float initialDistance, float distance) {
+        //log.debug("zoom");
         return false;
     }
 
     @Override
     public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        //log.debug("pinch");
         return false;
     }
 }
