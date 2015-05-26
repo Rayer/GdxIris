@@ -196,7 +196,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         float addx = dashMovement * (float)Math.cos(Math.toRadians(angle));
         float addy = dashMovement * (float)Math.sin(Math.toRadians(angle));
         addy = -addy;
-
+        mainActor.clearActions();
         mainActor.addAction(Actions.moveTo(mainActor.getX() + addx, mainActor.getY() + addy, dashSpeed));
     }
 
