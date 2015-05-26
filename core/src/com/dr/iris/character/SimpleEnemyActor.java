@@ -3,6 +3,7 @@ package com.dr.iris.character;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.GridPoint2;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.BulletGroupSpec;
@@ -25,6 +26,10 @@ public class SimpleEnemyActor extends GameActor {
     float moveCooldown = MOVE_PERIOD;
     LockOnTarget uiTarget;
 
+    GridPoint2 actionSpec[] = {}; // should be a spec
+    int currentStep = 0;
+    int specNum = 0;
+
     // notify user
     BitmapFont bulletColldownNotify;
     BitmapFont moveCooldownNotify;
@@ -33,9 +38,11 @@ public class SimpleEnemyActor extends GameActor {
         super(characterName);
         setPosition(200, 200);
 
-        Random random = new Random();
-        bulletCooldown = random.nextInt(5);
-        moveCooldown = random.nextInt(5);
+        //Random random = new Random();
+        //bulletCooldown = random.nextInt(5);
+        //moveCooldown = random.nextInt(5);
+        bulletCooldown = 3;
+        moveCooldown = 5;
 
         uiTarget = new LockOnTarget(this, false);
         UIObjectsManager.getInst().addUIObject(uiTarget);
@@ -47,6 +54,7 @@ public class SimpleEnemyActor extends GameActor {
         moveCooldownNotify = new BitmapFont();
         moveCooldownNotify.setColor(Color.LIGHT_GRAY);
         moveCooldownNotify.setScale(0.8f);
+
     }
 
     @Override
@@ -67,14 +75,30 @@ public class SimpleEnemyActor extends GameActor {
         if (moveCooldown < 0) {
             moveCooldown = MOVE_PERIOD;
 
-            Random random = new Random();
-            float moveToX = random.nextInt(600);
-            float moveToY = random.nextInt(600);
+            //Random random = new Random();
+            //float moveToX = random.nextInt(600);
+            //float moveToY = random.nextInt(600);
 
-            float distance = new Vector2(getX() - moveToX, getY() - moveToY).len();
+            if(actionSpec.length > 0) {
+                GridPoint2 nextStep = actionSpec[currentStep];
+                float moveToX = nextStep.x;
+                float moveToY = nextStep.y;
 
-            addAction(Actions.moveTo(moveToX, moveToY, distance / MOVE_VELOCITY_PER_SEC));
+                float distance = new Vector2(getX() - moveToX, getY() - moveToY).len();
+                addAction(Actions.moveTo(moveToX, moveToY, distance / MOVE_VELOCITY_PER_SEC));
+            }
+
+            ++currentStep;
+            if(currentStep >= specNum) {
+                currentStep = 0;
+            }
+
         }
+    }
+
+    public void setActionSpec(GridPoint2[] actionSpec) {
+        this.actionSpec = actionSpec;
+        specNum = actionSpec.length;
     }
 
     @Override

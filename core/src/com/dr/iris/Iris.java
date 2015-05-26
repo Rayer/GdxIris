@@ -23,7 +23,9 @@ import com.dr.iris.effect.EffectManager;
 import com.dr.iris.log.Log;
 import com.dr.iris.ui.UIObjectsManager;
 
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 
 /**
@@ -71,12 +73,49 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         mainActor = objectManager.createMainActor("trabiastudent_f");
         mainActor.setPosition(20, 40);
 
-        for (int i = 0; i < 2; ++i) {
-            Random random = new Random();
-            objectManager.createEnemyActor("steampunk_f9", random.nextInt(screenGrid.x), random.nextInt(screenGrid.y));
-        }
+//        for (int i = 0; i < 2; ++i) {
+//            Random random = new Random();
+//            objectManager.createEnemyActor("steampunk_f9", random.nextInt(screenGrid.x), random.nextInt(screenGrid.y));
+//        }
+        //enemy 1
+        GridPoint2 point1 = new GridPoint2(50, 400);
+        GridPoint2[] spec1 = getEnemySpec1();
+        SimpleEnemyActor enemy1 = objectManager.createEnemyActor("steampunk_f9", point1.x, point1.y);
+        enemy1.setActionSpec(spec1);
+
+        //enemy 2
+        GridPoint2 point2 = new GridPoint2(400, 400);
+        GridPoint2[] spec2 = getEnemySpec2();
+        SimpleEnemyActor enemy2 = objectManager.createEnemyActor("steampunk_f9", point2.x, point2.y);
+        enemy2.setActionSpec(spec2);
 
         super.create();
+    }
+
+    private GridPoint2[] getEnemySpec1() {
+        GridPoint2 step1 = new GridPoint2(100, 400);
+        GridPoint2 step2 = new GridPoint2(150, 400);
+        GridPoint2 step3 = new GridPoint2(200, 400);
+        GridPoint2 step4 = new GridPoint2(150, 400);
+        GridPoint2 step5 = new GridPoint2(100, 400);
+        GridPoint2 step6 = new GridPoint2(50, 400);
+
+        GridPoint2 ret[] = {step1, step2, step3, step4, step5, step6};
+
+        return ret;
+    }
+
+    private GridPoint2[] getEnemySpec2() {
+        GridPoint2 step1 = new GridPoint2(400, 350);
+        GridPoint2 step2 = new GridPoint2(400, 300);
+        GridPoint2 step3 = new GridPoint2(400, 250);
+        GridPoint2 step4 = new GridPoint2(400, 300);
+        GridPoint2 step5 = new GridPoint2(400, 350);
+        GridPoint2 step6 = new GridPoint2(400, 400);
+
+        GridPoint2 ret[] = {step1, step2, step3, step4, step5, step6};
+
+        return ret;
     }
 
     private void setupCamera() {

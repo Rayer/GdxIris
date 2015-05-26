@@ -95,8 +95,8 @@ public class ObjectManager {
         return actor;
     }
 
-    public GameActor createEnemyActor(String actorAtlas, float x, float y) {
-        GameActor actor = new SimpleEnemyActor(actorAtlas);
+    public SimpleEnemyActor createEnemyActor(String actorAtlas, float x, float y) {
+        SimpleEnemyActor actor = new SimpleEnemyActor(actorAtlas);
         actor.setPosition(x, y);
         gameActorList.add(actor);
         return actor;
