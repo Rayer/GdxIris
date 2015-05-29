@@ -12,8 +12,6 @@ import com.dr.iris.Objects.SweepingBulletGroup;
 import com.dr.iris.ui.LockOnTarget;
 import com.dr.iris.ui.UIObjectsManager;
 
-import java.util.Random;
-
 /**
  * Created by Rayer on 4/26/15.
  */
@@ -26,9 +24,13 @@ public class SimpleEnemyActor extends GameActor {
     float moveCooldown = MOVE_PERIOD;
     LockOnTarget uiTarget;
 
-    GridPoint2 actionSpec[] = {}; // should be a spec
-    int currentStep = 0;
-    int specNum = 0;
+    GridPoint2 actionArray[] = {}; // should be a spec
+    int currentAction = 0;
+    int actionNum = 0;
+
+    float bulletArray[] = {};
+    int currentBullet = 0;
+    int bulletNum = 0;
 
     // notify user
     BitmapFont bulletColldownNotify;
@@ -79,26 +81,34 @@ public class SimpleEnemyActor extends GameActor {
             //float moveToX = random.nextInt(600);
             //float moveToY = random.nextInt(600);
 
-            if(actionSpec.length > 0) {
-                GridPoint2 nextStep = actionSpec[currentStep];
-                float moveToX = nextStep.x;
-                float moveToY = nextStep.y;
-
-                float distance = new Vector2(getX() - moveToX, getY() - moveToY).len();
-                addAction(Actions.moveTo(moveToX, moveToY, distance / MOVE_VELOCITY_PER_SEC));
-            }
-
-            ++currentStep;
-            if(currentStep >= specNum) {
-                currentStep = 0;
-            }
-
+            doAction();
         }
     }
 
-    public void setActionSpec(GridPoint2[] actionSpec) {
-        this.actionSpec = actionSpec;
-        specNum = actionSpec.length;
+    private void doAction() {
+        if(actionArray.length > 0) {
+            GridPoint2 nextStep = actionArray[currentAction];
+            float moveToX = nextStep.x;
+            float moveToY = nextStep.y;
+
+            float distance = new Vector2(getX() - moveToX, getY() - moveToY).len();
+            addAction(Actions.moveTo(moveToX, moveToY, distance / MOVE_VELOCITY_PER_SEC));
+            ++currentAction;
+        }
+
+        if(currentAction >= actionNum) {
+            currentAction = 0;
+        }
+    }
+
+    public void setActionArray(GridPoint2[] actionArray) {
+        this.actionArray = actionArray;
+        actionNum = actionArray.length;
+    }
+
+    public void setBulletAngleArray(float[] bulletArray) {
+        this.bulletArray = bulletArray;
+        bulletNum = bulletArray.length;
     }
 
     @Override
@@ -113,10 +123,21 @@ public class SimpleEnemyActor extends GameActor {
     }
 
     private void fireBullet() {
+        //Random r = new Random();
+        //BulletGroupSpec spec = new SweepingBulletGroup(this, r.nextInt(360), 180.0f, 4.0f);
+        //ObjectManager.getInst().createBulletGroup(spec);
 
-        Random r = new Random();
-        BulletGroupSpec spec = new SweepingBulletGroup(this, r.nextInt(360), 180.0f, 4.0f);
-        ObjectManager.getInst().createBulletGroup(spec);
+        if(bulletArray.length > 0) {
+            float nextAngle = bulletArray[currentBullet];
+            BulletGroupSpec nextBullet = new SweepingBulletGroup(this, nextAngle, 180.0f, 4.0f);
+            ObjectManager.getInst().createBulletGroup(nextBullet);
+
+            ++currentBullet;
+        }
+
+        if(currentBullet >= bulletNum) {
+            currentBullet = 0;
+        }
     }
 
     public void getUnclicked() {
