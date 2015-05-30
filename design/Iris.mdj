@@ -1432,7 +1432,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "ClassDiagram1",
+					"name": "Event",
 					"visible": true,
 					"defaultDiagram": false,
 					"ownedViews": [
@@ -1471,8 +1471,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 45,
-											"top": 61,
+											"left": 17,
+											"top": 89,
 											"width": 580,
 											"height": 13,
 											"autoResize": false,
@@ -1496,8 +1496,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 45,
-											"top": 76,
+											"left": 17,
+											"top": 104,
 											"width": 580,
 											"height": 13,
 											"autoResize": false,
@@ -1521,8 +1521,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": -1284,
-											"top": -204,
+											"left": -1368,
+											"top": -120,
 											"width": 73,
 											"height": 13,
 											"autoResize": false,
@@ -1546,8 +1546,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": -1284,
-											"top": -204,
+											"left": -1368,
+											"top": -120,
 											"width": 0,
 											"height": 13,
 											"autoResize": false,
@@ -1565,8 +1565,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 40,
-									"top": 56,
+									"left": 12,
+									"top": 84,
 									"width": 590,
 									"height": 38,
 									"autoResize": false,
@@ -1601,8 +1601,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 40,
-									"top": 94,
+									"left": 12,
+									"top": 122,
 									"width": 590,
 									"height": 10,
 									"autoResize": false
@@ -1635,13 +1635,13 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 45,
-											"top": 109,
+											"left": 17,
+											"top": 137,
 											"width": 580,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+registerEvent(listener: EventListener, eventType: List<Class<? extends EventTypePrototype>>)",
+											"text": "+registerEvent(listener: EventProxy, eventType: List<Class<? extends EventTypePrototype>>)",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5
 										},
@@ -1663,13 +1663,13 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 45,
-											"top": 124,
+											"left": 17,
+											"top": 152,
 											"width": 580,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+deregisterEvent(listener: EventListener, eventType: List<Class<? extends EventTypePrototype>>)",
+											"text": "+deregisterEvent(listener: EventProxy, eventType: List<Class<? extends EventTypePrototype>>)",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5
 										},
@@ -1691,13 +1691,69 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 45,
-											"top": 139,
+											"left": 17,
+											"top": 167,
 											"width": 580,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+deregisterEvent(listener: EventListener)",
+											"text": "+deregisterEvent(listener: EventProxy)",
+											"horizontalAlignment": 0,
+											"verticalAlignment": 5
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFNn5p44WmQ14o=",
+											"_parent": {
+												"$ref": "AAAAAAFNnHmLO/e3bKQ="
+											},
+											"model": {
+												"$ref": "AAAAAAFNn5p4rGmN+s4="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 17,
+											"top": 182,
+											"width": 580,
+											"height": 13,
+											"autoResize": false,
+											"underline": false,
+											"text": "+sendEvent(event: EventInstance)",
+											"horizontalAlignment": 0,
+											"verticalAlignment": 5
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFNn6UUYWmd1j8=",
+											"_parent": {
+												"$ref": "AAAAAAFNnHmLO/e3bKQ="
+											},
+											"model": {
+												"$ref": "AAAAAAFNn6UUNmmanZQ="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 17,
+											"top": 197,
+											"width": 580,
+											"height": 13,
+											"autoResize": false,
+											"underline": false,
+											"text": "+sendEvent(target: GameActor, event: EventInstance)",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5
 										}
@@ -1711,10 +1767,10 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 40,
-									"top": 104,
+									"left": 12,
+									"top": 132,
 									"width": 590,
-									"height": 53,
+									"height": 83,
 									"autoResize": false
 								},
 								{
@@ -1735,8 +1791,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": -856,
-									"top": -136,
+									"left": -912,
+									"top": -80,
 									"width": 10,
 									"height": 10,
 									"autoResize": false
@@ -1751,10 +1807,10 @@
 							"showShadow": true,
 							"containerChangeable": true,
 							"containerExtending": false,
-							"left": 40,
-							"top": 56,
+							"left": 12,
+							"top": 84,
 							"width": 590,
-							"height": 101,
+							"height": 131,
 							"autoResize": false,
 							"stereotypeDisplay": "label",
 							"showVisibility": true,
@@ -1814,8 +1870,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 192,
-											"top": -24,
+											"left": 48,
+											"top": 192,
 											"width": 64,
 											"height": 13,
 											"autoResize": false,
@@ -1839,13 +1895,13 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 689,
-											"top": 94,
-											"width": 83,
+											"left": 641,
+											"top": 166,
+											"width": 202,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "EventHandler",
+											"text": "EventProxy",
 											"horizontalAlignment": 2,
 											"verticalAlignment": 5
 										},
@@ -1864,8 +1920,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 192,
-											"top": -24,
+											"left": 48,
+											"top": 192,
 											"width": 73,
 											"height": 13,
 											"autoResize": false,
@@ -1889,8 +1945,8 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 192,
-											"top": -24,
+											"left": 48,
+											"top": 192,
 											"width": 0,
 											"height": 13,
 											"autoResize": false,
@@ -1908,9 +1964,9 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 684,
-									"top": 87,
-									"width": 93,
+									"left": 636,
+									"top": 159,
+									"width": 212,
 									"height": 25,
 									"autoResize": false,
 									"stereotypeLabel": {
@@ -1944,8 +2000,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 128,
-									"top": -16,
+									"left": 32,
+									"top": 128,
 									"width": 10,
 									"height": 10,
 									"autoResize": false
@@ -1978,13 +2034,41 @@
 											"showShadow": true,
 											"containerChangeable": false,
 											"containerExtending": false,
-											"left": 689,
-											"top": 117,
-											"width": 83,
+											"left": 641,
+											"top": 189,
+											"width": 202,
 											"height": 13,
 											"autoResize": false,
 											"underline": false,
-											"text": "+Operation1()",
+											"text": "+sendEvent(event: EventInstance)",
+											"horizontalAlignment": 0,
+											"verticalAlignment": 5
+										},
+										{
+											"_type": "UMLOperationView",
+											"_id": "AAAAAAFNn6eIVGmtcM8=",
+											"_parent": {
+												"$ref": "AAAAAAFNnH4ME/f/QS0="
+											},
+											"model": {
+												"$ref": "AAAAAAFNn6eIM2mq1fA="
+											},
+											"visible": true,
+											"enabled": true,
+											"lineColor": "#000000",
+											"fillColor": "#ffffff",
+											"fontColor": "#000000",
+											"font": "Arial;13;0",
+											"showShadow": true,
+											"containerChangeable": false,
+											"containerExtending": false,
+											"left": 641,
+											"top": 204,
+											"width": 202,
+											"height": 13,
+											"autoResize": false,
+											"underline": false,
+											"text": "+onEvent(event: EventInstance)",
 											"horizontalAlignment": 0,
 											"verticalAlignment": 5
 										}
@@ -1998,10 +2082,10 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 684,
-									"top": 112,
-									"width": 93,
-									"height": 23,
+									"left": 636,
+									"top": 184,
+									"width": 212,
+									"height": 38,
 									"autoResize": false
 								},
 								{
@@ -2022,8 +2106,8 @@
 									"showShadow": true,
 									"containerChangeable": false,
 									"containerExtending": false,
-									"left": 128,
-									"top": -16,
+									"left": 32,
+									"top": 128,
 									"width": 10,
 									"height": 10,
 									"autoResize": false
@@ -2038,10 +2122,10 @@
 							"showShadow": true,
 							"containerChangeable": true,
 							"containerExtending": false,
-							"left": 684,
-							"top": 64,
-							"width": 93,
-							"height": 72,
+							"left": 636,
+							"top": 136,
+							"width": 212,
+							"height": 87,
 							"autoResize": false,
 							"stereotypeDisplay": "icon",
 							"showVisibility": true,
@@ -2099,7 +2183,9 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "EventListener",
+									"type": {
+										"$ref": "AAAAAAFNnH4MD/f2nvY="
+									},
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -2147,7 +2233,9 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "EventListener",
+									"type": {
+										"$ref": "AAAAAAFNnH4MD/f2nvY="
+									},
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -2195,7 +2283,89 @@
 									"visibility": "public",
 									"isStatic": false,
 									"isLeaf": false,
-									"type": "EventListener",
+									"type": {
+										"$ref": "AAAAAAFNnH4MD/f2nvY="
+									},
+									"isReadOnly": false,
+									"isOrdered": false,
+									"isUnique": false,
+									"direction": "in"
+								}
+							],
+							"concurrency": "sequential",
+							"isQuery": false,
+							"isAbstract": false
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFNn5p4rGmN+s4=",
+							"_parent": {
+								"$ref": "AAAAAAFNnHmLOveusQk="
+							},
+							"name": "sendEvent",
+							"visibility": "public",
+							"isStatic": false,
+							"isLeaf": false,
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFNn5rerGmUguo=",
+									"_parent": {
+										"$ref": "AAAAAAFNn5p4rGmN+s4="
+									},
+									"name": "event",
+									"visibility": "public",
+									"isStatic": false,
+									"isLeaf": false,
+									"type": "EventInstance",
+									"isReadOnly": false,
+									"isOrdered": false,
+									"isUnique": false,
+									"direction": "in"
+								}
+							],
+							"concurrency": "sequential",
+							"isQuery": false,
+							"isAbstract": false
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFNn6UUNmmanZQ=",
+							"_parent": {
+								"$ref": "AAAAAAFNnHmLOveusQk="
+							},
+							"name": "sendEvent",
+							"visibility": "public",
+							"isStatic": false,
+							"isLeaf": false,
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFNn6Xm7WmheZs=",
+									"_parent": {
+										"$ref": "AAAAAAFNn6UUNmmanZQ="
+									},
+									"name": "target",
+									"visibility": "public",
+									"isStatic": false,
+									"isLeaf": false,
+									"type": "GameActor",
+									"isReadOnly": false,
+									"isOrdered": false,
+									"isUnique": false,
+									"direction": "in"
+								},
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFNn6YKjmmkNP0=",
+									"_parent": {
+										"$ref": "AAAAAAFNn6UUNmmanZQ="
+									},
+									"name": "event",
+									"visibility": "public",
+									"isStatic": false,
+									"isLeaf": false,
+									"type": "EventInstance",
 									"isReadOnly": false,
 									"isOrdered": false,
 									"isUnique": false,
@@ -2218,7 +2388,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "EventHandler",
+					"name": "EventProxy",
 					"visibility": "public",
 					"operations": [
 						{
@@ -2227,10 +2397,60 @@
 							"_parent": {
 								"$ref": "AAAAAAFNnH4MD/f2nvY="
 							},
-							"name": "Operation1",
+							"name": "sendEvent",
 							"visibility": "public",
 							"isStatic": false,
 							"isLeaf": false,
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFNn6bAY2mnhZ0=",
+									"_parent": {
+										"$ref": "AAAAAAFNnH5INvgd634="
+									},
+									"name": "event",
+									"visibility": "public",
+									"isStatic": false,
+									"isLeaf": false,
+									"type": "EventInstance",
+									"isReadOnly": false,
+									"isOrdered": false,
+									"isUnique": false,
+									"direction": "in"
+								}
+							],
+							"concurrency": "sequential",
+							"isQuery": false,
+							"isAbstract": false
+						},
+						{
+							"_type": "UMLOperation",
+							"_id": "AAAAAAFNn6eIM2mq1fA=",
+							"_parent": {
+								"$ref": "AAAAAAFNnH4MD/f2nvY="
+							},
+							"name": "onEvent",
+							"visibility": "public",
+							"isStatic": false,
+							"isLeaf": false,
+							"parameters": [
+								{
+									"_type": "UMLParameter",
+									"_id": "AAAAAAFNn6e2rGmxwg0=",
+									"_parent": {
+										"$ref": "AAAAAAFNn6eIM2mq1fA="
+									},
+									"name": "event",
+									"visibility": "public",
+									"isStatic": false,
+									"isLeaf": false,
+									"type": "EventInstance",
+									"isReadOnly": false,
+									"isOrdered": false,
+									"isUnique": false,
+									"direction": "in"
+								}
+							],
 							"concurrency": "sequential",
 							"isQuery": false,
 							"isAbstract": false
@@ -7204,10 +7424,11 @@
 					"_parent": {
 						"$ref": "AAAAAAFNnJnb8vgmC9U="
 					},
-					"name": "Role1",
+					"name": "Object1",
 					"visibility": "public",
 					"isStatic": false,
 					"isLeaf": false,
+					"type": "",
 					"isReadOnly": false,
 					"isOrdered": false,
 					"isUnique": false,
@@ -7221,10 +7442,11 @@
 					"_parent": {
 						"$ref": "AAAAAAFNnJnb8vgmC9U="
 					},
-					"name": "Role2",
+					"name": "EventManager",
 					"visibility": "public",
 					"isStatic": false,
 					"isLeaf": false,
+					"type": "",
 					"isReadOnly": false,
 					"isOrdered": false,
 					"isUnique": false,
@@ -7238,10 +7460,11 @@
 					"_parent": {
 						"$ref": "AAAAAAFNnJnb8vgmC9U="
 					},
-					"name": "Role3",
+					"name": "Object2",
 					"visibility": "public",
 					"isStatic": false,
 					"isLeaf": false,
+					"type": "",
 					"isReadOnly": false,
 					"isOrdered": false,
 					"isUnique": false,
