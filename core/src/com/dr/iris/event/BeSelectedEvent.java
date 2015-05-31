@@ -7,12 +7,17 @@ public class BeSelectedEvent implements EventPrototype {
 
 
     @Override
-    public Class<?> getNthType() {
+    public String getName() {
         return null;
     }
 
     @Override
-    public String getNthName() {
+    public Class<?> getNthType(int nth) {
+        return null;
+    }
+
+    @Override
+    public String getNthFieldName(int nth) {
         return null;
     }
 
