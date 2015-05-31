@@ -10,14 +10,14 @@ import java.util.Map;
  */
 public class EventNexus {
 
-    private EventNexus() {}
     private static EventNexus defInst;
+    Map<EventPrototype, List<EventProxy>> in_eventMap = new HashMap<>();
+    private EventNexus() {}
+
     public static EventNexus getInst() {
         if(defInst == null) defInst = new EventNexus();
         return defInst;
     }
-
-    Map<EventPrototype, List<EventProxy>> in_eventMap = new HashMap<>();
 
     public void registerEvent(EventProxy proxy, EventPrototype... eventTypeList) {
         if(proxy == null) throw new RuntimeException("Sender null is not allowed");
@@ -37,14 +37,36 @@ public class EventNexus {
     }
 
     public void deregisterEvent(EventProxy proxy) {
-
+        for (List<EventProxy> list : in_eventMap.values()) {
+            list.remove(proxy);
+        }
     }
 
     void deregisterEvent(EventProxy proxy, EventPrototype... eventTypeList) {
-
+        for (EventPrototype ep : eventTypeList) {
+            if (in_eventMap.containsKey(ep) == false) continue;
+            in_eventMap.get(ep).remove(proxy);
+        }
     }
 
-    void sendEvent(EventProxy sender, Event event) {
+    int sendEvent(EventProxy sender, EventInstance eventInstance) {
+        int sent = 0;
+        for (EventProxy ev : in_eventMap.get(eventInstance.getPrototype())) {
+            //On-something
+            ev.handleEvent(eventInstance);
+            sent++;
+        }
+        return sent;
+    }
+
+    boolean sendEvent(EventProxy sender, EventProxy receiver, EventInstance eventInstance) {
+
+        if (in_eventMap.get(eventInstance.getPrototype()).contains(receiver)) {
+            receiver.handleEvent(eventInstance);
+            return true;
+        }
+
+        return false;
 
     }
 
