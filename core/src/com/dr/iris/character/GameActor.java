@@ -40,7 +40,7 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
     BitmapFont font;
     Texture debugTexture;
     Vector2 lastPos;
-    int debugFrameOffset = 10;
+    int debugFrameOffset = 0;
 
 
 

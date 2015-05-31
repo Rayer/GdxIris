@@ -26,10 +26,6 @@ import com.dr.iris.effect.EffectManager;
 import com.dr.iris.log.Log;
 import com.dr.iris.ui.UIObjectsManager;
 
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
-
 
 /**
  * Created by Rayer on 1/1/15.
@@ -91,13 +87,15 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         GridPoint2 point1 = new GridPoint2(50, 400);
         GridPoint2[] spec1 = getEnemySpec1();
         SimpleEnemyActor enemy1 = objectManager.createEnemyActor("steampunk_f9", point1.x, point1.y);
-        enemy1.setActionSpec(spec1);
+        enemy1.setActionArray(spec1);
+        enemy1.setBulletAngleArray(getBulletAngle1());
 
         //enemy 2
         GridPoint2 point2 = new GridPoint2(400, 400);
         GridPoint2[] spec2 = getEnemySpec2();
         SimpleEnemyActor enemy2 = objectManager.createEnemyActor("steampunk_f9", point2.x, point2.y);
-        enemy2.setActionSpec(spec2);
+        enemy2.setActionArray(spec2);
+        enemy2.setBulletAngleArray(getBulletAngle2());
 
         super.create();
     }
@@ -124,6 +122,25 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         GridPoint2 step6 = new GridPoint2(400, 400);
 
         GridPoint2 ret[] = {step1, step2, step3, step4, step5, step6};
+
+        return ret;
+    }
+
+    private float[] getBulletAngle1() {
+        float spec1 = 270.0f;
+        float spec2 = 300.0f;
+
+        float ret[] = {spec1, spec2};
+
+        return ret;
+    }
+
+    private float[] getBulletAngle2() {
+        float spec1 = 220.0f;
+        float spec2 = 180.0f;
+        float spec3 = 200.0f;
+
+        float ret[] = {spec1, spec2, spec3};
 
         return ret;
     }
