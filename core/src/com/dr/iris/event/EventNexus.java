@@ -42,27 +42,31 @@ public class EventNexus {
         }
     }
 
-    void deregisterEvent(EventProxy proxy, EventPrototype... eventTypeList) {
+    public void deregisterEvent(EventProxy proxy, EventPrototype... eventTypeList) {
         for (EventPrototype ep : eventTypeList) {
             if (in_eventMap.containsKey(ep) == false) continue;
             in_eventMap.get(ep).remove(proxy);
         }
     }
 
-    int sendEvent(EventProxy sender, EventInstance eventInstance) {
+    public int sendEvent(EventProxy sender, EventInstance eventInstance, int Flag) {
         int sent = 0;
         for (EventProxy ev : in_eventMap.get(eventInstance.getPrototype())) {
             //On-something
-            ev.handleEvent(eventInstance);
+            ev.handleEvent(sender, eventInstance);
             sent++;
         }
         return sent;
     }
 
-    boolean sendEvent(EventProxy sender, EventProxy receiver, EventInstance eventInstance) {
+    public int sendEvent(EventProxy sender, EventInstance eventInstance) {
+        return sendEvent(sender, eventInstance, 0);
+    }
+
+    public boolean sendEvent(EventProxy sender, EventProxy receiver, EventInstance eventInstance) {
 
         if (in_eventMap.get(eventInstance.getPrototype()).contains(receiver)) {
-            receiver.handleEvent(eventInstance);
+            receiver.handleEvent(sender, eventInstance);
             return true;
         }
 

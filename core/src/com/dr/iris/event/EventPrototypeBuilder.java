@@ -64,6 +64,11 @@ public class EventPrototypeBuilder {
     }
 
     public EventPrototype create() {
-        return new GenericEventPrototype(name, (String[]) fieldNameList.toArray(), (Class<?>[]) typeList.toArray());
+        String[] fieldNameArray = new String[fieldNameList.size()];
+        Class<?>[] typeArray = new Class<?>[typeList.size()];
+
+        fieldNameList.toArray(fieldNameArray);
+        typeList.toArray(typeArray);
+        return new GenericEventPrototype(name, fieldNameArray, typeArray);
     }
 }

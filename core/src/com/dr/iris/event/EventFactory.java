@@ -6,6 +6,10 @@ package com.dr.iris.event;
 public class EventFactory {
 
     public static EventInstance createEventByPrototype(EventPrototype prototype, Object... values) {
+        return new EventInstance(prototype, values);
+    }
+
+    public static EventInstance createEventByPrototype(String prototypeName, Object... values) {
         return null;
     }
 

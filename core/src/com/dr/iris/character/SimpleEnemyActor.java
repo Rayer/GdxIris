@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Objects.SweepingBulletGroup;
+import com.dr.iris.event.*;
 import com.dr.iris.ui.LockOnTarget;
 import com.dr.iris.ui.UIObjectsManager;
 
@@ -34,10 +35,21 @@ public class SimpleEnemyActor extends GameActor {
     BitmapFont bulletColldownNotify;
     BitmapFont moveCooldownNotify;
 
+    EventProxy eventProxy = new EventProxy() {
+        @Override
+        public void handleEvent(EventProxy sender, EventInstance eventInstance) {
+            if (sender == eventProxy) return;
+            if (eventInstance.getPrototype() == EventPrototypes.NOTIFY_UNCLICK) {
+                SimpleEnemyActor.this.getUnclicked();
+            }
+        }
+    };
+
     public SimpleEnemyActor(String characterName) {
         super(characterName);
         setPosition(200, 200);
 
+        EventNexus.getInst().registerEvent(eventProxy, EventPrototypes.NOTIFY_UNCLICK, EventPrototypes.NOTIFY_COLLIDE);
         //Random random = new Random();
         //bulletCooldown = random.nextInt(5);
         //moveCooldown = random.nextInt(5);
@@ -124,14 +136,8 @@ public class SimpleEnemyActor extends GameActor {
     }
 
     public void getClicked() {
-        //notify other actors stop spinning
-        for (GameActor sea : ObjectManager.getInst().getActorList()) {
-            if (sea.getFaction() == Faction.NON_ENEMY) continue;
-            if (sea == this) continue;
-
-            ((SimpleEnemyActor) sea).getUnclicked();
-        }
         uiTarget.setSpinning(true);
+        EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype(EventPrototypes.NOTIFY_UNCLICK));
     }
 
 }
