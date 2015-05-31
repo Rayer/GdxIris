@@ -26,11 +26,6 @@ class GenericEventPrototype implements EventPrototype {
         }
     }
 
-    void setAttribute(String[] fieldNames, Class<?>[] types) {
-        this.fieldNames = fieldNames;
-        this.types = types;
-    }
-
     @Override
     public String getName() {
         return eventName;
