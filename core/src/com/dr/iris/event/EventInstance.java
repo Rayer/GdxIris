@@ -27,8 +27,8 @@ public class EventInstance {
             if (valueName.equals(getPrototype().getNthFieldName(index))) break;
         }
 
-        if (index > getPrototype().getSize()) {
-            throw new IllegalArgumentException("No property + " + valueName + " is found!");
+        if (index >= getPrototype().getSize()) {
+            throw new IllegalArgumentException("No property \"" + valueName + "\" is found!");
         }
 
         Class<?> targetClass = getPrototype().getNthType(index);

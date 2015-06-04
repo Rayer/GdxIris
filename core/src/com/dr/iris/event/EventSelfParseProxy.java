@@ -68,7 +68,8 @@ public class EventSelfParseProxy implements EventProxy {
         if (info.parameterInfo != null && info.parameterInfo.length > 0) {
             parameters = new Object[info.parameterInfo.length];
             for (int index = 0; index < info.parameterInfo.length; ++index) {
-                parameters[index] = eventInstance.getValue(info.parameterInfo[index].relatedToEventParam);
+                ParameterInfo pinfo = info.parameterInfo[index];
+                parameters[index] = (pinfo.clazz).cast(eventInstance.getValue(pinfo.relatedToEventParam));
             }
         }
 

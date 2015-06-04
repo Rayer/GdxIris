@@ -136,9 +136,6 @@ public class SimpleEnemyActor extends GameActor {
     }
 
     private void fireBullet() {
-        //Random r = new Random();
-        //BulletGroupSpec spec = new SweepingBulletGroup(this, r.nextInt(360), 180.0f, 4.0f);
-        //ObjectManager.getInst().createBulletGroup(spec);
 
         if(bulletArray.length > 0) {
             float nextAngle = bulletArray[currentBullet];
