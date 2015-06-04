@@ -47,6 +47,9 @@ public class SimpleEnemyActor extends GameActor {
         }
     };
 
+
+
+
     public SimpleEnemyActor(String characterName) {
         super(characterName);
         setPosition(200, 200);
@@ -152,6 +155,7 @@ public class SimpleEnemyActor extends GameActor {
         }
     }
 
+    //@HandleEvent(EventPrototypes.NOTIFY_UNCLICK)
     public void getUnclicked() {
         uiTarget.setSpinning(false);
     }

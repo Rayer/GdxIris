@@ -1,7 +1,11 @@
 package com.dr.iris.event;
 
 import com.badlogic.gdx.math.Vector2;
+import com.dr.iris.Objects.Bullet;
 import com.dr.iris.character.GameActor;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Rayer on 6/1/15.
@@ -12,5 +16,9 @@ public class EventPrototypes {
             .addFieldNameType("target", GameActor.class)
             .addFieldNameType("delta", Vector2.class)
             .create();
+    public static final EventPrototype NOTIFY_BULLET_HIT = new EventPrototypeBuilder("NOTIFY_BULLET_HIT")
+            .addFieldNameType("source", Bullet.class)
+            .create();
+
 
 }

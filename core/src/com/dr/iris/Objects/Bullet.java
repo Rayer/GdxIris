@@ -54,7 +54,6 @@ public class Bullet implements Disposable {
             if(actor.isHit(spec.getCurPos().x, spec.getCurPos().y)) {
                 actor.getHit(spec);
                 ttl = 0;
-
                 EffectManager.getInst().addEffect(new BulletExploseEffect(spec.getCurPos().x, spec.getCurPos().y, 1));
                 return false;
             }

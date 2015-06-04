@@ -70,5 +70,6 @@ public class EventPrototypeBuilder {
         fieldNameList.toArray(fieldNameArray);
         typeList.toArray(typeArray);
         return new GenericEventPrototype(name, fieldNameArray, typeArray);
+
     }
 }
