@@ -19,10 +19,12 @@ public class EventPrototypes {
             .addFieldNameType("delta", Vector2.class)
             .create();
 
+    @SuppressWarnings("unused")
     public static final EventPrototype NOTIFY_BULLET_HIT = new EventPrototypeBuilder("NOTIFY_BULLET_HIT")
             .addFieldNameType("source", Bullet.class)
             .create();
 
+    @SuppressWarnings("unused")
     public static final EventPrototype TEST_MULTIPARAM_EVENT = new EventPrototypeBuilder("TEST_MULTIPARAM_EVENT")
             .addFieldNameType("test_1st_param", Integer.class)
             .addFieldNameType("test_2nd_param", String.class)

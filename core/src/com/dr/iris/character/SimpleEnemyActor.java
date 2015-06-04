@@ -62,11 +62,13 @@ public class SimpleEnemyActor extends GameActor {
 
     }
 
+    @SuppressWarnings("unused")
     @EventHandler("NOTIFY_UNCLICK")
     public void handle_unclick() {
         uiTarget.setSpinning(false);
     }
 
+    @SuppressWarnings("unused")
     @EventHandler("TEST_MULTIPARAM_EVENT")
     public void handle_param(@EventParameter("test_2nd_param") String param) {
         log.debug("Get param : " + param);
