@@ -11,6 +11,7 @@ import java.util.Map;
  * Created by Rayer on 6/1/15.
  */
 public class EventPrototypes {
+    static Map<String, EventPrototype> epMap;
     public static final EventPrototype NOTIFY_UNCLICK = new EventPrototypeBuilder("NOTIFY_UNCLICK").create();
     public static final EventPrototype NOTIFY_COLLIDE = new EventPrototypeBuilder("NOTIFY_COLLIDE")
             .addFieldNameType("target", GameActor.class)
@@ -20,5 +21,14 @@ public class EventPrototypes {
             .addFieldNameType("source", Bullet.class)
             .create();
 
+    public static EventPrototype getPrototypeByName(String name) {
+        return epMap.get(name);
+    }
+
+    public static EventPrototype registerPrototype(EventPrototype prototype) {
+        if (epMap == null) epMap = new HashMap<>();
+        epMap.put(prototype.getName(), prototype);
+        return prototype;
+    }
 
 }

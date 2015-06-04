@@ -37,24 +37,24 @@ public class SimpleEnemyActor extends GameActor {
     BitmapFont bulletColldownNotify;
     BitmapFont moveCooldownNotify;
 
-    EventProxy eventProxy = new EventProxy() {
-        @Override
-        public void handleEvent(EventProxy sender, EventInstance eventInstance) {
-            if (sender == eventProxy) return;
-            if (eventInstance.getPrototype() == EventPrototypes.NOTIFY_UNCLICK) {
-                SimpleEnemyActor.this.getUnclicked();
-            }
-        }
-    };
+//    EventProxy eventProxy = new EventProxy() {
+//        @Override
+//        public void handleEvent(EventProxy sender, EventInstance eventInstance) {
+//            if (sender == eventProxy) return;
+//            if (eventInstance.getPrototype() == EventPrototypes.NOTIFY_UNCLICK) {
+//                SimpleEnemyActor.this.getUnclicked();
+//            }
+//        }
+//    };
 
 
-
+    EventProxy eventProxy = new EventSelfParseProxy(this);
 
     public SimpleEnemyActor(String characterName) {
         super(characterName);
         setPosition(200, 200);
 
-        EventNexus.getInst().registerEvent(eventProxy, EventPrototypes.NOTIFY_UNCLICK, EventPrototypes.NOTIFY_COLLIDE);
+//      EventNexus.getInst().registerEvent(eventProxy, EventPrototypes.NOTIFY_UNCLICK, EventPrototypes.NOTIFY_COLLIDE);
         //Random random = new Random();
         //bulletCooldown = random.nextInt(5);
         //moveCooldown = random.nextInt(5);
@@ -72,6 +72,11 @@ public class SimpleEnemyActor extends GameActor {
         moveCooldownNotify.setColor(Color.LIGHT_GRAY);
         moveCooldownNotify.setScale(0.8f);
 
+    }
+
+    @EventHandler("NOTIFY_UNCLICK")
+    public void handle_unclick() {
+        uiTarget.setSpinning(false);
     }
 
     @Override
@@ -156,9 +161,9 @@ public class SimpleEnemyActor extends GameActor {
     }
 
     //@HandleEvent(EventPrototypes.NOTIFY_UNCLICK)
-    public void getUnclicked() {
-        uiTarget.setSpinning(false);
-    }
+//    public void getUnclicked() {
+//        uiTarget.setSpinning(false);
+//    }
 
     public void getClicked() {
         uiTarget.setSpinning(true);
