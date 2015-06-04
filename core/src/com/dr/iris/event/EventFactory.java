@@ -10,7 +10,8 @@ public class EventFactory {
     }
 
     public static EventInstance createEventByPrototype(String prototypeName, Object... values) {
-        return null;
+        EventPrototype proto = EventPrototypes.getPrototypeByName(prototypeName);
+        return createEventByPrototype(proto, values);
     }
 
 }

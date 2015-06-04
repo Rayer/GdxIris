@@ -10,6 +10,7 @@ import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Objects.SweepingBulletGroup;
 import com.dr.iris.event.*;
+import com.dr.iris.log.Log;
 import com.dr.iris.ui.LockOnTarget;
 import com.dr.iris.ui.UIObjectsManager;
 
@@ -25,6 +26,8 @@ public class SimpleEnemyActor extends GameActor {
     float moveCooldown = MOVE_PERIOD;
     LockOnTarget uiTarget;
 
+    Log log = Log.getLogger(this.getClass());
+
     GridPoint2 actionArray[] = {}; // should be a spec
     int currentAction = 0;
     int actionNum = 0;
@@ -37,27 +40,12 @@ public class SimpleEnemyActor extends GameActor {
     BitmapFont bulletColldownNotify;
     BitmapFont moveCooldownNotify;
 
-//    EventProxy eventProxy = new EventProxy() {
-//        @Override
-//        public void handleEvent(EventProxy sender, EventInstance eventInstance) {
-//            if (sender == eventProxy) return;
-//            if (eventInstance.getPrototype() == EventPrototypes.NOTIFY_UNCLICK) {
-//                SimpleEnemyActor.this.getUnclicked();
-//            }
-//        }
-//    };
-
-
     EventProxy eventProxy = new EventSelfParseProxy(this);
 
     public SimpleEnemyActor(String characterName) {
         super(characterName);
         setPosition(200, 200);
 
-//      EventNexus.getInst().registerEvent(eventProxy, EventPrototypes.NOTIFY_UNCLICK, EventPrototypes.NOTIFY_COLLIDE);
-        //Random random = new Random();
-        //bulletCooldown = random.nextInt(5);
-        //moveCooldown = random.nextInt(5);
         bulletCooldown = 3;
         moveCooldown = 5;
 
@@ -77,6 +65,11 @@ public class SimpleEnemyActor extends GameActor {
     @EventHandler("NOTIFY_UNCLICK")
     public void handle_unclick() {
         uiTarget.setSpinning(false);
+    }
+
+    @EventHandler("TEST_MULTIPARAM_EVENT")
+    public void handle_param(@EventParameter("test_2nd_param") String param) {
+        log.debug("Get param : " + param);
     }
 
     @Override
@@ -160,14 +153,11 @@ public class SimpleEnemyActor extends GameActor {
         }
     }
 
-    //@HandleEvent(EventPrototypes.NOTIFY_UNCLICK)
-//    public void getUnclicked() {
-//        uiTarget.setSpinning(false);
-//    }
 
     public void getClicked() {
         uiTarget.setSpinning(true);
         EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype(EventPrototypes.NOTIFY_UNCLICK));
+        EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype("TEST_MULTIPARAM_EVENT", 12, "Test", 11.4f));
     }
 
 }

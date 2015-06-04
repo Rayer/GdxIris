@@ -38,7 +38,8 @@ public class EventSelfParseProxy implements EventProxy {
                 Annotation[] annotations = parameterAnnotations[index];
                 for (Annotation anno : annotations) {
                     if (anno.annotationType() != EventParameter.class) continue;
-                    String eventAttrName = ((EventParameter) anno).attrName();
+                    String eventAttrName = ((EventParameter) anno).value();
+                    methodInfo.parameterInfo[index] = new ParameterInfo();
                     methodInfo.parameterInfo[index].relatedToEventParam = eventAttrName;
                     break;
                 }
