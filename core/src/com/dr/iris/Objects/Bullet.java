@@ -23,11 +23,11 @@ public class Bullet implements Disposable {
 
     public Bullet() {
         if(bulletTexture == null) {
-            bulletTexture = new Texture(FileUtils.getRes("bullet.png"));
+            bulletTexture = new Texture(FileUtils.getRes("bullet2.png"));
         }
 
         bulletSpirte = new Sprite(bulletTexture);
-        bulletSpirte.setSize(8, 8);
+        bulletSpirte.setSize(24, 24);
 
     }
 

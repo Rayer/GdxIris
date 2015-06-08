@@ -174,6 +174,14 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
         return getY() + (getHeight() / 2);
     }
 
+    public ActorSpec getActorSpec() {
+        return actorSpec;
+    }
+
+    public void setActorSpec(ActorSpec actorSpec) {
+        this.actorSpec = actorSpec;
+    }
+
     public enum Faction {
         ENEMY,
         NON_ENEMY

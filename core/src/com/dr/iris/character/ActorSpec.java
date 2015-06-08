@@ -3,13 +3,15 @@ package com.dr.iris.character;
 import com.dr.iris.action.ActionBase;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rayer on 1/1/15.
  */
 public class ActorSpec {
-    List<ActionBase> abilityActionBase = new ArrayList<>();
+    Map<ActionBase.ActionType, List<ActionBase>> abilityAction = new HashMap<>();
 
     private int HP = 120;
     private int MaxHP = 120;
@@ -18,6 +20,7 @@ public class ActorSpec {
     private int STA = 150;
     private int MaxSTA = 150;
     private int EXPERTISE = 100;
+    private float MoveSpeed = 80.0f;
     private Type type = Type.Friendly;
 
     public Type getType() {
@@ -82,6 +85,30 @@ public class ActorSpec {
 
     public void setEXPERTISE(int EXPERTISE) {
         this.EXPERTISE = EXPERTISE;
+    }
+
+    public List<ActionBase> getMoveActions() {
+        return abilityAction.get(ActionBase.ActionType.Move);
+    }
+
+    public void setMoveActions(List<ActionBase> actions) {
+        abilityAction.put(ActionBase.ActionType.Move, actions);
+    }
+
+    public List<ActionBase> getBulletActions() {
+        return abilityAction.get(ActionBase.ActionType.Bullet);
+    }
+
+    public void setBulletActions(List<ActionBase> actions) {
+        abilityAction.put(ActionBase.ActionType.Bullet, actions);
+    }
+
+    public float getMoveSpeed() {
+        return MoveSpeed;
+    }
+
+    public void setMoveSpeed(float moveSpeed) {
+        MoveSpeed = moveSpeed;
     }
 
     enum Type {Main, Friendly, Enemy}

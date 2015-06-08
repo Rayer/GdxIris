@@ -22,6 +22,8 @@ import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
 import com.dr.iris.character.MainActor;
 import com.dr.iris.character.SimpleEnemyActor;
+import com.dr.iris.character.enemyAction.SimpleEnemyAction1;
+import com.dr.iris.character.enemyAction.SimpleEnemyAction2;
 import com.dr.iris.effect.EffectManager;
 import com.dr.iris.log.Log;
 import com.dr.iris.ui.UIObjectsManager;
@@ -85,64 +87,19 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 //        }
         //enemy 1
         GridPoint2 point1 = new GridPoint2(50, 400);
-        GridPoint2[] spec1 = getEnemySpec1();
+        //GridPoint2[] spec1 = getEnemySpec1();
         SimpleEnemyActor enemy1 = objectManager.createEnemyActor("steampunk_f9", point1.x, point1.y);
-        enemy1.setActionArray(spec1);
-        enemy1.setBulletAngleArray(getBulletAngle1());
+        enemy1.getActorSpec().setBulletActions(SimpleEnemyAction1.getBulletActions(enemy1));
+        enemy1.getActorSpec().setMoveActions(SimpleEnemyAction1.getMoveActions(enemy1));
 
         //enemy 2
         GridPoint2 point2 = new GridPoint2(400, 400);
-        GridPoint2[] spec2 = getEnemySpec2();
+        //GridPoint2[] spec2 = getEnemySpec2();
         SimpleEnemyActor enemy2 = objectManager.createEnemyActor("steampunk_f9", point2.x, point2.y);
-        enemy2.setActionArray(spec2);
-        enemy2.setBulletAngleArray(getBulletAngle2());
+        enemy2.getActorSpec().setBulletActions(SimpleEnemyAction2.getBulletActions(enemy2));
+        enemy2.getActorSpec().setMoveActions(SimpleEnemyAction2.getMoveActions(enemy2));
 
         super.create();
-    }
-
-    private GridPoint2[] getEnemySpec1() {
-        GridPoint2 step1 = new GridPoint2(100, 400);
-        GridPoint2 step2 = new GridPoint2(150, 400);
-        GridPoint2 step3 = new GridPoint2(200, 400);
-        GridPoint2 step4 = new GridPoint2(150, 400);
-        GridPoint2 step5 = new GridPoint2(100, 400);
-        GridPoint2 step6 = new GridPoint2(50, 400);
-
-        GridPoint2 ret[] = {step1, step2, step3, step4, step5, step6};
-
-        return ret;
-    }
-
-    private GridPoint2[] getEnemySpec2() {
-        GridPoint2 step1 = new GridPoint2(400, 350);
-        GridPoint2 step2 = new GridPoint2(400, 300);
-        GridPoint2 step3 = new GridPoint2(400, 250);
-        GridPoint2 step4 = new GridPoint2(400, 300);
-        GridPoint2 step5 = new GridPoint2(400, 350);
-        GridPoint2 step6 = new GridPoint2(400, 400);
-
-        GridPoint2 ret[] = {step1, step2, step3, step4, step5, step6};
-
-        return ret;
-    }
-
-    private float[] getBulletAngle1() {
-        float spec1 = 270.0f;
-        float spec2 = 300.0f;
-
-        float ret[] = {spec1, spec2};
-
-        return ret;
-    }
-
-    private float[] getBulletAngle2() {
-        float spec1 = 220.0f;
-        float spec2 = 180.0f;
-        float spec3 = 200.0f;
-
-        float ret[] = {spec1, spec2, spec3};
-
-        return ret;
     }
 
     private void setupCamera() {

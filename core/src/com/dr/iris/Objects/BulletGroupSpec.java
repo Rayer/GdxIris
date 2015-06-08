@@ -6,4 +6,7 @@ package com.dr.iris.Objects;
 public interface BulletGroupSpec {
 
     boolean update(float delta);
+
+    // for workaround ?
+    BulletGroupSpec newInst();
 }

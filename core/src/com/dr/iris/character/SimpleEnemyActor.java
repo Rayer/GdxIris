@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Objects.SweepingBulletGroup;
+import com.dr.iris.action.ActionBase;
+import com.dr.iris.action.BulletAction;
 import com.dr.iris.event.*;
 import com.dr.iris.log.Log;
 import com.dr.iris.ui.LockOnTarget;
@@ -19,35 +21,20 @@ import com.dr.iris.ui.UIObjectsManager;
  */
 public class SimpleEnemyActor extends GameActor {
 
-    static final float BULLET_PERIOD = 6.0f;
-    static final float MOVE_PERIOD = 4.0f;
-    static final float MOVE_VELOCITY_PER_SEC = 80.0f;
-    float bulletCooldown = 0;
-    float moveCooldown = MOVE_PERIOD;
-    LockOnTarget uiTarget;
-
     Log log = Log.getLogger(this.getClass());
+    EventProxy eventProxy = new EventSelfParseProxy(this);
 
-    GridPoint2 actionArray[] = {}; // should be a spec
-    int currentAction = 0;
-    int actionNum = 0;
-
-    float bulletArray[] = {};
-    int currentBullet = 0;
-    int bulletNum = 0;
-
+    LockOnTarget uiTarget;
     // notify user
     BitmapFont bulletColldownNotify;
     BitmapFont moveCooldownNotify;
 
-    EventProxy eventProxy = new EventSelfParseProxy(this);
+    Integer currentMove = 0;
+    Integer currentBullet = 0;
 
     public SimpleEnemyActor(String characterName) {
         super(characterName);
         setPosition(200, 200);
-
-        bulletCooldown = 3;
-        moveCooldown = 5;
 
         uiTarget = new LockOnTarget(this, false);
         UIObjectsManager.getInst().addUIObject(uiTarget);
@@ -62,6 +49,60 @@ public class SimpleEnemyActor extends GameActor {
 
     }
 
+    public ActionBase getCurrentBullet() {
+        return getActorSpec().getBulletActions().get(currentBullet);
+    }
+
+    public int getBulletNum() {
+        return getActorSpec().getBulletActions().size();
+    }
+
+    public Integer getCurrentBulletCooldown() {
+        return (int)getCurrentBullet().actionCooldown;
+    }
+
+    private void bulletAction(float delta) {
+
+        if(getCurrentBullet() != null && getCurrentBullet().action(this, delta)) {
+            ++currentBullet;
+            if(currentBullet >= getBulletNum()) {
+                currentBullet = 0;
+            }
+        }
+    }
+
+    public ActionBase getCurrentMove() {
+        return getActorSpec().getMoveActions().get(currentMove);
+    }
+
+    public int getMoveNum() {
+        return getActorSpec().getMoveActions().size();
+    }
+
+    public Integer getCurrentMoveCooldown() {
+        return (int)getCurrentMove().actionCooldown;
+    }
+
+    private void moveAction(float delta) {
+
+        if(getCurrentMove() != null && getCurrentMove().action(this, delta)) {
+            ++currentMove;
+            if(currentMove >= getMoveNum()) {
+                currentMove = 0;
+            }
+        }
+    }
+
+    public void getClicked() {
+        uiTarget.setSpinning(true);
+        EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype(EventPrototypes.NOTIFY_UNCLICK));
+        EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype("TEST_MULTIPARAM_EVENT", 12, "Test", 11.4f));
+    }
+
+    /**
+     * Event
+     */
+    // --------------------------------------------------------------
     @SuppressWarnings("unused")
     @EventHandler("NOTIFY_UNCLICK")
     public void handle_unclick() {
@@ -74,6 +115,19 @@ public class SimpleEnemyActor extends GameActor {
         log.debug("Get param : " + param);
     }
 
+    /**
+     * Override
+     */
+    // --------------------------------------------------------------
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+
+        // draw notify
+        bulletColldownNotify.draw(batch, getCurrentBulletCooldown().toString(), getX()+getWidth(), getY()+5);
+        moveCooldownNotify.draw(batch, getCurrentMoveCooldown().toString(), getX() + getWidth(), getY() + getHeight());
+    }
+
     @Override
     public Faction getFaction() {
         return Faction.ENEMY;
@@ -82,81 +136,8 @@ public class SimpleEnemyActor extends GameActor {
     @Override
     public void act(float delta) {
         super.act(delta);
-        bulletCooldown -= delta;
-        if(bulletCooldown < 0) {
-            bulletCooldown = BULLET_PERIOD;
-            fireBullet();
-        }
 
-        moveCooldown -= delta;
-        if (moveCooldown < 0) {
-            moveCooldown = MOVE_PERIOD;
-
-            //Random random = new Random();
-            //float moveToX = random.nextInt(600);
-            //float moveToY = random.nextInt(600);
-
-            doAction();
-        }
+        bulletAction(delta);
+        moveAction(delta);
     }
-
-    private void doAction() {
-        if(actionArray.length > 0) {
-            GridPoint2 nextStep = actionArray[currentAction];
-            float moveToX = nextStep.x;
-            float moveToY = nextStep.y;
-
-            float distance = new Vector2(getX() - moveToX, getY() - moveToY).len();
-            addAction(Actions.moveTo(moveToX, moveToY, distance / MOVE_VELOCITY_PER_SEC));
-            ++currentAction;
-        }
-
-        if(currentAction >= actionNum) {
-            currentAction = 0;
-        }
-    }
-
-    public void setActionArray(GridPoint2[] actionArray) {
-        this.actionArray = actionArray;
-        actionNum = actionArray.length;
-    }
-
-    public void setBulletAngleArray(float[] bulletArray) {
-        this.bulletArray = bulletArray;
-        bulletNum = bulletArray.length;
-    }
-
-    @Override
-    public void draw(Batch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
-
-        // draw notify
-        Integer bulletCD = (int)bulletCooldown;
-        Integer moveCD = (int)moveCooldown;
-        bulletColldownNotify.draw(batch, bulletCD.toString(), getX()+getWidth(), getY()+5);
-        moveCooldownNotify.draw(batch, moveCD.toString(), getX()+getWidth(), getY() + getHeight());
-    }
-
-    private void fireBullet() {
-
-        if(bulletArray.length > 0) {
-            float nextAngle = bulletArray[currentBullet];
-            BulletGroupSpec nextBullet = new SweepingBulletGroup(this, nextAngle, 180.0f, 4.0f);
-            ObjectManager.getInst().createBulletGroup(nextBullet);
-
-            ++currentBullet;
-        }
-
-        if(currentBullet >= bulletNum) {
-            currentBullet = 0;
-        }
-    }
-
-
-    public void getClicked() {
-        uiTarget.setSpinning(true);
-        EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype(EventPrototypes.NOTIFY_UNCLICK));
-        EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype("TEST_MULTIPARAM_EVENT", 12, "Test", 11.4f));
-    }
-
 }

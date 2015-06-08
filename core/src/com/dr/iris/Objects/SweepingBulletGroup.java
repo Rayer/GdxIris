@@ -49,4 +49,9 @@ public class SweepingBulletGroup implements BulletGroupSpec {
 
         return true;
     }
+
+    @Override
+    public BulletGroupSpec newInst() {
+        return new SweepingBulletGroup(firer, initAngle, bulletSpeed, fireRemaining);
+    }
 }
