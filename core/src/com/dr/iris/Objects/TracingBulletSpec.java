@@ -12,10 +12,13 @@ public class TracingBulletSpec extends BaseBulletSpec {
     GameActor target;
     float speed;
     GameActor from;
-    Vector2 currentPos;
+    //Vector2 currentPos;
+
+    boolean isAlive = true;
 
     public TracingBulletSpec(float startX, float startY, GameActor targetActor, float speed, float ttl) {
-        currentPos = new Vector2(startX, startY);
+        super(startX, startY);
+        //currentPos = new Vector2(startX, startY);
         target = targetActor;
         this.speed = speed;
         this.ttl = ttl;
@@ -24,24 +27,22 @@ public class TracingBulletSpec extends BaseBulletSpec {
     @Override
     public boolean update(float delta) {
 
+        if(isAlive == false) return false;
+
         ttl -= delta;
         if (ttl < 0) {
             isAlive = false;
             return false;
         }
 
-        float deltaX = currentPos.x - target.getCenterX();
-        float deltaY = currentPos.y - target.getCenterY();
+        float deltaX = getX() - target.getCenterX();
+        float deltaY = getY() - target.getCenterY();
 
         Vector2 velocity = new Vector2(deltaX, deltaY).setLength(speed * delta);
-        currentPos = currentPos.sub(velocity);
+        Vector2 currentPos = new Vector2(getX(), getY()).sub(velocity);
+        setXY(currentPos.x, currentPos.y);
         //logger.debug_s("Pos : " + currentPos);
         return true;
-    }
-
-    @Override
-    public Vector2 getCurPos() {
-        return currentPos;
     }
 
     @Override
@@ -52,6 +53,11 @@ public class TracingBulletSpec extends BaseBulletSpec {
     @Override
     public void setFrom(GameActor object) {
         from = object;
+    }
+
+    @Override
+    public void setAlive(boolean b) {
+        isAlive = b;
     }
 
     public void setSpeed(float speed) {

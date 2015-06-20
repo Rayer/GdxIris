@@ -1,6 +1,5 @@
 package com.dr.iris.Objects;
 
-import com.badlogic.gdx.math.Vector2;
 import com.dr.iris.character.GameActor;
 
 /**
@@ -10,11 +9,15 @@ import com.dr.iris.character.GameActor;
 public interface BulletSpec {
 
 
-    boolean isAlive();
     boolean update(float delta);
-    Vector2 getCurPos();
 
     GameActor getFrom();
 
     void setFrom(GameActor object);
+
+    void setAlive(boolean b);
+
+    float getX();
+
+    float getY();
 }

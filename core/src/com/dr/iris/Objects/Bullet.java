@@ -39,7 +39,7 @@ public class Bullet implements Disposable {
 
         //TODO: Use primitive type like float x, float y, to avoid rapidly new object.
         if (spec.update(delta) == false) return false;
-        bulletSpirte.setPosition(spec.getCurPos().x, spec.getCurPos().y);
+        bulletSpirte.setPosition(spec.getX(), spec.getY());
 
 
         //hit test
@@ -51,10 +51,11 @@ public class Bullet implements Disposable {
             //Bypass the same faction
             if (spec.getFrom() != null && spec.getFrom().getFaction() == actor.getFaction()) continue;
 
-            if(actor.isHit(spec.getCurPos().x, spec.getCurPos().y)) {
+            if(actor.isHit(spec.getX(), spec.getY())) {
                 actor.getHit(spec);
                 ttl = 0;
-                EffectManager.getInst().addEffect(new BulletExploseEffect(spec.getCurPos().x, spec.getCurPos().y, 1));
+                spec.setAlive(false);
+                EffectManager.getInst().addEffect(new BulletExploseEffect(spec.getX(), spec.getY(), 1));
                 return false;
             }
         }

@@ -41,6 +41,38 @@ public class BulletFactory {
 
     }
 
+    public static class ExpEnemyBombBuilder {
+
+        ObjectManager objMgr = ObjectManager.getInst();
+
+        ExpEnemyBombSpec spec;
+        Vector2 dir = new Vector2(1, 0).nor();
+
+        public ExpEnemyBombBuilder(float x, float y) {
+            spec = new ExpEnemyBombSpec(new Vector2(x, y), dir, 80.0f, 12.0f);
+        }
+
+        public ExpEnemyBombBuilder setDirAndSpeed(Vector2 dir, float speed) {
+            spec.setDirectionAndSpeed(dir, speed);
+            return this;
+        }
+
+        public ExpEnemyBombBuilder setTTL(float ttl) {
+            spec.setTtl(ttl);
+            return this;
+        }
+
+        public ExpEnemyBombBuilder setFrom(GameActor from) {
+            spec.setFrom(from);
+            return this;
+        }
+
+        public void createBullet() {
+            objMgr.createBulletObject(spec);
+        }
+
+    }
+
     public static class TracingBulletBuilder {
         TracingBulletSpec spec;
 

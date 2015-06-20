@@ -49,6 +49,8 @@ public class MainActor extends GameActor {
 
             if (currentTarget != null) {
                 new BulletFactory.TracingBulletBuilder(this, currentTarget).createBullet();
+                //new BulletFactory.ExpEnemyBombBuilder(getX(), getY()).setDirAndSpeed(new Vector2(currentTarget.getX() - getX(), currentTarget.getY() - getY()), 70f).setFrom(this).createBullet();
+
             }
         }
 
