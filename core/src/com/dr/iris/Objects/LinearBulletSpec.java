@@ -11,19 +11,19 @@ public class LinearBulletSpec extends BaseBulletSpec {
 
 
 
-    Vector2 pos;
     Vector2 velocity;
 
     GameActor from;
 
-    public LinearBulletSpec(Vector2 start, Vector2 direction, float speed, float ttl) {
+    public LinearBulletSpec(Vector2 start, Vector2 direction, float speed, float ttl)
+    {
+        super(start.x, start.y);
         direction = direction.nor();
         direction.setLength(speed);
         setSpec(start, direction, ttl);
     }
 
     private void setSpec(Vector2 start, Vector2 velocity, float ttl) {
-        this.pos = new Vector2(start); //if we don't new one, it will share multiple in Bullet Group and cause trouble
         this.velocity = new Vector2(velocity);
         this.ttl = ttl;
         isAlive = true;
@@ -42,18 +42,12 @@ public class LinearBulletSpec extends BaseBulletSpec {
 
         float speedX = velocity.x * delta;
         float speedY = velocity.y * delta;
-        pos = pos.add(speedX, speedY);
+        Vector2 pos = new Vector2(getX(), getY()).add(speedX, speedY);
+        setXY(pos.x, pos.y);
 
         return true;
     }
 
-    public Vector2 getPos() {
-        return pos;
-    }
-
-    public void setPos(Vector2 pos) {
-        this.pos = pos;
-    }
 
     public Vector2 getVelocity() {
         return velocity;
@@ -64,17 +58,12 @@ public class LinearBulletSpec extends BaseBulletSpec {
     }
 
 
-    public void setIsAlive(boolean isAlive) {
+    public void setAlive(boolean isAlive) {
         this.isAlive = isAlive;
     }
 
     public void setDirectionAndSpeed(Vector2 dir, float speed) {
         this.velocity = dir.setLength(speed);
-    }
-
-    @Override
-    public Vector2 getCurPos() {
-        return pos;
     }
 
 
@@ -91,7 +80,6 @@ public class LinearBulletSpec extends BaseBulletSpec {
     @Override
     public String toString() {
         return "LinearBulletSpec{" +
-                "pos=" + pos +
                 ", velocity=" + velocity +
                 ", ttl=" + ttl +
                 ", isAlive=" + isAlive +

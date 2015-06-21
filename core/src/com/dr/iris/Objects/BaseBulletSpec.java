@@ -8,9 +8,29 @@ public abstract class BaseBulletSpec implements BulletSpec {
     float ttl;
     boolean isAlive;
 
+    float x;
+    float y;
+
     @Override
-    public boolean isAlive() {
-        return ttl > 0;
+    public float getX() {
+        return x;
+    }
+
+    @Override
+    public float getY() {
+        return y;
+    }
+
+    @Override
+    public void setXY(float x, float y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public BaseBulletSpec(float x, float y) {
+        this.x = x;
+        this.y = y;
+        isAlive = true;
     }
 
     public void setAlive(boolean alive) {

@@ -14,6 +14,11 @@ public class EventPrototypes {
     static Map<String, EventPrototype> epMap;
     public static final EventPrototype NOTIFY_UNCLICK = new EventPrototypeBuilder("NOTIFY_UNCLICK").create();
 
+    public static final EventPrototype NOTIFY_FIRE_BOMB = new EventPrototypeBuilder("NOTIFY_FIRE_BOMB")
+            .addFieldNameType("target_x", Float.class)
+            .addFieldNameType("target_y", Float.class)
+            .create();
+
     public static final EventPrototype NOTIFY_COLLIDE = new EventPrototypeBuilder("NOTIFY_COLLIDE")
             .addFieldNameType("target", GameActor.class)
             .addFieldNameType("delta", Vector2.class)

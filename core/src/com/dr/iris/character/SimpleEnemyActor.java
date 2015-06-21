@@ -3,14 +3,8 @@ package com.dr.iris.character;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.math.GridPoint2;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.dr.iris.Objects.BulletGroupSpec;
-import com.dr.iris.Objects.ObjectManager;
-import com.dr.iris.Objects.SweepingBulletGroup;
+import com.dr.iris.Objects.BulletFactory;
 import com.dr.iris.action.ActionBase;
-import com.dr.iris.action.BulletAction;
 import com.dr.iris.event.*;
 import com.dr.iris.log.Log;
 import com.dr.iris.ui.LockOnTarget;
@@ -96,7 +90,7 @@ public class SimpleEnemyActor extends GameActor {
     public void getClicked() {
         uiTarget.setSpinning(true);
         EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype(EventPrototypes.NOTIFY_UNCLICK));
-        EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype("TEST_MULTIPARAM_EVENT", 12, "Test", 11.4f));
+        //EventNexus.getInst().sendEvent(eventProxy, EventFactory.createEventByPrototype("TEST_MULTIPARAM_EVENT", 12, "Test", 11.4f));
     }
 
     /**
@@ -110,9 +104,10 @@ public class SimpleEnemyActor extends GameActor {
     }
 
     @SuppressWarnings("unused")
-    @EventHandler("TEST_MULTIPARAM_EVENT")
-    public void handle_param(@EventParameter("test_2nd_param") String param) {
-        log.debug("Get param : " + param);
+    @EventHandler("NOTIFY_FIRE_BOMB")
+    public void handle_fire_bomb(@EventParameter("target_x")Float x, @EventParameter("target_y")Float y) {
+        log.debug("Fire exp_bomb!");
+        new BulletFactory.ExpEnemyBombBuilder(getX(), getY(), x, y).setFrom(this).createBullet();
     }
 
     /**
