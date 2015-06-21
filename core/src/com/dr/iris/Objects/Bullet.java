@@ -17,8 +17,12 @@ public class Bullet implements Disposable {
     static Texture bulletTexture;
     Sprite bulletSpirte;
     float ttl = 5.0f; //max life time is 5 sec
-
-
+    /*
+        static Texture flashTexture;
+        Sprite flashSpirte;
+        float alpha = 0;
+        float scale = 0;
+    */
     BulletSpec spec;
 
     public Bullet() {
@@ -28,7 +32,17 @@ public class Bullet implements Disposable {
 
         bulletSpirte = new Sprite(bulletTexture);
         bulletSpirte.setSize(24, 24);
+/*
+        if(flashTexture == null) {
+            flashTexture = new Texture(FileUtils.getRes("flash.png"));
+        }
 
+        flashSpirte = new Sprite(flashTexture);
+        flashSpirte.setSize(24, 24);
+        flashSpirte.setOrigin(12, 12);
+        flashSpirte.setAlpha(alpha);
+        flashSpirte.setScale(scale);
+*/
     }
 
     public void setSpec(BulletSpec spec) {
@@ -40,7 +54,7 @@ public class Bullet implements Disposable {
         //TODO: Use primitive type like float x, float y, to avoid rapidly new object.
         if (spec.update(delta) == false) return false;
         bulletSpirte.setPosition(spec.getCurPos().x, spec.getCurPos().y);
-
+//        flashSpirte.setPosition(spec.getCurPos().x, spec.getCurPos().y);
 
         //hit test
         for(GameActor actor : ObjectManager.getInst().getActorList()) {
@@ -58,13 +72,22 @@ public class Bullet implements Disposable {
                 return false;
             }
         }
-
+        /*
+        flashSpirte.setAlpha(alpha+=0.25f);
+        flashSpirte.setScale(scale += 0.25f);
+        if(alpha > 1.0f) {
+            alpha = 0;
+        }
+        if(scale > 2.0f) {
+            scale = 0;
+        }
+        */
         return true;
     }
 
     void draw(Batch batch) {
         bulletSpirte.draw(batch);
-
+        //flashSpirte.draw(batch);
     }
 
 
