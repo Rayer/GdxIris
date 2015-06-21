@@ -202,7 +202,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     @Override
     public boolean longPress(float x, float y) {
         log.debug("longPress");
-        EventNexus.getInst().sendEvent(eventHandler, EventFactory.createEventByPrototype(EventPrototypes.NOTIFY_FIRE_BOMB));
+        EventNexus.getInst().sendEvent(eventHandler, EventFactory.createEventByPrototype(EventPrototypes.NOTIFY_FIRE_BOMB, camera.position.x, camera.position.y));
         return false;
     }
 

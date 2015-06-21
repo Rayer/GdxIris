@@ -1,6 +1,5 @@
 package com.dr.iris.character;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -106,9 +105,9 @@ public class SimpleEnemyActor extends GameActor {
 
     @SuppressWarnings("unused")
     @EventHandler("NOTIFY_FIRE_BOMB")
-    public void handle_fire_bomb() {
+    public void handle_fire_bomb(@EventParameter("target_x")Float x, @EventParameter("target_y")Float y) {
         log.debug("Fire exp_bomb!");
-        new BulletFactory.ExpEnemyBombBuilder(getX(), getY(), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2).setFrom(this).createBullet();
+        new BulletFactory.ExpEnemyBombBuilder(getX(), getY(), x, y).setFrom(this).createBullet();
     }
 
     /**
