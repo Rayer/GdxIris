@@ -20,4 +20,6 @@ public interface BulletSpec {
     float getX();
 
     float getY();
+
+    void setXY(float x, float y);
 }

@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.GridPoint2;
 import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.SweepingBulletGroup;
 import com.dr.iris.action.ActionBase;
-import com.dr.iris.action.BulletAction;
+import com.dr.iris.action.BulletGroupAction;
 import com.dr.iris.action.ForceMoveAction;
 import com.dr.iris.character.GameActor;
 
@@ -22,13 +22,13 @@ public class SimpleEnemyAction2 {
         List<ActionBase> ret = new ArrayList<ActionBase>();
 
         BulletGroupSpec spec1 = new SweepingBulletGroup(actor, 220.0f, 180.0f, 4.0f);
-        BulletAction bullet1 = new BulletAction(spec1, 3.0f);
+        BulletGroupAction bullet1 = new BulletGroupAction(spec1, 3.0f);
 
         BulletGroupSpec spec2 = new SweepingBulletGroup(actor, 180.0f, 180.0f, 4.0f);
-        BulletAction bullet2 = new BulletAction(spec2, 3.0f);
+        BulletGroupAction bullet2 = new BulletGroupAction(spec2, 3.0f);
 
         BulletGroupSpec spec3 = new SweepingBulletGroup(actor, 200.0f, 180.0f, 4.0f);
-        BulletAction bullet3 = new BulletAction(spec3, 3.0f);
+        BulletGroupAction bullet3 = new BulletGroupAction(spec3, 3.0f);
 
         ret.add(bullet1);
         ret.add(bullet2);

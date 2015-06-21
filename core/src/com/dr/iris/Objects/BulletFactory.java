@@ -46,14 +46,13 @@ public class BulletFactory {
         ObjectManager objMgr = ObjectManager.getInst();
 
         ExpEnemyBombSpec spec;
-        Vector2 dir = new Vector2(1, 0).nor();
 
-        public ExpEnemyBombBuilder(float x, float y) {
-            spec = new ExpEnemyBombSpec(new Vector2(x, y), dir, 80.0f, 12.0f);
+        public ExpEnemyBombBuilder(float x, float y, float destX, float destY) {
+            spec = new ExpEnemyBombSpec(new Vector2(x, y), new Vector2(destX, destY), 80.0f, 12.0f);
         }
 
-        public ExpEnemyBombBuilder setDirAndSpeed(Vector2 dir, float speed) {
-            spec.setDirectionAndSpeed(dir, speed);
+        public ExpEnemyBombBuilder setSpeed(float speed) {
+            spec.setSpeed(speed);
             return this;
         }
 

@@ -25,6 +25,7 @@ import com.dr.iris.character.SimpleEnemyActor;
 import com.dr.iris.character.enemyAction.SimpleEnemyAction1;
 import com.dr.iris.character.enemyAction.SimpleEnemyAction2;
 import com.dr.iris.effect.EffectManager;
+import com.dr.iris.event.*;
 import com.dr.iris.log.Log;
 import com.dr.iris.ui.UIObjectsManager;
 
@@ -51,6 +52,8 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     //Box2D
     World world;
     Box2DDebugRenderer box2DDebugRenderer;
+
+    EventProxy eventHandler = new EventSelfParseProxy(this);
 
     public Iris() {
         super();
@@ -199,6 +202,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     @Override
     public boolean longPress(float x, float y) {
         log.debug("longPress");
+        EventNexus.getInst().sendEvent(eventHandler, EventFactory.createEventByPrototype(EventPrototypes.NOTIFY_FIRE_BOMB));
         return false;
     }
 

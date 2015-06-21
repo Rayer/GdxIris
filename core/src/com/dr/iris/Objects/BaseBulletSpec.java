@@ -11,14 +11,17 @@ public abstract class BaseBulletSpec implements BulletSpec {
     float x;
     float y;
 
+    @Override
     public float getX() {
         return x;
     }
 
+    @Override
     public float getY() {
         return y;
     }
 
+    @Override
     public void setXY(float x, float y) {
         this.x = x;
         this.y = y;

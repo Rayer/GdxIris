@@ -2,17 +2,16 @@ package com.dr.iris.action;
 
 import com.dr.iris.Objects.BulletGroupSpec;
 import com.dr.iris.Objects.ObjectManager;
-import com.dr.iris.Objects.SweepingBulletGroup;
 import com.dr.iris.character.GameActor;
 
 /**
  * Created by shoi on 15/6/7.
  */
-public class BulletAction extends ActionBase {
+public class BulletGroupAction extends ActionBase {
 
     BulletGroupSpec spec;
 
-    public BulletAction(BulletGroupSpec spec, float initCoolDown) {
+    public BulletGroupAction(BulletGroupSpec spec, float initCoolDown) {
         this.actionType = ActionType.Bullet;
         this.spec = spec;
         this.actionCooldown = initCoolDown;
@@ -32,7 +31,6 @@ public class BulletAction extends ActionBase {
 
     private void fire() {
         if(spec != null) {
-
             ObjectManager.getInst().createBulletGroup(spec.newInst());
         }
     }

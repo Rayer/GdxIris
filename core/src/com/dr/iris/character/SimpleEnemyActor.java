@@ -1,8 +1,10 @@
 package com.dr.iris.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.dr.iris.Objects.BulletFactory;
 import com.dr.iris.action.ActionBase;
 import com.dr.iris.event.*;
 import com.dr.iris.log.Log;
@@ -102,11 +104,12 @@ public class SimpleEnemyActor extends GameActor {
         uiTarget.setSpinning(false);
     }
 
-//    @SuppressWarnings("unused")
-//    @EventHandler("TEST_MULTIPARAM_EVENT")
-//    public void handle_param(@EventParameter("test_2nd_param") String param) {
-//        log.debug("Get param : " + param);
-//    }
+    @SuppressWarnings("unused")
+    @EventHandler("NOTIFY_FIRE_BOMB")
+    public void handle_fire_bomb() {
+        log.debug("Fire exp_bomb!");
+        new BulletFactory.ExpEnemyBombBuilder(getX(), getY(), Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2).setFrom(this).createBullet();
+    }
 
     /**
      * Override
