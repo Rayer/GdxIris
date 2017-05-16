@@ -254,5 +254,10 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         //log.debug("pinch");
         return false;
     }
+
+//    @Override
+//    public void pinchStop() {
+//
+//    }
 }
 
