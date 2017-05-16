@@ -35,11 +35,11 @@ public class SimpleEnemyActor extends GameActor {
 
         bulletColldownNotify = new BitmapFont();
         bulletColldownNotify.setColor(Color.RED);
-        bulletColldownNotify.setScale(0.8f);
+        //bulletColldownNotify.setScale(0.8f);
 
         moveCooldownNotify = new BitmapFont();
         moveCooldownNotify.setColor(Color.LIGHT_GRAY);
-        moveCooldownNotify.setScale(0.8f);
+        //moveCooldownNotify.setScale(0.8f);
 
     }
 

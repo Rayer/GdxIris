@@ -255,9 +255,9 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         return false;
     }
 
-//    @Override
-//    public void pinchStop() {
-//
-//    }
+    @Override
+    public void pinchStop() {
+
+    }
 }
 

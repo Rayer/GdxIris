@@ -30,7 +30,7 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
     CharacterRenderInfo.FACING lastFacing = currentFacing;
     CharacterRenderInfo charRenderInfo;
 
-    Animation currentAnimation;
+    Animation<TextureRegion> currentAnimation;
     float elapsedTime = 0;
 
     String name;
@@ -52,14 +52,15 @@ public abstract class GameActor extends com.badlogic.gdx.scenes.scene2d.Actor im
         setTouchable(Touchable.enabled);
         lastPos = new Vector2(getX(), getY());
         charRenderInfo = CharacterRenderManager.getInst().getCharacter(characterName);
-        currentAnimation = new Animation(5f, charRenderInfo.getRegion(currentFacing));
+        currentAnimation = new Animation<TextureRegion>(5f, charRenderInfo.getRegion(currentFacing));
         setBounds(getX(), getY(), currentAnimation.getKeyFrame(0).getRegionWidth(), currentAnimation.getKeyFrame(0).getRegionHeight());
         setOrigin(currentAnimation.getKeyFrame(0).getRegionWidth(), currentAnimation.getKeyFrame(0).getRegionHeight());
 
         //debug_s info_s
         font = new BitmapFont();
         font.setColor(Color.GREEN);
-        font.setScale(0.8f);
+        //font.setScale(0.8f);
+
 
         //frame
         TextureRegion tr = currentAnimation.getKeyFrame(0);
