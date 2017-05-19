@@ -7,7 +7,7 @@ import com.dr.iris.log.Log;
 
 public class DesktopLauncher {
 
-    static String SCENE_NAME = System.getProperty("SCENE_NAME") == null ? "com.dr.iris.Main" : System.getProperty("SCENE_NAME");
+    static String SCENE_NAME = System.getProperty("SCENE_NAME") == null ? "com.dr.iris.Iris" : System.getProperty("SCENE_NAME");
 
     public static void main(String[] arg) {
         LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
