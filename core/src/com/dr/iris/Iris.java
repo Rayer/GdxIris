@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.Render.IrisRenderer;
 import com.dr.iris.character.GameActor;
@@ -27,6 +29,7 @@ import com.dr.iris.character.enemyAction.SimpleEnemyAction2;
 import com.dr.iris.effect.EffectManager;
 import com.dr.iris.event.*;
 import com.dr.iris.log.Log;
+import com.dr.iris.stage.IrisStage;
 import com.dr.iris.ui.UIObjectsManager;
 
 
@@ -37,67 +40,42 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
 
     Log log = Log.getLogger(Iris.class);
 
-
-    TiledMap map;
-    InputProcessor inputProcessor;
-    SpriteBatch sb;
-    IrisRenderer renderer;
     OrthographicCamera camera;
-    GridPoint2 screenGrid = new GridPoint2();
+
+    IrisStage stage;
 
     MainActor mainActor;
 
     ObjectManager objectManager = ObjectManager.getInst();
 
-    //Box2D
-    World world;
-    Box2DDebugRenderer box2DDebugRenderer;
-
     EventProxy eventHandler = new EventSelfParseProxy(this);
-
-    public Iris() {
-        super();
-    }
-
-    public Iris(int x, int y) {
-        screenGrid.set(x, y);
-    }
 
 
     @Override
     public void create() {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
-        Box2D.init();
-        world = new World(new Vector2(0, 0), true);
-        box2DDebugRenderer = new Box2DDebugRenderer();
 
-        log.debug("Starting Iris");
-        sb = new SpriteBatch();
-        map = new TmxMapLoader().load("data/Wildness2.tmx");
-        renderer = new IrisRenderer(map, sb);
+        //Set camera and batch to Stage
+        Viewport viewport = setupCamera();
+        stage = new IrisStage(viewport);
+
+        log.debug("Starting Iris with Viewport : " + viewport.getScreenWidth() + " / " + viewport.getScreenHeight());
         Gdx.input.setInputProcessor(new GestureDetector(this));
 
-
-        setupCamera();
         GameActor.isDebug = true;
 
         mainActor = objectManager.createMainActor("trabiastudent_f");
         mainActor.setPosition(20, 40);
 
-//        for (int i = 0; i < 2; ++i) {
-//            Random random = new Random();
-//            objectManager.createEnemyActor("steampunk_f9", random.nextInt(screenGrid.x), random.nextInt(screenGrid.y));
-//        }
+
         //enemy 1
         GridPoint2 point1 = new GridPoint2(50, 400);
-        //GridPoint2[] spec1 = getEnemySpec1();
         SimpleEnemyActor enemy1 = objectManager.createEnemyActor("steampunk_f9", point1.x, point1.y);
         enemy1.getActorSpec().setBulletActions(SimpleEnemyAction1.getBulletActions(enemy1));
         enemy1.getActorSpec().setMoveActions(SimpleEnemyAction1.getMoveActions(enemy1));
 
         //enemy 2
         GridPoint2 point2 = new GridPoint2(400, 400);
-        //GridPoint2[] spec2 = getEnemySpec2();
         SimpleEnemyActor enemy2 = objectManager.createEnemyActor("steampunk_f9", point2.x, point2.y);
         enemy2.getActorSpec().setBulletActions(SimpleEnemyAction2.getBulletActions(enemy2));
         enemy2.getActorSpec().setMoveActions(SimpleEnemyAction2.getMoveActions(enemy2));
@@ -105,14 +83,13 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         super.create();
     }
 
-    private void setupCamera() {
-        screenGrid = getScreenGrid();
+    private Viewport setupCamera() {
         camera = new OrthographicCamera();
-        camera.zoom -= 0.3f; // zoom in
-        camera.setToOrtho(false, screenGrid.x, screenGrid.y);
-        //camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-
+        //camera.zoom -= 0.3f; // zoom in
+        log.debug("Set viewport to : " + Gdx.graphics.getWidth() + " / " + Gdx.graphics.getHeight());
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
+        return new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);
     }
 
 
@@ -120,8 +97,7 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
-        screenGrid.set(width, height);
-        setupCamera();
+        stage.getViewport().update(width, height, false);
     }
 
     @Override
@@ -131,20 +107,19 @@ public class Iris extends ApplicationAdapter implements GestureDetector.GestureL
         Gdx.gl.glClearColor(0, 1, 0, 1);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
+        //camera.update();
 
         //All update here should be gathered into a pre-render control
         UIObjectsManager.getInst().update(delta);
         objectManager.update(delta);
         EffectManager.getInst().update(delta);
-        renderer.setView(camera);
-        renderer.render(delta);
+        stage.draw();
     }
 
-    private GridPoint2 getScreenGrid() {
-        return new GridPoint2(screenGrid.x == 0 ? Gdx.graphics.getWidth() : screenGrid.x,
-                screenGrid.y == 0 ? Gdx.graphics.getHeight() : screenGrid.y);
-    }
+//    private GridPoint2 getScreenGrid() {
+//        return new GridPoint2(screenGrid.x == 0 ? Gdx.graphics.getWidth() : screenGrid.x,
+//                screenGrid.y == 0 ? Gdx.graphics.getHeight() : screenGrid.y);
+//    }
 
     @Override
     public void pause() {
