@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class EventSelfParseProxy implements EventProxy {
 
-    Log log = Log.getLogger(this.getClass());
+    Log log = Log.getLogger();
     Object host;
     Map<EventPrototype, MethodInfo> handlingMap = new HashMap<>();
 

@@ -13,8 +13,12 @@ public class Log {
     private String component_alias;
 
     public static Log getLogger(Class<?> clazz) {
+        return getLogger(clazz.getCanonicalName());
+    }
+
+    public static Log getLogger(String canonicalName) {
         Log ret = new Log();
-        String[] clazzNameSlice = clazz.getCanonicalName().split("\\.");
+        String[] clazzNameSlice = canonicalName.split("\\.");
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < clazzNameSlice.length; ++i) {
@@ -30,6 +34,17 @@ public class Log {
 
         ret.component_alias = sb.toString();
         return ret;
+    }
+
+    public static Log getLogger() {
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+
+        /*
+        StackTraceElements[0] represents StackTraceElement itself, [1] represents Logger class
+        So we need use [2]
+         */
+        StackTraceElement ste = stackTraceElements[2];
+        return getLogger(ste.getClassName());
     }
 
     public static void debug_s(String message) {

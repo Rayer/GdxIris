@@ -26,7 +26,7 @@ import com.dr.iris.log.Log;
  */
 public class IrisStage extends com.badlogic.gdx.scenes.scene2d.Stage {
 
-    static Log log = Log.getLogger(IrisStage.class);
+    static Log log = Log.getLogger();
 
     //Experimental items
     private MainActor mainActor;
@@ -34,7 +34,7 @@ public class IrisStage extends com.badlogic.gdx.scenes.scene2d.Stage {
 
     static public IrisStage CreateIrisStage() {
         OrthographicCamera camera = new OrthographicCamera();
-        //log.debug("Set viewport to : " + Gdx.graphics.getWidth() + " / " + Gdx.graphics.getHeight());
+        log.debug("Set viewport to : " + Gdx.graphics.getWidth() + " / " + Gdx.graphics.getHeight());
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         camera.update();
         Viewport viewport = new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(), camera);

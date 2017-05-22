@@ -17,7 +17,7 @@ import com.dr.iris.log.Log;
  */
 public class GestureControl implements GestureDetector.GestureListener {
 
-    private static Log log = Log.getLogger(GestureControl.class);
+    private static Log log = Log.getLogger();
     private ObjectManager objectManager = ObjectManager.getInst();
     private EventProxy eventHandler = new EventSelfParseProxy(this);
 

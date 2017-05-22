@@ -15,7 +15,7 @@ import com.dr.iris.ui.UIObjectsManager;
  */
 public class SimpleEnemyActor extends GameActor {
 
-    Log log = Log.getLogger(this.getClass());
+    Log log = Log.getLogger();
     EventProxy eventProxy = new EventSelfParseProxy(this);
 
     LockOnTarget uiTarget;

@@ -15,7 +15,7 @@ import com.dr.iris.ui.UIObjectsManager;
 
 public class Iris extends ApplicationAdapter {
 
-    Log log = Log.getLogger(Iris.class);
+    Log log = Log.getLogger();
     IrisStage stage;
     ObjectManager objectManager = ObjectManager.getInst();
 
