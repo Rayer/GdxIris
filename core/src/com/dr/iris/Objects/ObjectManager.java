@@ -60,9 +60,9 @@ public class ObjectManager {
             }
         }
 
-        for(GameActor a : gameActorList) {
-            a.act(delta);
-        }
+//        for(GameActor a : gameActorList) {
+//            a.act(delta);
+//        }
 
         for (int i = 0; i < bulletGroupSpecs.size(); ++i) {
             BulletGroupSpec spec = bulletGroupSpecs.get(i);

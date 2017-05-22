@@ -74,6 +74,10 @@ public class IrisStage extends com.badlogic.gdx.scenes.scene2d.Stage {
         SimpleEnemyActor enemy2 = objectManager.createEnemyActor("steampunk_f9", point2.x, point2.y);
         enemy2.getActorSpec().setBulletActions(SimpleEnemyAction2.getBulletActions(enemy2));
         enemy2.getActorSpec().setMoveActions(SimpleEnemyAction2.getMoveActions(enemy2));
+
+        this.addActor(mainActor);
+        this.addActor(enemy1);
+        this.addActor(enemy2);
     }
 
     @Override

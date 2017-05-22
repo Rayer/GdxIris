@@ -48,6 +48,7 @@ public class Iris extends ApplicationAdapter {
         //camera.update();
 
         //All update here should be gathered into a pre-render control
+        stage.act(delta);
         UIObjectsManager.getInst().update(delta);
         objectManager.update(delta);
         EffectManager.getInst().update(delta);
