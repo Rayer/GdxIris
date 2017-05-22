@@ -8,6 +8,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.dr.iris.Objects.ObjectManager;
 import com.dr.iris.effect.EffectManager;
 import com.dr.iris.log.Log;
+import com.dr.iris.stage.GestureControl;
 import com.dr.iris.stage.IrisStage;
 import com.dr.iris.ui.UIObjectsManager;
 
@@ -15,9 +16,6 @@ import com.dr.iris.ui.UIObjectsManager;
 public class Iris extends ApplicationAdapter {
 
     Log log = Log.getLogger(Iris.class);
-
-//    OrthographicCamera camera;
-
     IrisStage stage;
     ObjectManager objectManager = ObjectManager.getInst();
 
@@ -28,7 +26,8 @@ public class Iris extends ApplicationAdapter {
         //Set camera and batch to Stage
         stage = IrisStage.CreateIrisStage();
 
-        Gdx.input.setInputProcessor(new GestureDetector(stage));
+        //TODO: .......so complex
+        Gdx.input.setInputProcessor(new GestureDetector(new GestureControl(stage)));
 
         super.create();
     }
